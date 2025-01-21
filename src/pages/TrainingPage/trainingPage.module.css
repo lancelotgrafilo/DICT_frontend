@@ -1,0 +1,16 @@
+.pageContainer{
+  height: 100vh;
+}
+
+.beginnerContainer,
+.intermediateContainer,
+.technicalContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: red 2px;
+  padding: 16px 16px;
+  width: 100px;
+  height: auto;
+}
+
