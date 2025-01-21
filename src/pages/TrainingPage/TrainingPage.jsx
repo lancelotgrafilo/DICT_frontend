@@ -11,8 +11,12 @@ export function TrainingPage (){
         <div className={styleTraining.beginnerContainer}>Beginner</div>
         <div className={styleTraining.intermediateContainer}>Intermediate</div>
         <div className={styleTraining.technicalContainer}>Technical</div>
+
+        <div className={styleTraining.reqSpeaker}>Request Speaker</div>
       </div>
       
+
+
     </>
   )
   
