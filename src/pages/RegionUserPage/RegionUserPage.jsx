@@ -2,15 +2,14 @@ import styleRegionUserPage from "./regionUserPage.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
 import { Link } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
-
 import { usePath } from '../../utils/context/PathContext';
-import { useContext, useRef } from 'react';
+import { useState, useContext, useRef } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'remixicon/fonts/remixicon.css';
 
-
-export function RegionUserPage(){
+export function RegionUserPage() {
+  const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const { updatePath } = usePath();
 
@@ -24,12 +23,17 @@ export function RegionUserPage(){
       sidebar.style.zIndex = isHovered ? '9999' : 'initial';
     }
   };
+
+  const handleLogoutClick = () => {
+    setLogoutModalOpen(true);
+  };
+
   const handleMenuItemClick = (btnId) => {
     updateActiveButton(btnId);
     updatePath(null, null); // Set both paths to null
   };
 
-  return(
+  return (
     <div className={styleRegionUserPage.dashboardContainer}>
       <div className={styleRegionUserPage.sidebar}>
         <div className={styleRegionUserPage.logoContainer}>
@@ -42,12 +46,12 @@ export function RegionUserPage(){
           </div>
         </div>
 
-        <div>
-          MANAGE
+        <div className={styleRegionUserPage.manageTxt}>
+          <p>MANAGE</p>
         </div>
 
         <ul className={styleRegionUserPage.sidebarMenu}>
-          {[
+          {[ 
             { to: "dashboard", label: "Dashboard", icon: "ri-pie-chart-2-fill", btnId: "dashboard" },
             { to: "request", label: "Request", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
@@ -56,8 +60,7 @@ export function RegionUserPage(){
             { to: "statistics", label: "Statistics", icon: "ri-bar-chart-box-fill", btnId: "statistics" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
             { to: "notification", label: "Notification", icon: "ri-notification-2-fill", btnId: "notification" },
-            { to: "logout", label: "Logout", icon: "ri-logout-box-r-fill", btnId: "logout" },
-          ].map(({to, label, icon, btnId, disabled}, index) => (
+          ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li
               key={btnId}
               className={`${styleRegionUserPage.sidebarMenuItem} ${disabled ? styleRegionUserPage.disabled : ''}`}
@@ -68,7 +71,7 @@ export function RegionUserPage(){
             >
               <Link
                 to={disabled ? '#' : to}
-                className={`${styleRegionUserPage.sidebarMenuLink} ${activeButton === btnId ? styleRegionUserPage.active : ''} ${disabled ? styleRegionUserPage.disabledLink : ''}`} 
+                className={`${styleRegionUserPage.sidebarMenuLink} ${activeButton === btnId ? styleRegionUserPage.active : ''} ${disabled ? styleRegionUserPage.disabledLink : ''}`}
                 onClick={() => !disabled && updateActiveButton(btnId)}
               >
                 <i className={`ri ${icon} ${styleRegionUserPage.sidebarIcons}`} alt={`${label} Icon`} />
@@ -76,13 +79,68 @@ export function RegionUserPage(){
               </Link>
             </li>
           ))}
+          
+          {/* Theme Link */}
+          <li
+            className={styleRegionUserPage.sidebarMenuItem}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+            ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
+          >
+            <a 
+              href="#"
+              className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
+              id="theme-button"
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <i className="ri-moon-clear-fill" style={{ marginRight: '10px' }} />
+              <span className={styleRegionUserPage.navItem}>Theme</span>
+            </a>
+          </li>
+
+          {/* Logout Link */}
+          <li
+            className={styleRegionUserPage.sidebarMenuItem}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+            ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
+          >
+            <a
+              href="#"
+              onClick={handleLogoutClick}
+              className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
+              style={{ display: 'flex', alignItems: 'center' }}
+            >
+              <i className="ri-logout-box-r-fill" style={{ marginRight: '10px' }}></i>
+              <span className={styleRegionUserPage.navItem}>Logout</span>
+            </a>
+          </li>
+
         </ul>
-
-        
-
-
-
       </div>
+
+      {isLogoutModalOpen && (
+        <div className={styleRegionUserPage.modalOverlay}>
+          <div className={styleRegionUserPage.modal}>
+            <h2>Confirm Logout</h2>
+            <h4>Are you sure you want to logout?</h4>
+            <div className={styleRegionUserPage.buttonRow}>
+              <button 
+                // onClick={handleConfirmLogout} 
+                className={styleRegionUserPage.confirmLogoutBtn}
+              >
+                Yes, Logout
+              </button>
+              <button 
+                onClick={() => setLogoutModalOpen(false)} 
+                className={styleRegionUserPage.cancelBtn}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
