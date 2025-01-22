@@ -1,5 +1,8 @@
 import React from 'react';
-import './style.css'; // Assuming you still want to use the same CSS
+import styleLogin from './loginPage.module.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export function LoginPage() {
   return (
