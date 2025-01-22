@@ -49,7 +49,7 @@ export function LoginPage() {
               <button className="btn btn-lg btn-primary w-100 fs-6">Login</button>
             </div>
             <div className="row">
-              <small>Don't have an account? <a href="#">Sign Up</a></small>
+              <small>Don&apos;t have an account? <a href="#">Sign Up</a></small>
             </div>
           </div>
         </div>
