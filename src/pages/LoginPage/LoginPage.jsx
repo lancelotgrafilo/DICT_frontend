@@ -3,6 +3,7 @@ import './style.css'; // Assuming you still want to use the same CSS
 
 export function LoginPage() {
   return (
+    <>
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       {/* Login Container */}
       <div className="row border rounded-5 p-3 bg-blue shadow box-area">
@@ -54,5 +55,6 @@ export function LoginPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
