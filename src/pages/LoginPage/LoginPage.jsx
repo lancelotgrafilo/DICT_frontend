@@ -14,7 +14,7 @@ export function LoginPage() {
         {/* Left Box */}
         <div className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style={{ background: '#103cbe' }}>
           <div className="featured-image mb-3">
-            <img src="images/logo(2).png" className="img-fluid" style={{ width: '250px' }} alt="Logo" />
+            <img src="images/logo.png" className="img-fluid" style={{ width: '250px' }} alt="Logo" />
           </div>
           <p className="text-white fs-2" style={{ fontFamily: "'Courier New', Courier, monospace", fontWeight: 600 }}>
             Secure Login
