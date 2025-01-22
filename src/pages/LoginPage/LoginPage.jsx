@@ -6,6 +6,7 @@ export function LoginPage(){
       <div className={styleLogin.loginContainer}>
         <form action="" className={styleLogin.loginForm}>
           <h1>LOGIN</h1>
+          <h1>SIGNUP</h1>
         </form>
       </div>
     </>
