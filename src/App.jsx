@@ -13,6 +13,7 @@ export default function App() {
     
       <AppProviders>
         <Router>
+
           <RegionUserPage/>
 
           {/* <TrainingPage /> */}
