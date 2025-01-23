@@ -13,31 +13,98 @@
 
 .category {
   margin-bottom: 40px;
+  position: relative;
+  overflow: visible;
 }
 
 .categoryTitle {
-  font-size: 1.5rem;
+  font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px;
   color: #00574b; /* Darker shade of primary color */
+  text-align: start;
 }
 
 .carousel {
   width: 60%;
   margin: 0 auto;
+  overflow: visible;
 }
+.react-multi-carousel-list {
+  position: relative;
+  overflow: visible; /* Allow items to overflow and prevent clipping */
+  padding-bottom: 12px;
+}
+
 
 .moduleItem {
   cursor: pointer;
-  padding: 20px;
-  background-color: #00796b;
-  color: #fff;
-  border-radius: 10px;
+  padding: 0;
+  background-color: #ffffff; /* White background */
+  color: #333;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   transition: transform 0.3s ease;
-  text-align: center;
-  margin: 10px; /* Add some spacing between cards */
+  text-align: left; /* Align text to the left */
+  margin: 10px; 
+  height: 300px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 24px;
+  
 }
 
 .moduleItem:hover {
   transform: scale(1.05);
-  background-color: #00574b; /* Slightly darker hover effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+  z-index: 1000;
+}
+
+.moduleItem img {
+  width: 100%; /* Full width of the card */
+  height: 70%; /* Half the card height */
+  object-fit: cover; /* Maintain aspect ratio, crop if needed */
+  border-top-left-radius: 12px; /* Match card's corner rounding */
+  border-top-right-radius: 12px;
+}
+
+.moduleItem h3{
+  margin-left: 15px; /* Add spacing for text */
+  margin-top: 8px;
+}
+
+.moduleItem h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.moduleItem p {
+  font-size: 12px;
+  color: #666; /* Subtle gray for the description */
+  margin-left: 15px;
+  margin-top: -8px;
+}
+
+.moduleItem button {
+  margin: auto;
+  margin-bottom: 15px;
+  padding: 8px 16px;
+  background-color: #103cbe;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.moduleItem button:hover {
+  background-color: #022dad; /* Darker shade for hover */
 }
