@@ -125,7 +125,6 @@ export function RegionUserPage() {
           </div>
         </div>
 
-        <Header/>
         <Outlet/>
       </div>
       
