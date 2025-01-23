@@ -1,23 +1,43 @@
-.module-page {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
-  }
-  
-  .category {
-    margin-bottom: 40px;
-  }
-  
-  .module-item {
-    cursor: pointer;
-    padding: 20px;
-    background-color: #00796b;
-    color: #fff;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-  }
-  
-  .module-item:hover {
-    transform: scale(1.05);
-  }
-  
+.modulePage {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+  color: #333;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #000; /* Primary color */
+}
+
+.category {
+  margin-bottom: 40px;
+}
+
+.categoryTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #00574b; /* Darker shade of primary color */
+}
+
+.carousel {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.moduleItem {
+  cursor: pointer;
+  padding: 20px;
+  background-color: #00796b;
+  color: #fff;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  text-align: center;
+  margin: 10px; /* Add some spacing between cards */
+}
+
+.moduleItem:hover {
+  transform: scale(1.05);
+  background-color: #00574b; /* Slightly darker hover effect */
+}
