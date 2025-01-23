@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styleModule from "./modules.module.css"; // Import CSS module
-
+import pic from '../../assets/img/pic.jpg';
 const modules = {
   beginners: [
     { title: "Module 1", pdf: "/pdfs/beginners-module1.pdf" },
@@ -54,7 +54,10 @@ export function Modules() {
           className={styleModule.moduleItem}
           onClick={() => handleModuleClick(module.pdf)}
         >
+          <img src={pic} alt="Module Img" />
           <h3>{module.title}</h3>
+          <p>Lorem ipsum dolor sit amet cons expedita nesciunt, dolorum nostrum natus, eos porro nisi!</p>
+          <button>View Details</button>
         </div>
       ))}
     </Carousel>
@@ -62,7 +65,6 @@ export function Modules() {
 
   return (
     <div className={styleModule.modulePage}>
-      <h1 className={styleModule.title}>Module Page</h1>
       <div className={styleModule.category}>
         <h2 className={styleModule.categoryTitle}>Beginners</h2>
         {renderCarousel("beginners")}

@@ -76,7 +76,8 @@ body.dark-theme {
 /*=============== SIDEBAR ===============*/
 .dashboardContainer {
   display: flex;
-  height: 100vh;
+  height: auto;
+  overflow-x: hidden;
 }
 
 .sidebar {
