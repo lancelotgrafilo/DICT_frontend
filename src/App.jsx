@@ -3,6 +3,7 @@
 // import { SignUpPage } from './pages/SignUpPage/SignUpPage.jsx' 
 // import { LoginPage } from "./pages/LoginPage/LoginPage.jsx"
 // import { Sidebar } from './components/Sidebar/Sidebar.jsx'
+
 import { RegionUserPage } from './pages/RegionUserPage/RegionUserPage.jsx'
 import { AppProviders } from './utils/context/AppProviders.jsx'
 
@@ -13,15 +14,16 @@ export default function App() {
     
       <AppProviders>
         <Router>
-
-          <RegionUserPage/>
-
-          {/* <TrainingPage /> */}
-
-          {/*       
-          <Sidebar/>
-          <LoginPage/>
-          <SignUpPage /> */}
+          <Routes>
+            <Route path="/" component={<RegionUserPage/> }/>
+            
+            
+            <Route path='/request' />
+            <Route path='/activities' />
+            <Route path='/modules' /> 
+            <Route path='/settings' />
+           
+          </Routes>
         </Router>
         
       </AppProviders>

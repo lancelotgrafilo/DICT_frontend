@@ -1,12 +1,14 @@
 import styleRegionUserPage from "./regionUserPage.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
-import { Link } from 'react-router-dom';
+import dict from '../../assets/logo/DICT_Pic.png';
+import { Outlet, Link } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
 import { usePath } from '../../utils/context/PathContext';
 import { useState, useContext, useRef } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'remixicon/fonts/remixicon.css';
+import { Header } from '../../components/Header/Header';
 
 export function RegionUserPage() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -56,10 +58,7 @@ export function RegionUserPage() {
             { to: "request", label: "Request", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
             { to: "modules", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
-            { to: "recent_transaction", label: "Recent Transaction", icon: "ri-arrow-up-down-line", btnId: "recent_transaction" },
-            { to: "statistics", label: "Statistics", icon: "ri-bar-chart-box-fill", btnId: "statistics" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
-            { to: "notification", label: "Notification", icon: "ri-notification-2-fill", btnId: "notification" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li
               key={btnId}
@@ -118,6 +117,18 @@ export function RegionUserPage() {
 
         </ul>
       </div>
+          
+      <div className={styleRegionUserPage.mainContent}>
+        <div className={styleRegionUserPage.horizontalMenu}>
+          <div className={styleRegionUserPage.imageContainer}>
+            <img src={dict} alt="DICT" className={styleRegionUserPage.dict}/>
+          </div>
+        </div>
+
+        <Header/>
+        <Outlet/>
+      </div>
+      
 
       {isLogoutModalOpen && (
         <div className={styleRegionUserPage.modalOverlay}>
