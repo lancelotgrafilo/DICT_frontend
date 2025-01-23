@@ -1,37 +1,27 @@
-
-// import { TrainingPage } from './pages/TrainingPage/TrainingPage.jsx'
-// import { SignUpPage } from './pages/SignUpPage/SignUpPage.jsx' 
-// import { LoginPage } from "./pages/LoginPage/LoginPage.jsx"
-// import { Sidebar } from './components/Sidebar/Sidebar.jsx'
-
-import { RegionUserPage } from './pages/RegionUserPage/RegionUserPage.jsx'
-import { AppProviders } from './utils/context/AppProviders.jsx'
+// Import necessary components
+import { RegionUserPage } from './pages/RegionUserPage/RegionUserPage.jsx';
+import { AppProviders } from './utils/context/AppProviders.jsx';
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 export default function App() {
   return (
-    
-      <AppProviders>
-        <Router>
-          <Routes>
-            <Route path="/" component={<RegionUserPage/> }/>
-            
-            
-            <Route path='/request' />
-            <Route path='/activities' />
-            <Route path='/modules' /> 
-            <Route path='/settings' />
-           
-          </Routes>
-        </Router>
-        
-      </AppProviders>
+    <AppProviders>
+      <Router>
+        <Routes>
+          {/* Correct usage of the element prop */}
+          <Route path="/" element={<RegionUserPage />} />
 
-      
+          {/* Add components for these routes or leave as placeholders */}
+          <Route path="/request" element={<div>Request Page</div>} />
+          <Route path="/activities" element={<div>Activities Page</div>} />
+          <Route path="/modules" element={<div>Modules Page</div>} />
+          <Route path="/settings" element={<div>Settings Page</div>} />
 
-      
-    
-  )
-  
+          {/* Add a fallback route for unmatched paths */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </AppProviders>
+  );
 }
