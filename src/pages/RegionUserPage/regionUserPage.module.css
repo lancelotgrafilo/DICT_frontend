@@ -178,18 +178,24 @@ body.dark-theme {
 
 .usernameContainer {
   margin-left: 1rem;
+  display: flex;
+  flex-direction: column; /* Stack the h2 and p elements */
+  justify-content: start;
+  align-items: start; /* Center elements horizontally */
+  text-align: left; /* Center text inside the h2 and p elements */
 }
 
 .usernameContainer h2 {
   font-size: 1rem;
   font-weight: var(--font-semi-bold);
+  margin: 0; /* Remove any margin for better centering */
 }
 
 .usernameContainer p {
   font-size: .875rem;
   color: var(--text-color);
+  margin: 0; /* Remove any margin for better centering */
 }
-
 /* Modal styles */
 .modalOverlay {
   position: fixed;

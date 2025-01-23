@@ -119,12 +119,7 @@ export function RegionUserPage() {
       </div>
           
       <div className={styleRegionUserPage.mainContent}>
-        <div className={styleRegionUserPage.horizontalMenu}>
-          <div className={styleRegionUserPage.imageContainer}>
-            <img src={dict} alt="DICT" className={styleRegionUserPage.dict}/>
-          </div>
-        </div>
-
+        <Header/>
         <Outlet/>
       </div>
       
