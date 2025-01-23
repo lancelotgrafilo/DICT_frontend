@@ -1,0 +1,23 @@
+.module-page {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .category {
+    margin-bottom: 40px;
+  }
+  
+  .module-item {
+    cursor: pointer;
+    padding: 20px;
+    background-color: #00796b;
+    color: #fff;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .module-item:hover {
+    transform: scale(1.05);
+  }
+  
