@@ -174,5 +174,51 @@ input[type="date"] {
     border-color: #005a4e;
   }
   
+  /* Categories Section */
+.categories-section {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .categories-section h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* Category Checkbox Styles */
+  .category {
+    margin-bottom: 15px;
+  }
+  
+  .category label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .options {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .options label {
+    display: block;
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  /* Highlighted Checkbox */
+  input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  input[type="checkbox"]:checked + label {
+    font-weight: bold;
+    color: #00796b; /* Primary green */
+  }
+  
   
   
