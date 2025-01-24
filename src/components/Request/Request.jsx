@@ -361,13 +361,167 @@ export function Request() {
                 >
                   Previous
                 </button>
-                <button type="submit" className="btn btn-success">
-                  Submit
+                <button
+                  type="button" // Change from submit to button
+                  className="btn btn-success"
+                  onClick={handleNext} // Ensure this function moves to the next step
+                >
+                  Next
                 </button>
               </div>
             </div>
           )}
 
+          {step === 4 && (
+            <div>
+              <h4 className="mb-3">Module Categories</h4>
+              <div className="row g-3">
+                <div className="col-12">
+                  <label className="form-label">Select Categories</label>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id="beginner"
+                      value="Beginner"
+                      onChange={(e) => handleCategoryChange(e, "beginner")}
+                      className="form-check-input"
+                    />
+                    <label htmlFor="beginner" className="form-check-label">
+                      Beginner
+                    </label>
+                  </div>
+                  {selectedCategories.beginner && (
+                    <div className="sub-options">
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id="beginnerOption1"
+                          value="Basic Concepts"
+                          onChange={(e) => handleSubCategoryChange(e, "beginner")}
+                          className="form-check-input"
+                        />
+                        <label htmlFor="beginnerOption1" className="form-check-label">
+                          Basic Concepts
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id="beginnerOption2"
+                          value="Safe Browsing"
+                          onChange={(e) => handleSubCategoryChange(e, "beginner")}
+                          className="form-check-input"
+                        />
+                        <label htmlFor="beginnerOption2" className="form-check-label">
+                          Safe Browsing
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="col-12">
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id="intermediate"
+                      value="Intermediate"
+                      onChange={(e) => handleCategoryChange(e, "intermediate")}
+                      className="form-check-input"
+                    />
+                    <label htmlFor="intermediate" className="form-check-label">
+                      Intermediate
+                    </label>
+                  </div>
+                  {selectedCategories.intermediate && (
+                    <div className="sub-options">
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id="intermediateOption1"
+                          value="Network Security"
+                          onChange={(e) => handleSubCategoryChange(e, "intermediate")}
+                          className="form-check-input"
+                        />
+                        <label htmlFor="intermediateOption1" className="form-check-label">
+                          Network Security
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id="intermediateOption2"
+                          value="Email Security"
+                          onChange={(e) => handleSubCategoryChange(e, "intermediate")}
+                          className="form-check-input"
+                        />
+                        <label htmlFor="intermediateOption2" className="form-check-label">
+                          Email Security
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                  </div>
+                  <div className="col-12">
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        id="technical"
+                        value="Technical"
+                        onChange={(e) => handleCategoryChange(e, "technical")}
+                        className="form-check-input"
+                      />
+                      <label htmlFor="technical" className="form-check-label">
+                        Technical
+                      </label>
+                    </div>
+                    {selectedCategories.technical && (
+                      <div className="sub-options">
+                        <div className="form-check">
+                          <input
+                            type="checkbox"
+                            id="technicalOption1"
+                            value="Penetration Testing"
+                            onChange={(e) => handleSubCategoryChange(e, "technical")}
+                            className="form-check-input"
+                          />
+                          <label htmlFor="technicalOption1" className="form-check-label">
+                            Penetration Testing
+                          </label>
+                        </div>
+                        <div className="form-check">
+                          <input
+                            type="checkbox"
+                            id="technicalOption2"
+                            value="System Hardening"
+                            onChange={(e) => handleSubCategoryChange(e, "technical")}
+                            className="form-check-input"
+                          />
+                          <label htmlFor="technicalOption2" className="form-check-label">
+                            System Hardening
+                          </label>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between mt-4">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePrevious}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={handleNext}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
         </form>
       </div>
     </div>
