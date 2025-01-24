@@ -13,7 +13,7 @@ export function Header(){
       case 'dashboard':
         return 'Dashboard';
       case 'request':
-        return 'Request';
+        return '';
       case 'activities':
         return 'Activities';
       case 'modules':
