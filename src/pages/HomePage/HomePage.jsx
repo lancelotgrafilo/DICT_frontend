@@ -16,6 +16,7 @@ export function Homepage() {
       gender: "",
       contactNo: "",
       email: "",
+      address: "",
     },
     organizationInfo: {
       organizationName: "",
@@ -32,14 +33,6 @@ export function Homepage() {
     ],
     categories: [],
   });
-
-
-  const calculateTotalHours = (startTime, endTime) => {
-    const start = new Date(`1970-01-01T${startTime}:00`);
-    const end = new Date(`1970-01-01T${endTime}:00`);
-    const diffInMilliseconds = end - start;
-    return diffInMilliseconds / (1000 * 60 * 60);
-  };
 
   const [rows, setRows] = useState([{ category: "", subcategory: "" }]);
 
@@ -84,13 +77,21 @@ export function Homepage() {
         updatedDates[index].endTime = newEndTime; // Automatically update end time
       }
 
-      // Calculate total hours if both start and end times are available
-      if (updatedDates[index].startTime && updatedDates[index].endTime) {
-        const totalHours = calculateTotalHours(
-          updatedDates[index].startTime,
-          updatedDates[index].endTime
-        );
-        updatedDates[index].totalHours = totalHours;
+      // Validate endTime and ensure it’s at least 1 hour after startTime
+      if (name === "endTime" || name === "startTime") {
+        if (updatedDates[index].startTime && updatedDates[index].endTime) {
+          const totalHours = calculateTotalHours(
+            updatedDates[index].startTime,
+            updatedDates[index].endTime
+          );
+
+          if (totalHours <= 0) {
+            alert("End time must be at least 1 hour after the start time.");
+            updatedDates[index].endTime = ""; // Clear invalid end time
+          } else {
+            updatedDates[index].totalHours = totalHours; // Update total hours
+          }
+        }
       }
 
       setFormData((prevData) => ({
@@ -107,6 +108,7 @@ export function Homepage() {
       }));
     }
   };
+
 
   const calculateEndTime = (startTime) => {
     const start = new Date(`1970-01-01T${startTime}:00`);
@@ -168,26 +170,34 @@ export function Homepage() {
     }));
   };
 
-  // Helper function to generate time options
   const generateTimeOptions = (startTime, endTime) => {
     const times = [];
-    const start = parseTime(startTime);
-    const end = parseTime(endTime);
+    const start = parseTime(startTime); // Parse start time into minutes
+    const end = parseTime(endTime); // Parse end time into minutes
 
-    let currentTime = start;
+    let currentTime = start + 60; // Start 1 hour after the selected startTime
 
     while (currentTime <= end) {
-      times.push(formatTime(currentTime));
+      times.push(formatTime(currentTime)); // Format and push time
       currentTime += 60; // Increment by 60 minutes
     }
 
     return times;
   };
 
-  // Helper function to parse time string (e.g., "08:00") into minutes
+  // Helper function to parse time string (e.g., "1:00 PM") into minutes
   const parseTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    return parseInt(hours) * 60 + parseInt(minutes);
+    const [time, modifier] = timeString.split(" "); // Split time and AM/PM
+    let [hours, minutes] = time.split(":").map(Number);
+
+    if (modifier === "PM" && hours !== 12) {
+      hours += 12; // Convert PM hours to 24-hour format
+    }
+    if (modifier === "AM" && hours === 12) {
+      hours = 0; // Convert midnight to 0 hours
+    }
+
+    return hours * 60 + minutes; // Return total minutes
   };
 
   // Helper function to format time in 12-hour format with AM/PM
@@ -195,21 +205,33 @@ export function Homepage() {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     const period = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12; // 12-hour format
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12; // Convert to 12-hour format
     return `${formattedHours}:${mins.toString().padStart(2, "0")} ${period}`;
+  };
+
+  const calculateTotalHours = (startTime, endTime) => {
+    const start = parseTime(startTime); // Convert startTime to minutes
+    const end = parseTime(endTime); // Convert endTime to minutes
+
+    if (end > start) {
+      const diffInMinutes = end - start; // Calculate the difference
+      return diffInMinutes / 60; // Convert minutes to hours
+    } else {
+      return 0; // If the end time is invalid, return 0
+    }
   };
 
   const getOneWeekAfterDate = () => {
     const today = new Date();
     const oneWeekAfter = new Date();
     oneWeekAfter.setDate(today.getDate() + 7);
-  
+
     const year = oneWeekAfter.getFullYear();
     const month = (oneWeekAfter.getMonth() + 1).toString().padStart(2, "0");
     const day = oneWeekAfter.getDate().toString().padStart(2, "0");
-  
+
     return `${year}-${month}-${day}`;
-  };  
+  };
 
   return (
     <div className={styleHomePage.mainContent}>
@@ -320,6 +342,18 @@ export function Homepage() {
                       type="email"
                       name="email"
                       value={formData.personalInfo.email}
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Address</label>
+                    <span style={{ color: 'red' }}>*</span>
+                    <input
+                      type="address"
+                      name="address"
+                      value={formData.personalInfo.address}
                       onChange={(e) => handleChange(e, "personalInfo")}
                       className="form-control"
                       required
@@ -456,25 +490,26 @@ export function Homepage() {
                             </select>
                           </td>
                           <td>
-                            <select
-                              name="endTime"
-                              value={dateInfo.endTime}
-                              onChange={(e) => handleChange(e, "preferredDates", index)}
-                              className="form-control"
-                              required
-                            >
-                              <option value="" disabled>Select End Time</option>
-                              {generateTimeOptions(dateInfo.startTime, "17:00").map((time, idx) => (
-                                <option key={idx} value={time}>{time}</option>
-                              ))}
-                            </select>
+                          <select
+                            name="endTime"
+                            value={dateInfo.endTime}
+                            onChange={(e) => handleChange(e, "preferredDates", index)}
+                            className="form-control"
+                            required
+                          >
+                            <option value="" disabled>Select End Time</option>
+                            {generateTimeOptions(dateInfo.startTime, "5:00 PM").map((time, idx) => (
+                              <option key={idx} value={time}>
+                                {time}
+                              </option>
+                            ))}
+                          </select>
                           </td>
-
                           <td>
                             <input
                               type="number"
                               name="totalHours"
-                              value={dateInfo.totalHours}
+                              value={dateInfo.totalHours || 0} // Display computed total hours
                               className="form-control"
                               readOnly
                             />
