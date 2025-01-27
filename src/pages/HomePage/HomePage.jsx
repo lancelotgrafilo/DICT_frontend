@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styleHomePage from "./homePage.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Header } from "../../components/Header/Header";
+import { toast } from 'react-toastify';
 
 export function Homepage() {
   const [step, setStep] = useState(1);
@@ -86,7 +87,7 @@ export function Homepage() {
           );
 
           if (totalHours <= 0) {
-            alert("End time must be at least 1 hour after the start time.");
+            toast.info("End time must be at least 1 hour after the start time.");
             updatedDates[index].endTime = ""; // Clear invalid end time
           } else {
             updatedDates[index].totalHours = totalHours; // Update total hours
@@ -124,7 +125,7 @@ export function Homepage() {
     if (isValid) {
       setStep(step + 1);
     } else {
-      alert("Please fill in all required fields.");
+      toast.info("Please fill in all required fields.");
     }
   };
 
@@ -150,7 +151,7 @@ export function Homepage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted Data:", formData, selectedCategories);
-    alert("Form submitted successfully!");
+    toast.success("Form submitted successfully!");
   };
 
   const addPreferredDate = () => {
@@ -460,7 +461,7 @@ export function Homepage() {
 
                                 // Restrict weekends
                                 if (day === 0 || day === 6) {
-                                  alert("Weekends are not allowed. Please select a weekday.");
+                                  toast.warn("Weekends are not allowed. Please select a weekday.");
                                   e.target.value = ""; // Clear invalid date
                                   return;
                                 }
