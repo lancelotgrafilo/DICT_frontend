@@ -29,46 +29,95 @@ export function Request() {
         totalHours: 0,
       },
     ],
-    categories: [],
   });
 
-  const [rows, setRows] = useState([{ category: "", subcategory: "" }]);
+
+  const handleChange = (e, section, index = null) => {
+    const { name, value } = e.target;
+    if (section === "preferredDates" && index !== null) {
+      const updatedDates = [...formData.preferredDates];
+      updatedDates[index][name] = value;
+
+      // Automatically calculate total hours if both start and end times are provided
+      if (name === "startTime" || name === "endTime") {
+        const startTime = updatedDates[index].startTime;
+        const endTime = updatedDates[index].endTime;
+        if (startTime && endTime) {
+          const start = new Date(`1970-01-01T${startTime}:00`);
+          const end = new Date(`1970-01-01T${endTime}:00`);
+          const diff = (end - start) / (1000 * 60 * 60); // Difference in hours
+          updatedDates[index].totalHours = diff > 0 ? diff : 0;
+        }
+      }
+
+      setFormData((prevData) => ({
+        ...prevData,
+        preferredDates: updatedDates,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [section]: {
+          ...prevData[section],
+          [name]: value,
+        },
+      }));
+    }
+  };
+
+  const [selectedCategories, setSelectedCategories] = useState({});
 
   const categories = [
-    { id: "beginners", label: "Beginners", subcategories: ["Module 1", "Module 2"] },
-    { id: "intermediate", label: "Intermediate", subcategories: ["Module 3", "Module 4"] },
-    { id: "technical", label: "Technical", subcategories: ["Module 5", "Module 6"] },
+    {
+      id: "beginners",
+      label: "Beginners",
+      subcategories: [
+        { id: "beginners1", label: "Basic Cyber Hygiene" },
+        { id: "beginners2", label: "Safe Online Practices" },
+      ],
+    },
+    {
+      id: "intermediate",
+      label: "Intermediate",
+      subcategories: [
+        { id: "intermediate1", label: "Incident Response" },
+        { id: "intermediate2", label: "Risk Assessment" },
+      ],
+    },
+    {
+      id: "technical",
+      label: "Technical",
+      subcategories: [
+        { id: "technical1", label: "Advanced Threat Detection" },
+        { id: "technical2", label: "Penetration Testing" },
+      ],
+    },
   ];
-
-  const handleCategoryChange = (index, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index].category = value;
-    updatedRows[index].subcategory = ""; // Reset subcategory when category changes
-    setRows(updatedRows);
-  };
-
-  const handleSubcategoryChange = (index, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index].subcategory = value;
-    setRows(updatedRows);
-  };
-
-  const addRow = () => {
-    setRows([...rows, { category: "", subcategory: "" }]);
-  };
-
-  const removeRow = (index) => {
-    setRows(rows.filter((_, i) => i !== index));
-  };
 
   const handleNext = () => setStep(step + 1);
   const handlePrevious = () => setStep(step - 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData((prev) => ({ ...prev, categories: rows }));
-    console.log("Form Data Submitted:", formData);
+    console.log("Submitted Data:", formData, selectedCategories);
     alert("Form submitted successfully!");
+  };
+
+  const addPreferredDate = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      preferredDates: [
+        ...prevData.preferredDates,
+        { date: "", startTime: "", endTime: "", totalHours: 0 },
+      ],
+    }));
+  };
+
+  const removePreferredDate = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      preferredDates: prevData.preferredDates.filter((_, i) => i !== index),
+    }));
   };
 
   return (
@@ -82,17 +131,13 @@ export function Request() {
                 <h4 className="mb-3">Personal Information</h4>
                 <hr />
                 <div className="row g-3">
+                  {/* Personal Info Fields */}
                   <div className="col-md-4">
                     <label className="form-label">Salutation</label>
                     <select
                       name="salutation"
                       value={formData.personalInfo.salutation}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          personalInfo: { ...prev.personalInfo, salutation: e.target.value },
-                        }))
-                      }
+                      onChange={(e) => handleChange(e, "personalInfo")}
                       className="form-select"
                     >
                       <option value="">Select</option>
@@ -108,12 +153,7 @@ export function Request() {
                       type="text"
                       name="firstName"
                       value={formData.personalInfo.firstName}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          personalInfo: { ...prev.personalInfo, firstName: e.target.value },
-                        }))
-                      }
+                      onChange={(e) => handleChange(e, "personalInfo")}
                       className="form-control"
                       required
                     />
@@ -124,12 +164,64 @@ export function Request() {
                       type="text"
                       name="lastName"
                       value={formData.personalInfo.lastName}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          personalInfo: { ...prev.personalInfo, lastName: e.target.value },
-                        }))
-                      }
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label className="form-label">Middle Name</label>
+                    <input
+                      type="text"
+                      name="middleName"
+                      value={formData.personalInfo.middleName}
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label className="form-label">Extension Name</label>
+                    <input
+                      type="text"
+                      name="extensionName"
+                      value={formData.personalInfo.extensionName}
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label className="form-label">Gender</label>
+                    <select
+                      name="gender"
+                      value={formData.personalInfo.gender}
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-select"
+                      required
+                    >
+                      <option value="">Select</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Contact No.</label>
+                    <input
+                      type="tel"
+                      name="contactNo"
+                      value={formData.personalInfo.contactNo}
+                      onChange={(e) => handleChange(e, "personalInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.personalInfo.email}
+                      onChange={(e) => handleChange(e, "personalInfo")}
                       className="form-control"
                       required
                     />
@@ -149,69 +241,149 @@ export function Request() {
 
             {step === 2 && (
               <div>
-                <h4 className="mb-3">Module Categories and Subcategories</h4>
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Category</th>
-                      <th>Subcategory (Module)</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row, index) => (
-                      <tr key={index}>
-                        <td>
-                          <select
-                            className="form-select"
-                            value={row.category}
-                            onChange={(e) => handleCategoryChange(index, e.target.value)}
-                          >
-                            <option value="">Select Category</option>
-                            {categories.map((cat) => (
-                              <option key={cat.id} value={cat.label}>
-                                {cat.label}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                        <td>
-                          <select
-                            className="form-select"
-                            value={row.subcategory}
-                            onChange={(e) => handleSubcategoryChange(index, e.target.value)}
-                            disabled={!row.category}
-                          >
-                            <option value="">Select Module</option>
-                            {categories
-                              .find((cat) => cat.label === row.category)
-                              ?.subcategories.map((sub, subIndex) => (
-                                <option key={subIndex} value={sub}>
-                                  {sub}
-                                </option>
-                              ))}
-                          </select>
-                        </td>
-                        <td>
+                <h4 className="mb-3">Organization Information</h4>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Organization Name</label>
+                    <input
+                      type="text"
+                      name="organizationName"
+                      value={formData.organizationInfo.organizationName}
+                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Department</label>
+                    <input
+                      type="text"
+                      name="department"
+                      value={formData.organizationInfo.department}
+                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Position</label>
+                    <input
+                      type="text"
+                      name="position"
+                      value={formData.organizationInfo.position}
+                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between mt-4">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handlePrevious}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleNext}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
+            {step === 3 && (
+              <div>
+                <h4 className="mb-3">Preferred Date and Time</h4>
+                {formData.preferredDates.map((dateInfo, index) => (
+                  <div key={index} className="mb-3">
+                    <div className="d-flex align-items-center">
+                      <div className="row g-3 flex-grow-1 align-items-center">
+                        <div className="col-md-4">
+                          <label className="form-label">Preferred Date</label>
+                          <input
+                            type="date"
+                            name="date"
+                            value={dateInfo.date}
+                            onChange={(e) => {
+                              const selectedDate = new Date(e.target.value);
+                              const day = selectedDate.getDay();
+                              if (day === 0 || day === 6) {
+                                alert("Weekends are not allowed. Please select a weekday.");
+                                e.target.value = ""; // Clear invalid date
+                                return;
+                              }
+                              handleChange(e, "preferredDates", index);
+                            }}
+                            className="form-control"
+                            required
+                          />
+                        </div>
+                        <div className="col-md-3">
+                          <label className="form-label">Start Time</label>
+                          <input
+                            type="time"
+                            name="startTime"
+                            value={dateInfo.startTime}
+                            onChange={(e) => handleChange(e, "preferredDates", index)}
+                            className="form-control"
+                            min="08:00"
+                            max="17:00"
+                            required
+                          />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label className="form-label">End Time</label>
+                          <input
+                            type="time"
+                            name="endTime"
+                            value={dateInfo.endTime}
+                            onChange={(e) => handleChange(e, "preferredDates", index)}
+                            className="form-control"
+                            min="08:00"
+                            max="17:00"
+                            required
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <label className="form-label">Total Hours</label>
+                          <input
+                            type="number"
+                            name="totalHours"
+                            value={Math.round(dateInfo.totalHours)} // Ensure the value is a whole number
+                            className="form-control"
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-1 d-flex-grow-1 justify-content-center align-items-center">
+                        {formData.preferredDates.length > 1 && (
                           <button
                             type="button"
-                            className="btn btn-danger btn-sm"
-                            onClick={() => removeRow(index)}
+                            className="btn btn-danger btn-sm delete-btn"
+                            onClick={() => removePreferredDate(index)}
                           >
-                            Remove
+                            <i className="bi bi-trash" style={{ marginRight: "5px" }}></i> Delete
                           </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <button
-                  type="button"
-                  className="btn btn-secondary mt-3"
-                  onClick={addRow}
-                >
-                  Add Another Row
-                </button>
+                        )}
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                ))}
+                <div className="d-flex justify-content-end mt-3">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={addPreferredDate}
+                  >
+                    Add Another Date
+                  </button>
+                </div>
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
@@ -231,10 +403,47 @@ export function Request() {
               </div>
             )}
 
-            {step === 3 && (
+            {step === 4 && (
               <div>
-                <h4 className="mb-3">Review and Submit</h4>
-                <p>Please review your selections before submitting.</p>
+                <h4 className="mb-3">Module Categories</h4>
+                <div className="row g-3">
+                  {categories.map((category) => (
+                    <div key={category.id} className="col-12">
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id={category.id}
+                          value={category.label}
+                          onChange={(e) => handleCategoryChange(e, category.id)}
+                          className="form-check-input"
+                        />
+                        <label htmlFor={category.id} className="form-check-label">
+                          {category.label}
+                        </label>
+                      </div>
+
+                      {/* Conditionally show subcategories if the category is selected */}
+                      {selectedCategories[category.id]?.selected && (
+                        <div className="sub-options ms-3">
+                          {category.subcategories.map((sub) => (
+                            <div key={sub.id} className="form-check">
+                              <input
+                                type="checkbox"
+                                id={sub.id}
+                                value={sub.label}
+                                onChange={(e) => handleSubCategoryChange(e, category.id, sub.id)}
+                                className="form-check-input"
+                              />
+                              <label htmlFor={sub.id} className="form-check-label">
+                                {sub.label}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
@@ -254,4 +463,4 @@ export function Request() {
       </div>
     </div>
   );
-}
+};
