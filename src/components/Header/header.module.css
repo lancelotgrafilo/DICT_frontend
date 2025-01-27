@@ -1,27 +1,33 @@
 .mainContent {
-  padding: 0; /* Optional: Adds padding inside the content */
-  width: calc(100% - 16px); /* Ensures the content adjusts to the full width */
+  padding: 0; /* Adds padding inside the content */
+  width: 100%; /* Ensures the content adjusts to the full width */
   position: sticky; /* Keeps the header at the top during scrolling */
   top: 16px; /* Sticks the header at the top of the viewport */
   z-index: 1000; /* Ensures it appears above other elements */
-  background-color: #ffffff; /* Set a solid color, replace with desired color */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow */
+  background-color: #ffffff; /* Sets a solid background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  border-radius: 12px; /* Rounded edges */
 }
 
 /* ================= HORIZONTAL Menu ================ */
 .horizontalMenu {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
-  background-color: var(--sidebar-bg-color); /* Match the sidebar background */
+  background-color: var(--sidebar-bg-color); /* Matches sidebar background */
   padding: 10px 20px;
-  border-radius: 10px; /* Optional for rounded edges */
-  box-shadow: 2px 0 24px var(--shadow-color);
+  border-radius: 12px; /* Rounded edges */
+  box-shadow: 2px 0 24px var(--shadow-color); /* Subtle shadow */
   width: 100%;
   height: 80px;
-  
+  overflow: hidden; /* Ensures content doesn't spill out */
 }
+
+/* ================= DICT Styling =================== */
 .dict {
   width: 100px;
-  height: auto;
+  height: auto; /* Maintains aspect ratio */
 }
