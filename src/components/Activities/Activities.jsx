@@ -24,75 +24,78 @@ export function Activities () {
   };
 
   return (
-    <div className="container mt-5">
-      <h1 className="text-center mb-4" style={{ color: '#00796b' }}>Activity Planner</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="year" className="form-label">Select Year</label>
-          <select
-            id="year"
-            name="year"
-            className="form-select"
-            value={formData.year}
-            onChange={handleChange}
-          >
-            <option value="">Choose Year</option>
-            {years.map((year) => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="date" className="form-label">Select Date</label>
-          <div className="input-group">
-            <input
-              type="text"
-              id="date"
-              name="date"
-              className="form-control"
-              placeholder="Select a date"
-              value={formData.date}
+    <div className={styleActivities.mainContent}>
+      <div className="container mt-5">
+        <h1 className="text-center mb-4" style={{ color: '#00796b' }}>Activity Planner</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="year" className="form-label">Select Year</label>
+            <select
+              id="year"
+              name="year"
+              className="form-select"
+              value={formData.year}
               onChange={handleChange}
-              readOnly
-            />
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => {
-                const dateInput = document.createElement('input');
-                dateInput.type = 'date';
-                dateInput.onchange = (e) => {
-                  setFormData({ ...formData, date: e.target.value });
-                  document.body.removeChild(dateInput);
-                };
-                dateInput.style.position = 'absolute';
-                dateInput.style.opacity = 0;
-                document.body.appendChild(dateInput);
-                dateInput.click();
-              }}
             >
-              Open Calendar
-            </button>
+              <option value="">Choose Year</option>
+              {years.map((year) => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
           </div>
-        </div>
 
-        <div className="mb-3">
-          <label htmlFor="activity" className="form-label">Activity</label>
-          <textarea
-            id="activity"
-            name="activity"
-            className="form-control"
-            placeholder="Describe your activity"
-            value={formData.activity}
-            onChange={handleChange}
-            rows="3"
-          />
-        </div>
+          <div className="mb-3">
+            <label htmlFor="date" className="form-label">Select Date</label>
+            <div className="input-group">
+              <input
+                type="text"
+                id="date"
+                name="date"
+                className="form-control"
+                placeholder="Select a date"
+                value={formData.date}
+                onChange={handleChange}
+                readOnly
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  const dateInput = document.createElement('input');
+                  dateInput.type = 'date';
+                  dateInput.onchange = (e) => {
+                    setFormData({ ...formData, date: e.target.value });
+                    document.body.removeChild(dateInput);
+                  };
+                  dateInput.style.position = 'absolute';
+                  dateInput.style.opacity = 0;
+                  document.body.appendChild(dateInput);
+                  dateInput.click();
+                }}
+              >
+                Open Calendar
+              </button>
+            </div>
+          </div>
 
-        <button type="submit" className="btn" style={{ backgroundColor: '#00796b', color: 'white' }}>Save Activity</button>
-      </form>
+          <div className="mb-3">
+            <label htmlFor="activity" className="form-label">Activity</label>
+            <textarea
+              id="activity"
+              name="activity"
+              className="form-control"
+              placeholder="Describe your activity"
+              value={formData.activity}
+              onChange={handleChange}
+              rows="3"
+            />
+          </div>
+
+          <button type="submit" className="btn" style={{ backgroundColor: '#00796b', color: 'white' }}>Save Activity</button>
+        </form>
+      </div>
     </div>
+    
   );
 };
 
