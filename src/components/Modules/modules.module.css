@@ -36,7 +36,6 @@
   padding-bottom: 12px;
 }
 
-
 .moduleItem {
   cursor: pointer;
   padding: 0;
@@ -53,7 +52,7 @@
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   
 }
 
