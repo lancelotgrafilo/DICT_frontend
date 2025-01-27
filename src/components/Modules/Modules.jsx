@@ -65,6 +65,9 @@ export function Modules() {
 
   return (
     <div className={styleModule.modulePage}>
+      <div>
+        <h1>Modules</h1>
+      </div>
       <div className={styleModule.category}>
         <h2 className={styleModule.categoryTitle}>Beginners</h2>
         {renderCarousel("beginners")}
