@@ -15,8 +15,6 @@ export default function App() {
     // <AppProviders>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-
           <Route path="home" element={ <Homepage/> }></Route>
           {/* <Route path="/" element={<RegionUserPage />}>
             <Route path="dashboard" element={<RegionDashboard />} />
