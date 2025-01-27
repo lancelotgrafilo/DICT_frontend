@@ -1,3 +1,7 @@
+.mainContent{
+  height: 100vh;
+}
+
 /* General Container */
 .container {
     max-width: 800px;
