@@ -1,67 +1,85 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import styleModule from "./modules.module.css"; // Import CSS module
-import pic from '../../assets/img/pic.jpg';
-const modules = {
-  beginners: [
-    { title: "Module 1", pdf: "/pdfs/beginners-module1.pdf" },
-    { title: "Module 2", pdf: "/pdfs/beginners-module2.pdf" },
-    { title: "Module 3", pdf: "/pdfs/beginners-module3.pdf" },
-    { title: "Module 4", pdf: "/pdfs/beginners-module4.pdf" },
-  ],
-  intermediate: [
-    { title: "Module 1", pdf: "/pdfs/intermediate-module1.pdf" },
-    { title: "Module 2", pdf: "/pdfs/intermediate-module2.pdf" },
-    { title: "Module 3", pdf: "/pdfs/intermediate-module3.pdf" },
-  ],
-  technical: [
-    { title: "Module 1", pdf: "/pdfs/technical-module1.pdf" },
-    { title: "Module 2", pdf: "/pdfs/technical-module2.pdf" },
-    { title: "Module 3", pdf: "/pdfs/technical-module3.pdf" },
-  ],
-};
+import styleModule from "./modules.module.css";
+import pic from "../../assets/img/pic.jpg";
+import useGetModules from "../../utils/Hooks/ModulesHooks/useGetModules";
 
 export function Modules() {
-  const handleModuleClick = (pdf) => {
-    window.open(pdf, "_blank");
+  const { modules, loading, error } = useGetModules(); 
+  const [categorizedModules, setCategorizedModules] = useState({});
+
+  useEffect(() => {
+    console.log(modules);
+    if (modules) {
+      const categorized = { beginners: [], intermediate: [], technical: [] };
+
+      modules.forEach((module) => {
+        console.log(module); // Log each module to inspect its properties
+        if (module.difficulty === "Beginner") {
+          categorized.beginners.push(module);
+        } else if (module.difficulty === "Intermediate") {
+          categorized.intermediate.push(module);
+        } else if (module.difficulty === "Technical") {
+          categorized.technical.push(module);
+        }
+      });
+      
+
+      setCategorizedModules(categorized);
+    }
+  }, [modules]);
+
+  useEffect(() => {
+    console.log(categorizedModules); // Check how categorizedModules looks
+  }, [categorizedModules]);
+  
+
+  const handleModuleClick = (moduleId) => {
+    console.log(`Module clicked: ${moduleId}`);
   };
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 1024 },
-      items: 3, // Show 3 cards for large screens
-    },
-    desktop: {
-      breakpoint: { max: 1024, min: 768 },
-      items: 2, // Show 2 cards for medium screens
-    },
-    tablet: {
-      breakpoint: { max: 768, min: 464 },
-      items: 1, // Show 1 card for smaller screens
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1, // Show 1 card for mobile
-    },
+    superLargeDesktop: { breakpoint: { max: 4000, min: 1024 }, items: 5 },
+    desktop: { breakpoint: { max: 1024, min: 768 }, items: 2 },
+    tablet: { breakpoint: { max: 768, min: 464 }, items: 1 },
+    mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
   };
 
-  const renderCarousel = (category) => (
-    <Carousel responsive={responsive} infinite autoPlay>
-      {modules[category].map((module, index) => (
-        <div
-          key={index}
-          className={styleModule.moduleItem}
-          onClick={() => handleModuleClick(module.pdf)}
-        >
-          <img src={pic} alt="Module Img" />
-          <h3>{module.title}</h3>
-          <p>Lorem ipsum dolor sit amet cons expedita nesciunt, dolorum nostrum natus, eos porro nisi!</p>
-          <button>View Details</button>
-        </div>
-      ))}
-    </Carousel>
-  );
+  const renderCarousel = (category) => {
+    const categoryModules = categorizedModules[category];
+    console.log(categoryModules); // Log the modules for the category
+  
+    if (categoryModules && categoryModules.length > 0) {
+      return (
+        <Carousel responsive={responsive} infinite autoPlay>
+          {categoryModules.map((module) => (
+            <div
+              key={module._id}
+              className={styleModule.moduleItem}
+              onClick={() => handleModuleClick(module._id)}
+            >
+              <img src={pic} alt="Module Img" />
+              <h3>{module.module_name}</h3>
+              <p>{module.module_description || "Lorem ipsum dolor sit amet..."}</p>
+              <button>View Details</button>
+            </div>
+          ))}
+        </Carousel>
+      );
+    } else {
+      return <p>No modules found in this category.</p>;
+    }
+  };
+  
+
+  if (loading) {
+    return <p>Loading modules...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className={styleModule.modulePage}>
@@ -83,5 +101,3 @@ export function Modules() {
     </div>
   );
 }
-
-export default Modules;
