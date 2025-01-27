@@ -33,6 +33,14 @@ export function Homepage() {
     categories: [],
   });
 
+
+  const calculateTotalHours = (startTime, endTime) => {
+    const start = new Date(`1970-01-01T${startTime}:00`);
+    const end = new Date(`1970-01-01T${endTime}:00`);
+    const diffInMilliseconds = end - start;
+    return diffInMilliseconds / (1000 * 60 * 60);
+  };
+
   const [rows, setRows] = useState([{ category: "", subcategory: "" }]);
 
   const categories = [
@@ -69,15 +77,20 @@ export function Homepage() {
       updatedDates[index][name] = value;
 
       // Automatically calculate total hours if both start and end times are provided
-      if (name === "startTime" || name === "endTime") {
-        const startTime = updatedDates[index].startTime;
-        const endTime = updatedDates[index].endTime;
-        if (startTime && endTime) {
-          const start = new Date(`1970-01-01T${startTime}:00`);
-          const end = new Date(`1970-01-01T${endTime}:00`);
-          const diff = (end - start) / (1000 * 60 * 60); // Difference in hours
-          updatedDates[index].totalHours = diff > 0 ? diff : 0;
-        }
+      if (name === "startTime") {
+        // When the start time is changed, set the end time to be 1 hour later
+        const newStartTime = value;
+        const newEndTime = calculateEndTime(newStartTime);
+        updatedDates[index].endTime = newEndTime; // Automatically update end time
+      }
+
+      // Calculate total hours if both start and end times are available
+      if (updatedDates[index].startTime && updatedDates[index].endTime) {
+        const totalHours = calculateTotalHours(
+          updatedDates[index].startTime,
+          updatedDates[index].endTime
+        );
+        updatedDates[index].totalHours = totalHours;
       }
 
       setFormData((prevData) => ({
@@ -95,7 +108,41 @@ export function Homepage() {
     }
   };
 
-  const handleNext = () => setStep(step + 1);
+  const calculateEndTime = (startTime) => {
+    const start = new Date(`1970-01-01T${startTime}:00`);
+    start.setHours(start.getHours() + 1); // Add 1 hour
+    if (start.getHours() >= 17) { // Check if it exceeds 17:00
+      return "17:00";
+    }
+    return formatTime(start);
+  };
+
+  const handleNext = () => {
+    const isValid = validateStep(step);
+    if (isValid) {
+      setStep(step + 1);
+    } else {
+      alert("Please fill in all required fields.");
+    }
+  };
+
+  const validateStep = (step) => {
+    switch (step) {
+      case 1:
+        return formData.personalInfo.firstName && formData.personalInfo.lastName && formData.personalInfo.gender && formData.personalInfo.contactNo && formData.personalInfo.email;
+      case 2:
+        return formData.organizationInfo.organizationName && formData.organizationInfo.department && formData.organizationInfo.position;
+      case 3:
+        return formData.preferredDates.every((dateInfo) => dateInfo.date && dateInfo.startTime && dateInfo.endTime);
+      case 4:
+        return rows.every((row) => row.category && row.subcategory);
+      case 5:
+        return true; // No additional validation needed for review step
+      default:
+        return true;
+    }
+  };
+
   const handlePrevious = () => setStep(step - 1);
 
   const handleSubmit = (e) => {
@@ -121,6 +168,38 @@ export function Homepage() {
     }));
   };
 
+  // Helper function to generate time options
+  const generateTimeOptions = (startTime, endTime) => {
+    const times = [];
+    const start = parseTime(startTime);
+    const end = parseTime(endTime);
+
+    let currentTime = start;
+
+    while (currentTime <= end) {
+      times.push(formatTime(currentTime));
+      currentTime += 60; // Increment by 60 minutes
+    }
+
+    return times;
+  };
+
+  // Helper function to parse time string (e.g., "08:00") into minutes
+  const parseTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    return parseInt(hours) * 60 + parseInt(minutes);
+  };
+
+  // Helper function to format time in 12-hour format with AM/PM
+  const formatTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    const period = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12; // 12-hour format
+    return `${formattedHours}:${mins.toString().padStart(2, "0")} ${period}`;
+  };
+
+
   return (
     <div className={styleHomePage.mainContent}>
       <Header />
@@ -136,6 +215,7 @@ export function Homepage() {
                   {/* Personal Info Fields */}
                   <div className="col-md-4">
                     <label className="form-label">Salutation</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <select
                       name="salutation"
                       value={formData.personalInfo.salutation}
@@ -151,6 +231,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">First Name</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="firstName"
@@ -162,6 +243,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">Last Name</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="lastName"
@@ -173,6 +255,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">Middle Name</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="middleName"
@@ -193,6 +276,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">Gender</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <select
                       name="gender"
                       value={formData.personalInfo.gender}
@@ -208,6 +292,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Contact No.</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="tel"
                       name="contactNo"
@@ -219,6 +304,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Email Address</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="email"
                       name="email"
@@ -247,6 +333,7 @@ export function Homepage() {
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">Organization Name</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="organizationName"
@@ -258,6 +345,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Department</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="department"
@@ -269,6 +357,7 @@ export function Homepage() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Position</label>
+                    <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="position"
@@ -297,86 +386,100 @@ export function Homepage() {
                 </div>
               </div>
             )}
+
+
             {step === 3 && (
               <div>
                 <h4 className="mb-3">Preferred Date and Time</h4>
-                {formData.preferredDates.map((dateInfo, index) => (
-                  <div key={index} className="mb-3">
-                    <div className="d-flex align-items-center">
-                      <div className="row g-3 flex-grow-1 align-items-center">
-                        <div className="col-md-4">
-                          <label className="form-label">Preferred Date</label>
-                          <input
-                            type="date"
-                            name="date"
-                            value={dateInfo.date}
-                            onChange={(e) => {
-                              const selectedDate = new Date(e.target.value);
-                              const day = selectedDate.getDay();
-                              if (day === 0 || day === 6) {
-                                alert("Weekends are not allowed. Please select a weekday.");
-                                e.target.value = ""; // Clear invalid date
-                                return;
-                              }
-                              handleChange(e, "preferredDates", index);
-                            }}
-                            className="form-control"
-                            required
-                          />
-                        </div>
-                        <div className="col-md-3">
-                          <label className="form-label">Start Time</label>
-                          <input
-                            type="time"
-                            name="startTime"
-                            value={dateInfo.startTime}
-                            onChange={(e) => handleChange(e, "preferredDates", index)}
-                            className="form-control"
-                            min="08:00"
-                            max="17:00"
-                            required
-                          />
-                        </div>
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead className="table-light">
+                      <tr>
+                        <th scope="col">Preferred Date</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Total Hours</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {formData.preferredDates.map((dateInfo, index) => (
+                        <tr key={index}>
+                          <td>
+                            <input
+                              type="date"
+                              name="date"
+                              value={dateInfo.date}
+                              onChange={(e) => {
+                                const selectedDate = new Date(e.target.value);
+                                const day = selectedDate.getDay();
+                                if (day === 0 || day === 6) {
+                                  alert("Weekends are not allowed. Please select a weekday.");
+                                  e.target.value = ""; // Clear invalid date
+                                  return;
+                                }
+                                handleChange(e, "preferredDates", index);
+                              }}
+                              className="form-control"
+                              required
+                            />
+                          </td>
+                          <td>
+                            <select
+                              name="startTime"
+                              value={dateInfo.startTime}
+                              onChange={(e) => handleChange(e, "preferredDates", index)}
+                              className="form-control"
+                              required
+                            >
+                              <option value="" disabled>Select Start Time</option>
+                              {generateTimeOptions("08:00", "16:00").map((time, idx) => (
+                                <option key={idx} value={time}>
+                                  {time}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td>
+                            <select
+                              name="endTime"
+                              value={dateInfo.endTime}
+                              onChange={(e) => handleChange(e, "preferredDates", index)}
+                              className="form-control"
+                              required
+                            >
+                              <option value="" disabled>Select End Time</option>
+                              {generateTimeOptions(dateInfo.startTime, "17:00").map((time, idx) => (
+                                <option key={idx} value={time}>{time}</option>
+                              ))}
+                            </select>
+                          </td>
 
-                        <div className="col-md-3">
-                          <label className="form-label">End Time</label>
-                          <input
-                            type="time"
-                            name="endTime"
-                            value={dateInfo.endTime}
-                            onChange={(e) => handleChange(e, "preferredDates", index)}
-                            className="form-control"
-                            min="08:00"
-                            max="17:00"
-                            required
-                          />
-                        </div>
-                        <div className="col-md-2">
-                          <label className="form-label">Total Hours</label>
-                          <input
-                            type="number"
-                            name="totalHours"
-                            value={Math.round(dateInfo.totalHours)} // Ensure the value is a whole number
-                            className="form-control"
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-1 d-flex-grow-1 justify-content-center align-items-center">
-                        {formData.preferredDates.length > 1 && (
-                          <button
-                            type="button"
-                            className="btn btn-danger btn-sm delete-btn"
-                            onClick={() => removePreferredDate(index)}
-                          >
-                            <i className="bi bi-trash" style={{ marginRight: "5px" }}></i> Delete
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                ))}
+                          <td>
+                            <input
+                              type="number"
+                              name="totalHours"
+                              value={dateInfo.totalHours}
+                              className="form-control"
+                              readOnly
+                            />
+                          </td>
+                          <td className="text-center">
+                            {formData.preferredDates.length > 1 && (
+                              <button
+                                type="button"
+                                className="btn btn-danger btn-sm"
+                                onClick={() => removePreferredDate(index)}
+                              >
+                                <i className="bi bi-trash"></i> Delete
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
                 <div className="d-flex justify-content-end mt-3">
                   <button
                     type="button"
@@ -386,6 +489,7 @@ export function Homepage() {
                     Add Another Date
                   </button>
                 </div>
+
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
@@ -405,9 +509,10 @@ export function Homepage() {
               </div>
             )}
 
+
             {step === 4 && (
               <div>
-                <h4 className="mb-3">Module Categories and Subcategories</h4>
+                <h4 className="mb-3">Module Categories</h4>
                 <table className="table table-bordered">
                   <thead>
                     <tr>
