@@ -199,6 +199,17 @@ export function Homepage() {
     return `${formattedHours}:${mins.toString().padStart(2, "0")} ${period}`;
   };
 
+  const getOneWeekAfterDate = () => {
+    const today = new Date();
+    const oneWeekAfter = new Date();
+    oneWeekAfter.setDate(today.getDate() + 7);
+  
+    const year = oneWeekAfter.getFullYear();
+    const month = (oneWeekAfter.getMonth() + 1).toString().padStart(2, "0");
+    const day = oneWeekAfter.getDate().toString().padStart(2, "0");
+  
+    return `${year}-${month}-${day}`;
+  };  
 
   return (
     <div className={styleHomePage.mainContent}>
@@ -412,15 +423,20 @@ export function Homepage() {
                               onChange={(e) => {
                                 const selectedDate = new Date(e.target.value);
                                 const day = selectedDate.getDay();
+
+                                // Restrict weekends
                                 if (day === 0 || day === 6) {
                                   alert("Weekends are not allowed. Please select a weekday.");
                                   e.target.value = ""; // Clear invalid date
                                   return;
                                 }
+
+                                // Proceed with updating the date
                                 handleChange(e, "preferredDates", index);
                               }}
                               className="form-control"
                               required
+                              min={getOneWeekAfterDate()} // Restrict date selection to 1 week after today
                             />
                           </td>
                           <td>
