@@ -4,6 +4,7 @@ import styleRequestForm from "./requestForm.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { toast } from 'react-toastify';
 import { Header } from "../../components/Header/Header";
+import { useNavigate } from 'react-router-dom';
 
 import usePostRequest from "../../utils/Hooks/RequestHooks/usePostRequest";
 import useModules from "../../utils/Hooks/ModulesHooks/useGetModules";
@@ -31,6 +32,8 @@ export function RequestForm() {
     ],
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form Values:', formValues);  // Log all the formValues before submitting
@@ -38,6 +41,7 @@ export function RequestForm() {
       const response = await addRequest(formValues);
       console.log('Request submitted successfully:', response);
       toast.success('Request submitted successfully:', response);
+      navigate('/home');
     } catch (err) {
       console.error('Error submitting request:', err);
     }
