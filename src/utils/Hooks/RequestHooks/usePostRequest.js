@@ -8,24 +8,22 @@ const usePostRequest = () => {
 
   // Function to post a new request
   const addRequest = async (requestPayload) => {
+    console.log('Sending request payload:', requestPayload);
     setLoading(true);
     setError(null);
-
+  
     try {
-      // Send POST request to the API
-      const response = await axios.post('/api/post-requests', requestPayload);
-
-      // Set response data
+      const response = await axios.post('/api/post-request', requestPayload);
       setData(response.data);
-      return response.data; // Return data for further usage
+      return response.data;
     } catch (err) {
-      // Handle and set the error
       setError(err.response?.data?.message || err.message);
-      throw err; // Rethrow the error for the caller to handle
+      throw err;
     } finally {
       setLoading(false);
     }
   };
+  
 
   return { data, loading, error, addRequest };
 };

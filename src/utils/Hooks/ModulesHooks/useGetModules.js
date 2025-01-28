@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const useModules = () => {
   const [modules, setModules] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loadingModules, setLoading] = useState(true);
+  const [errorModule, setError] = useState(null);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -30,7 +30,7 @@ const useModules = () => {
     fetchModules();
   }, []);
 
-  return { modules, loading, error };
+  return { modules, loadingModules, errorModule };
 };
 
 export default useModules;
