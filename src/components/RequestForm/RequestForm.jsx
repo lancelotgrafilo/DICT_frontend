@@ -649,6 +649,7 @@ export function RequestForm() {
                     <tr>
                       <th>Category</th>
                       <th>Subcategory (Module)</th>
+                      <th>Description</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -695,6 +696,11 @@ export function RequestForm() {
                               ))}
 
                           </select>
+                        </td>
+                        <td>
+                          <span className="form-select">
+                            {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
+                          </span>
                         </td>
                         <td>
                           <button
