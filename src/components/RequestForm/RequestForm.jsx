@@ -3,62 +3,94 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styleRequestForm from "./requestForm.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { toast } from 'react-toastify';
-
 import { Header } from "../../components/Header/Header";
 
+import usePostRequest from "../../utils/Hooks/RequestHooks/usePostRequest";
+import useModules from "../../utils/Hooks/ModulesHooks/useGetModules";
+
 export function RequestForm() {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    personalInfo: {
-      lastName: "",
-      firstName: "",
-      middleName: "",
-      extensionName: "",
-      salutation: "",
-      gender: "",
-      contactNo: "",
-      email: "",
-      address: "",
-    },
-    organizationInfo: {
-      organizationName: "",
-      department: "",
-      position: "",
-    },
-    preferredDates: [
-      {
-        date: "",
-        startTime: "",
-        endTime: "",
-        totalHours: 0,
-      },
+  const { data, loading, error, addRequest } = usePostRequest();
+  const [formValues, setFormValues] = useState({
+    salutation: '',
+    last_name: '',
+    first_name: '',
+    middle_name: '',
+    extension_name: '',
+    gender: '',
+    address: '',
+    email_address: '',
+    contact_number: '',
+    organization_name: '',
+    department: '',
+    position: '',
+    date_and_time: [
+      { date: '', start_time: '', end_time: '', total_hours: 0 },
     ],
-    categories: [],
+    modules_selected: [
+      { module_name: '', module_description: '', difficulty: '' },
+    ],
   });
 
-  const [rows, setRows] = useState([{ category: "", subcategory: "" }]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Form Values:', formValues);  // Log all the formValues before submitting
+    try {
+      const response = await addRequest(formValues);
+      console.log('Request submitted successfully:', response);
+      toast.success('Request submitted successfully:', response);
+    } catch (err) {
+      console.error('Error submitting request:', err);
+    }
+  };
 
-  const categories = [
-    { id: "beginners", label: "Beginners", subcategories: ["Module 1", "Module 2"] },
-    { id: "intermediate", label: "Intermediate", subcategories: ["Module 3", "Module 4"] },
-    { id: "technical", label: "Technical", subcategories: ["Module 5", "Module 6"] },
-  ];
+  const [step, setStep] = useState(1);
+
+  const { modules, loadingModules, errorModule } = useModules();
+
+  const [rows, setRows] = useState([{ category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
 
   const handleCategoryChange = (index, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index].category = value;
-    updatedRows[index].subcategory = ""; // Reset subcategory when category changes
-    setRows(updatedRows);
-  };
+  const updatedRows = [...rows];
+  updatedRows[index].category = value;
+  updatedRows[index].subcategory = { module_name: "", module_description: "", difficulty: "" }; // Reset subcategory when category changes
+  setRows(updatedRows);
 
-  const handleSubcategoryChange = (index, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index].subcategory = value;
-    setRows(updatedRows);
-  };
+  // Update modules_selected to reflect the changes
+  const updatedModulesSelected = [...formValues.modules_selected];
+  updatedModulesSelected[index] = { module_name: "", module_description: "", difficulty: "" };
+  setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
+};
 
+const handleSubcategoryChange = (index, moduleName) => {
+  const selectedModule = modules.find((module) => module.module_name === moduleName); // Find the selected module
+
+  if (selectedModule) {
+    const updatedRows = [...rows];
+    updatedRows[index].subcategory = {
+      module_name: selectedModule.module_name,
+      module_description: selectedModule.module_description,
+      difficulty: selectedModule.difficulty
+    };
+    setRows(updatedRows);
+
+    // Update modules_selected to reflect the changes
+    const updatedModulesSelected = [...formValues.modules_selected];
+    updatedModulesSelected[index] = {
+      module_name: selectedModule.module_name,
+      module_description: selectedModule.module_description,
+      difficulty: selectedModule.difficulty
+    };
+    setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
+  } else {
+    // Handle case where module is not found (optional)
+    console.error("Selected module not found");
+  }
+};
+
+  
+  
   const addRow = () => {
-    setRows([...rows, { category: "", subcategory: "" }]);
+    setRows([...rows, { category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
   };
 
   const removeRow = (index) => {
@@ -67,49 +99,51 @@ export function RequestForm() {
 
   const handleChange = (e, section, index = null) => {
     const { name, value } = e.target;
-    if (section === "preferredDates" && index !== null) {
-      const updatedDates = [...formData.preferredDates];
+  
+    if (section === "date_and_time" && index !== null) {
+      const updatedDates = [...formValues.date_and_time];
       updatedDates[index][name] = value;
-
+  
       // Automatically calculate total hours if both start and end times are provided
-      if (name === "startTime") {
+      if (name === "start_time") {
         // When the start time is changed, set the end time to be 1 hour later
         const newStartTime = value;
         const newEndTime = calculateEndTime(newStartTime);
-        updatedDates[index].endTime = newEndTime; // Automatically update end time
+        updatedDates[index].end_time = newEndTime; // Automatically update end time
       }
-
+  
       // Validate endTime and ensure it’s at least 1 hour after startTime
-      if (name === "endTime" || name === "startTime") {
-        if (updatedDates[index].startTime && updatedDates[index].endTime) {
+      if (name === "end_time" || name === "start_time") {
+        if (updatedDates[index].start_time && updatedDates[index].end_time) {
           const totalHours = calculateTotalHours(
-            updatedDates[index].startTime,
-            updatedDates[index].endTime
+            updatedDates[index].start_time,
+            updatedDates[index].end_time
           );
-
+  
           if (totalHours <= 0) {
             toast.info("End time must be at least 1 hour after the start time.");
-            updatedDates[index].endTime = ""; // Clear invalid end time
+            updatedDates[index].end_time = ""; // Clear invalid end time
           } else {
-            updatedDates[index].totalHours = totalHours; // Update total hours
+            updatedDates[index].total_hours = totalHours; // Update total hours
           }
         }
       }
-
-      setFormData((prevData) => ({
-        ...prevData,
-        preferredDates: updatedDates,
+  
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        date_and_time: updatedDates,
       }));
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormValues((prevValues) => ({
+        ...prevValues,
         [section]: {
-          ...prevData[section],
+          ...prevValues[section],
           [name]: value,
         },
       }));
     }
   };
+  
 
 
   const calculateEndTime = (startTime) => {
@@ -133,11 +167,11 @@ export function RequestForm() {
   const validateStep = (step) => {
     switch (step) {
       case 1:
-        return formData.personalInfo.firstName && formData.personalInfo.lastName && formData.personalInfo.gender && formData.personalInfo.contactNo && formData.personalInfo.email;
+        return formValues.first_name && formValues.last_name && formValues.gender && formValues.contact_number && formValues.email_address;
       case 2:
-        return formData.organizationInfo.organizationName && formData.organizationInfo.department && formData.organizationInfo.position;
+        return formValues.organization_name && formValues.department && formValues.position;
       case 3:
-        return formData.preferredDates.every((dateInfo) => dateInfo.date && dateInfo.startTime && dateInfo.endTime);
+        return formValues.date_and_time.every((dateInfo) => dateInfo.date && dateInfo.start_time && dateInfo.end_time);
       case 4:
         return rows.every((row) => row.category && row.subcategory);
       case 5:
@@ -149,26 +183,20 @@ export function RequestForm() {
 
   const handlePrevious = () => setStep(step - 1);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted Data:", formData, selectedCategories);
-    toast.success("Form submitted successfully!");
-  };
-
   const addPreferredDate = () => {
-    setFormData((prevData) => ({
+    setFormValues((prevData) => ({
       ...prevData,
-      preferredDates: [
-        ...prevData.preferredDates,
-        { date: "", startTime: "", endTime: "", totalHours: 0 },
+      date_and_time: [
+        ...prevData.date_and_time,
+        { date: "", start_time: "", end_time: "", total_hours: 0 },
       ],
     }));
   };
 
   const removePreferredDate = (index) => {
-    setFormData((prevData) => ({
+    setFormValues((prevData) => ({
       ...prevData,
-      preferredDates: prevData.preferredDates.filter((_, i) => i !== index),
+      date_and_time: prevData.date_and_time.filter((_, i) => i !== index),
     }));
   };
 
@@ -253,11 +281,13 @@ export function RequestForm() {
                     <span style={{ color: 'red' }}>*</span>
                     <select
                       name="salutation"
-                      value={formData.personalInfo.salutation}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.salutation}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, salutation: e.target.value })
+                      }
                       className="form-select"
                     >
-                      <option value="">Select</option>
+                      <option value=""></option>
                       <option value="Mr">Mr</option>
                       <option value="Ms">Ms</option>
                       <option value="Mrs">Mrs</option>
@@ -265,25 +295,29 @@ export function RequestForm() {
                     </select>
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">First Name</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.personalInfo.firstName}
-                      onChange={(e) => handleChange(e, "personalInfo")}
-                      className="form-control"
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
                     <label className="form-label">Last Name</label>
                     <span style={{ color: 'red' }}>*</span>
                     <input
                       type="text"
                       name="lastName"
-                      value={formData.personalInfo.lastName}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.last_name}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, last_name: e.target.value })
+                      }
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label className="form-label">First Name</label>
+                    <span style={{ color: 'red' }}>*</span>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formValues.first_name}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, first_name: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -294,8 +328,10 @@ export function RequestForm() {
                     <input
                       type="text"
                       name="middleName"
-                      value={formData.personalInfo.middleName}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.middle_name}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, middle_name: e.target.value })
+                      }
                       className="form-control"
                     />
                   </div>
@@ -304,8 +340,10 @@ export function RequestForm() {
                     <input
                       type="text"
                       name="extensionName"
-                      value={formData.personalInfo.extensionName}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.extension_name}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, extension_name: e.target.value })
+                      }
                       className="form-control"
                     />
                   </div>
@@ -314,8 +352,10 @@ export function RequestForm() {
                     <span style={{ color: 'red' }}>*</span>
                     <select
                       name="gender"
-                      value={formData.personalInfo.gender}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.gender}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, gender: e.target.value })
+                      }
                       className="form-select"
                       required
                     >
@@ -331,8 +371,10 @@ export function RequestForm() {
                     <input
                       type="tel"
                       name="contactNo"
-                      value={formData.personalInfo.contactNo}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.contact_number}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, contact_number: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -343,8 +385,10 @@ export function RequestForm() {
                     <input
                       type="email"
                       name="email"
-                      value={formData.personalInfo.email}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.email_address}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, email_address: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -355,8 +399,10 @@ export function RequestForm() {
                     <input
                       type="address"
                       name="address"
-                      value={formData.personalInfo.address}
-                      onChange={(e) => handleChange(e, "personalInfo")}
+                      value={formValues.address}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, address: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -384,8 +430,10 @@ export function RequestForm() {
                     <input
                       type="text"
                       name="organizationName"
-                      value={formData.organizationInfo.organizationName}
-                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      value={formValues.organization_name}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, organization_name: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -396,8 +444,10 @@ export function RequestForm() {
                     <input
                       type="text"
                       name="department"
-                      value={formData.organizationInfo.department}
-                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      value={formValues.department}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, department: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -408,8 +458,10 @@ export function RequestForm() {
                     <input
                       type="text"
                       name="position"
-                      value={formData.organizationInfo.position}
-                      onChange={(e) => handleChange(e, "organizationInfo")}
+                      value={formValues.position}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, position: e.target.value })
+                      }
                       className="form-control"
                       required
                     />
@@ -449,7 +501,7 @@ export function RequestForm() {
                       </tr>
                     </thead>
                     <tbody>
-                      {formData.preferredDates.map((dateInfo, index) => (
+                      {formValues.date_and_time.map((dateInfo, index) => (
                         <tr key={index}>
                           <td>
                             <input
@@ -467,8 +519,8 @@ export function RequestForm() {
                                   return;
                                 }
 
-                                // Proceed with updating the date
-                                handleChange(e, "preferredDates", index);
+                                // Update the date field in the array
+                                handleChange(e, "date_and_time", index);
                               }}
                               className="form-control"
                               required
@@ -477,13 +529,15 @@ export function RequestForm() {
                           </td>
                           <td>
                             <select
-                              name="startTime"
-                              value={dateInfo.startTime}
-                              onChange={(e) => handleChange(e, "preferredDates", index)}
+                              name="start_time"
+                              value={dateInfo.start_time}
+                              onChange={(e) => handleChange(e, "date_and_time", index)}
                               className="form-control"
                               required
                             >
-                              <option value="" disabled>Select Start Time</option>
+                              <option value="" disabled>
+                                Select Start Time
+                              </option>
                               {generateTimeOptions("07:00", "16:00").map((time, idx) => (
                                 <option key={idx} value={time}>
                                   {time}
@@ -493,14 +547,32 @@ export function RequestForm() {
                           </td>
                           <td>
                             <select
-                              name="endTime"
-                              value={dateInfo.endTime}
-                              onChange={(e) => handleChange(e, "preferredDates", index)}
+                              name="end_time"
+                              value={dateInfo.end_time}
+                              onChange={(e) => {
+                                handleChange(e, "date_and_time", index);
+
+                                // Automatically calculate total hours when end time changes
+                                const startTime = new Date(`1970-01-01T${dateInfo.start_time}:00`);
+                                const endTime = new Date(`1970-01-01T${e.target.value}:00`);
+
+                                if (endTime > startTime) {
+                                  const diffInHours = (endTime - startTime) / (1000 * 60 * 60);
+                                  handleChange({
+                                    target: {
+                                      name: "total_hours",
+                                      value: diffInHours.toFixed(2),
+                                    },
+                                  }, "date_and_time", index);
+                                }
+                              }}
                               className="form-control"
                               required
                             >
-                              <option value="" disabled>Select End Time</option>
-                              {generateTimeOptions(dateInfo.startTime, "5:00 PM").map((time, idx) => (
+                              <option value="" disabled>
+                                Select End Time
+                              </option>
+                              {generateTimeOptions(dateInfo.start_time, "17:00").map((time, idx) => (
                                 <option key={idx} value={time}>
                                   {time}
                                 </option>
@@ -510,14 +582,14 @@ export function RequestForm() {
                           <td>
                             <input
                               type="number"
-                              name="totalHours"
-                              value={dateInfo.totalHours || 0} // Display computed total hours
+                              name="total_hours"
+                              value={dateInfo.total_hours || 0} // Display computed total hours
                               className="form-control"
                               readOnly
                             />
                           </td>
                           <td className="text-center">
-                            {formData.preferredDates.length > 1 && (
+                            {formValues.date_and_time.length > 1 && (
                               <button
                                 type="button"
                                 className="btn btn-danger btn-sm"
@@ -529,6 +601,8 @@ export function RequestForm() {
                           </td>
                         </tr>
                       ))}
+
+
                     </tbody>
                   </table>
                 </div>
@@ -572,7 +646,7 @@ export function RequestForm() {
                       <th>Category</th>
                       <th>Subcategory (Module)</th>
                       <th>Action</th>
-                    </tr>
+                    </tr> 
                   </thead>
                   <tbody>
                     {rows.map((row, index) => (
@@ -584,28 +658,38 @@ export function RequestForm() {
                             onChange={(e) => handleCategoryChange(index, e.target.value)}
                           >
                             <option value="">Select Category</option>
-                            {categories.map((cat) => (
-                              <option key={cat.id} value={cat.label}>
-                                {cat.label}
-                              </option>
-                            ))}
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Technical">Technical</option>
                           </select>
                         </td>
                         <td>
                           <select
                             className="form-select"
-                            value={row.subcategory}
+                            value={row.subcategory.module_name}
                             onChange={(e) => handleSubcategoryChange(index, e.target.value)}
                             disabled={!row.category}
                           >
                             <option value="">Select Module</option>
-                            {categories
-                              .find((cat) => cat.label === row.category)
-                              ?.subcategories.map((sub, subIndex) => (
-                                <option key={subIndex} value={sub}>
-                                  {sub}
+                            {modules
+                              .filter((module) => {
+                                if (row.category === "Technical") {
+                                  return module.difficulty === "Technical";
+                                }
+                                if (row.category === "Intermediate") {
+                                  return module.difficulty === "Intermediate";
+                                }
+                                if (row.category === "Beginner") {
+                                  return module.difficulty === "Beginner";
+                                }
+                                return true; // Default case if no category is selected
+                              })
+                              .map((module) => (
+                                <option key={module._id} value={module.module_name}>
+                                  {module.module_name}
                                 </option>
                               ))}
+
                           </select>
                         </td>
                         <td>
@@ -660,15 +744,15 @@ export function RequestForm() {
                     PERSONAL INFORMATION
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
-                    <p><strong>Last Name:</strong> {formData.personalInfo.lastName}</p>
-                    <p><strong>First Name:</strong> {formData.personalInfo.firstName}</p>
-                    <p><strong>Middle Name:</strong> {formData.personalInfo.middleName}</p>
-                    <p><strong>Extension Name:</strong> {formData.personalInfo.extensionName || "N/A"}</p>
-                    <p><strong>Gender:</strong> {formData.personalInfo.gender}</p>
-                    <p><strong>Salutation:</strong> {formData.personalInfo.salutation}</p>
-                    <p><strong>Contact No:</strong> {formData.personalInfo.contactNo}</p>
-                    <p><strong>Email:</strong> {formData.personalInfo.email}</p>
-                    <p><strong>Address:</strong> {formData.personalInfo.address}</p>
+                    <p><strong>Last Name:</strong> {formValues.last_name}</p>
+                    <p><strong>First Name:</strong> {formValues.first_name}</p>
+                    <p><strong>Middle Name:</strong> {formValues.middle_name}</p>
+                    <p><strong>Extension Name:</strong> {formValues.extension_name || "N/A"}</p>
+                    <p><strong>Gender:</strong> {formValues.gender}</p>
+                    <p><strong>Salutation:</strong> {formValues.salutation}</p>
+                    <p><strong>Contact No:</strong> {formValues.contact_number}</p>
+                    <p><strong>Email:</strong> {formValues.email_address}</p>
+                    <p><strong>Address:</strong> {formValues.address}</p>
                   </div>
                 </div>
 
@@ -678,9 +762,9 @@ export function RequestForm() {
                     ORGANIZATION INFORMATION
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
-                    <p><strong>Organization Name:</strong> {formData.organizationInfo.organizationName}</p>
-                    <p><strong>Department:</strong> {formData.organizationInfo.department}</p>
-                    <p><strong>Position:</strong> {formData.organizationInfo.position}</p>
+                    <p><strong>Organization Name:</strong> {formValues.organization_name}</p>
+                    <p><strong>Department:</strong> {formValues.department}</p>
+                    <p><strong>Position:</strong> {formValues.position}</p>
                   </div>
                 </div>
 
@@ -690,12 +774,12 @@ export function RequestForm() {
                     PREFERRED DATE AND TIME
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
-                    {formData.preferredDates.map((date, index) => (
+                    {formValues.date_and_time.map((date, index) => (
                       <div key={index} className="mb-3">
                         <p><strong>Date:</strong> {date.date || "Not Set"}</p>
-                        <p><strong>Start Time:</strong> {date.startTime || "Not Set"}</p>
-                        <p><strong>End Time:</strong> {date.endTime || "Not Set"}</p>
-                        <p><strong>Total Hours:</strong> {date.totalHours || 0}</p>
+                        <p><strong>Start Time:</strong> {date.start_time || "Not Set"}</p>
+                        <p><strong>End Time:</strong> {date.end_time || "Not Set"}</p>
+                        <p><strong>Total Hours:</strong> {date.total_hours || 0}</p>
                       </div>
                     ))}
                   </div>
@@ -719,7 +803,7 @@ export function RequestForm() {
                           {rows.map((row, index) => (
                             <tr key={index}>
                               <td>{row.category || "Not Selected"}</td>
-                              <td>{row.subcategory || "Not Selected"}</td>
+                              <td>{row.subcategory?.module_name || "Not Selected"}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -743,9 +827,9 @@ export function RequestForm() {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    onClick={() => toast.success("Form submitted successfully!")}
+                    disabled={loading}
                   >
-                    Submit
+                    {loading ? 'Submitting...' : 'Submit'}                  
                   </button>
                 </div>
               </div>
