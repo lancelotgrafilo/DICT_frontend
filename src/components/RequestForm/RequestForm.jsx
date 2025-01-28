@@ -890,12 +890,7 @@ export function RequestForm() {
                       e.target.style.color = "#007bff";
                     }}
                   >
-                    {loading ? (
-                      <div className={styleRequestForm.loader}></div> 
-                    ) : (
-                      "Submit"
-                    )
-                  }
+                    {loading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
 
