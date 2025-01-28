@@ -225,12 +225,12 @@ export function RequestForm() {
 
   const getOneWeekAfterDate = () => {
     const today = new Date();
-    const oneWeekAfter = new Date();
-    oneWeekAfter.setDate(today.getDate() + 7);
+    const twoWeekAfter = new Date();
+    twoWeekAfter.setDate(today.getDate() + 14);
 
-    const year = oneWeekAfter.getFullYear();
-    const month = (oneWeekAfter.getMonth() + 1).toString().padStart(2, "0");
-    const day = oneWeekAfter.getDate().toString().padStart(2, "0");
+    const year = twoWeekAfter.getFullYear();
+    const month = (twoWeekAfter.getMonth() + 1).toString().padStart(2, "0");
+    const day = twoWeekAfter.getDate().toString().padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   };
@@ -656,7 +656,7 @@ export function RequestForm() {
 
                 {/* Personal Information Section */}
                 <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     PERSONAL INFORMATION
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
@@ -674,7 +674,7 @@ export function RequestForm() {
 
                 {/* Organization Information Section */}
                 <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     ORGANIZATION INFORMATION
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
@@ -686,7 +686,7 @@ export function RequestForm() {
 
                 {/* Preferred Dates Section */}
                 <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     PREFERRED DATE AND TIME
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
@@ -703,7 +703,7 @@ export function RequestForm() {
 
                 {/* Modules Section */}
                 <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center"}}>
                     MODULES
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
