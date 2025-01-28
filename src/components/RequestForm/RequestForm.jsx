@@ -50,45 +50,45 @@ export function RequestForm() {
   const [rows, setRows] = useState([{ category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
 
   const handleCategoryChange = (index, value) => {
-  const updatedRows = [...rows];
-  updatedRows[index].category = value;
-  updatedRows[index].subcategory = { module_name: "", module_description: "", difficulty: "" }; // Reset subcategory when category changes
-  setRows(updatedRows);
-
-  // Update modules_selected to reflect the changes
-  const updatedModulesSelected = [...formValues.modules_selected];
-  updatedModulesSelected[index] = { module_name: "", module_description: "", difficulty: "" };
-  setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
-};
-
-const handleSubcategoryChange = (index, moduleName) => {
-  const selectedModule = modules.find((module) => module.module_name === moduleName); // Find the selected module
-
-  if (selectedModule) {
     const updatedRows = [...rows];
-    updatedRows[index].subcategory = {
-      module_name: selectedModule.module_name,
-      module_description: selectedModule.module_description,
-      difficulty: selectedModule.difficulty
-    };
+    updatedRows[index].category = value;
+    updatedRows[index].subcategory = { module_name: "", module_description: "", difficulty: "" }; // Reset subcategory when category changes
     setRows(updatedRows);
 
     // Update modules_selected to reflect the changes
     const updatedModulesSelected = [...formValues.modules_selected];
-    updatedModulesSelected[index] = {
-      module_name: selectedModule.module_name,
-      module_description: selectedModule.module_description,
-      difficulty: selectedModule.difficulty
-    };
+    updatedModulesSelected[index] = { module_name: "", module_description: "", difficulty: "" };
     setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
-  } else {
-    // Handle case where module is not found (optional)
-    console.error("Selected module not found");
-  }
-};
+  };
 
-  
-  
+  const handleSubcategoryChange = (index, moduleName) => {
+    const selectedModule = modules.find((module) => module.module_name === moduleName); // Find the selected module
+
+    if (selectedModule) {
+      const updatedRows = [...rows];
+      updatedRows[index].subcategory = {
+        module_name: selectedModule.module_name,
+        module_description: selectedModule.module_description,
+        difficulty: selectedModule.difficulty
+      };
+      setRows(updatedRows);
+
+      // Update modules_selected to reflect the changes
+      const updatedModulesSelected = [...formValues.modules_selected];
+      updatedModulesSelected[index] = {
+        module_name: selectedModule.module_name,
+        module_description: selectedModule.module_description,
+        difficulty: selectedModule.difficulty
+      };
+      setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
+    } else {
+      // Handle case where module is not found (optional)
+      console.error("Selected module not found");
+    }
+  };
+
+
+
   const addRow = () => {
     setRows([...rows, { category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
   };
@@ -99,11 +99,11 @@ const handleSubcategoryChange = (index, moduleName) => {
 
   const handleChange = (e, section, index = null) => {
     const { name, value } = e.target;
-  
+
     if (section === "date_and_time" && index !== null) {
       const updatedDates = [...formValues.date_and_time];
       updatedDates[index][name] = value;
-  
+
       // Automatically calculate total hours if both start and end times are provided
       if (name === "start_time") {
         // When the start time is changed, set the end time to be 1 hour later
@@ -111,7 +111,7 @@ const handleSubcategoryChange = (index, moduleName) => {
         const newEndTime = calculateEndTime(newStartTime);
         updatedDates[index].end_time = newEndTime; // Automatically update end time
       }
-  
+
       // Validate endTime and ensure it’s at least 1 hour after startTime
       if (name === "end_time" || name === "start_time") {
         if (updatedDates[index].start_time && updatedDates[index].end_time) {
@@ -119,7 +119,7 @@ const handleSubcategoryChange = (index, moduleName) => {
             updatedDates[index].start_time,
             updatedDates[index].end_time
           );
-  
+
           if (totalHours <= 0) {
             toast.info("End time must be at least 1 hour after the start time.");
             updatedDates[index].end_time = ""; // Clear invalid end time
@@ -128,7 +128,7 @@ const handleSubcategoryChange = (index, moduleName) => {
           }
         }
       }
-  
+
       setFormValues((prevValues) => ({
         ...prevValues,
         date_and_time: updatedDates,
@@ -143,7 +143,7 @@ const handleSubcategoryChange = (index, moduleName) => {
       }));
     }
   };
-  
+
 
 
   const calculateEndTime = (startTime) => {
@@ -646,7 +646,7 @@ const handleSubcategoryChange = (index, moduleName) => {
                       <th>Category</th>
                       <th>Subcategory (Module)</th>
                       <th>Action</th>
-                    </tr> 
+                    </tr>
                   </thead>
                   <tbody>
                     {rows.map((row, index) => (
@@ -739,7 +739,7 @@ const handleSubcategoryChange = (index, moduleName) => {
                 </h4>
 
                 {/* Personal Information Section */}
-                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                <div style={{ border: "2px solid #003366"}}>
                   <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     PERSONAL INFORMATION
                   </h5>
@@ -757,7 +757,7 @@ const handleSubcategoryChange = (index, moduleName) => {
                 </div>
 
                 {/* Organization Information Section */}
-                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                <div style={{ border: "2px solid #003366" }}>
                   <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     ORGANIZATION INFORMATION
                   </h5>
@@ -769,25 +769,54 @@ const handleSubcategoryChange = (index, moduleName) => {
                 </div>
 
                 {/* Preferred Dates Section */}
-                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                <div
+                  style={{
+                    border: "2px solid #003366",
+                  }}
+                >
+                  <h5
+                    style={{
+                      backgroundColor: "#003366",
+                      color: "white",
+                      padding: "10px",
+                      margin: 0,
+                      textAlign: "center",
+                    }}
+                  >
                     PREFERRED DATE AND TIME
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
-                    {formValues.date_and_time.map((date, index) => (
-                      <div key={index} className="mb-3">
-                        <p><strong>Date:</strong> {date.date || "Not Set"}</p>
-                        <p><strong>Start Time:</strong> {date.start_time || "Not Set"}</p>
-                        <p><strong>End Time:</strong> {date.end_time || "Not Set"}</p>
-                        <p><strong>Total Hours:</strong> {date.total_hours || 0}</p>
-                      </div>
-                    ))}
+                    {formValues.date_and_time.length > 0 ? (
+                      <table className="table table-bordered" style={{ textAlign: "center", backgroundColor: "white" }}>
+                        <thead>
+                          <tr style={{ backgroundColor: "#003366", color: "white" }}>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Total Hours</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {formValues.date_and_time.map((date, index) => (
+                            <tr key={index}>
+                              <td>{date.date || "Not Set"}</td>
+                              <td>{date.start_time || "Not Set"}</td>
+                              <td>{date.end_time || "Not Set"}</td>
+                              <td>{date.total_hours || 0}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <p style={{ textAlign: "center" }}>No dates provided.</p>
+                    )}
                   </div>
                 </div>
 
+
                 {/* Modules Section */}
-                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center"}}>
+                <div style={{ border: "2px solid #003366", marginBottom: "20px"}}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     MODULES
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
@@ -819,19 +848,52 @@ const handleSubcategoryChange = (index, moduleName) => {
                 <div className="d-flex justify-content-between">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "2px solid #6c757d",
+                      color: "#6c757d",
+                      borderRadius: "5px",
+                      padding: "10px 20px",
+                      fontWeight: "600",
+                      transition: "all 0.3s ease",
+                    }}
                     onClick={() => setStep(step - 1)}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#6c757d";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "transparent";
+                      e.target.style.color = "#6c757d";
+                    }}
                   >
                     Previous
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "2px solid #007bff",
+                      color: "#007bff",
+                      borderRadius: "5px",
+                      padding: "10px 20px",
+                      fontWeight: "600",
+                      transition: "all 0.3s ease",
+                    }}
                     disabled={loading}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#007bff";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "transparent";
+                      e.target.style.color = "#007bff";
+                    }}
                   >
-                    {loading ? 'Submitting...' : 'Submit'}                  
+                    {loading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
+
               </div>
             )}
 
