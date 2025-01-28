@@ -836,6 +836,7 @@ export function RequestForm() {
                           <tr style={{ backgroundColor: "#003366", color: "white" }}>
                             <th>Category</th>
                             <th>Module</th>
+                            <th>Description</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -843,6 +844,7 @@ export function RequestForm() {
                             <tr key={index}>
                               <td>{row.category || "Not Selected"}</td>
                               <td>{row.subcategory?.module_name || "Not Selected"}</td>
+                              <td>{row.subcategory?.module_description || "Not Selected"}</td>
                             </tr>
                           ))}
                         </tbody>
