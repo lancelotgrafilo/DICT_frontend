@@ -412,13 +412,20 @@ export function RequestForm() {
                     />
                   </div>
                 </div>
-                <div className="d-flex justify-content-end mt-4">
+                <div className="d-flex justify-content-between mt-4">
+                  <button
+                    type="button"
+                    className={styleRequestForm.btn_cancel}
+                    onClick={() => navigate("/home")}
+                  >
+                    <i className="bi bi-x-circle"></i> Cancel
+                  </button>
                   <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleNext}
                   >
-                    Next
+                    <i className="bi bi-arrow-right-circle"></i> Next
                   </button>
                 </div>
               </div>
@@ -474,17 +481,17 @@ export function RequestForm() {
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className="btn-secondary"
+                    className="btn btn-secondary"
                     onClick={handlePrevious}
                   >
-                    Previous
+                    <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleNext}
                   >
-                    Next
+                    <i className="bi bi-arrow-right-circle"></i> Next
                   </button>
                 </div>
               </div>
@@ -627,14 +634,14 @@ export function RequestForm() {
                     className="btn btn-secondary"
                     onClick={handlePrevious}
                   >
-                    Previous
+                    <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleNext}
                   >
-                    Next
+                    <i className="bi bi-arrow-right-circle"></i> Next
                   </button>
                 </div>
               </div>
@@ -728,14 +735,14 @@ export function RequestForm() {
                     className="btn btn-secondary"
                     onClick={handlePrevious}
                   >
-                    Previous
+                    <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleNext}
                   >
-                    Next
+                    <i className="bi bi-arrow-right-circle"></i> Next
                   </button>
                 </div>
               </div>
@@ -879,7 +886,7 @@ export function RequestForm() {
                       e.target.style.color = "#6c757d";
                     }}
                   >
-                    Previous
+                    <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="submit"
@@ -902,7 +909,30 @@ export function RequestForm() {
                       e.target.style.color = "#007bff";
                     }}
                   >
-                    {loading ? "Submitting..." : "Submit"}
+                    <i className="bi bi-printer"></i> Print
+                  </button>
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "2px solid #007bff",
+                      color: "#007bff",
+                      borderRadius: "5px",
+                      padding: "10px 20px",
+                      fontWeight: "600",
+                      transition: "all 0.3s ease",
+                    }}
+                    disabled={loading}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#007bff";
+                      e.target.style.color = "white";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "transparent";
+                      e.target.style.color = "#007bff";
+                    }}
+                  >
+                    <i className="bi bi-check-circle"></i> {loading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
 
