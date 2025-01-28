@@ -68,6 +68,22 @@
   border-color: #103cbe;
 }
 
+.btn_cancel {
+  background-color: transparent;
+  border: 2px solid #dc3545;  /* Red border */
+  color: #dc3545;  /* Red text */
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn_cancel:hover {
+  background-color: #dc3545;  /* Red background on hover */
+  color: white;  /* White text on hover */
+}
+
+
 .btn-secondary:hover {
   background-color: #5a6268;
   border-color: #5a6268;
