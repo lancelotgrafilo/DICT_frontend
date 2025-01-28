@@ -418,7 +418,7 @@ export function RequestForm() {
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn-secondary"
                     onClick={handlePrevious}
                   >
                     Previous
@@ -484,7 +484,7 @@ export function RequestForm() {
                               required
                             >
                               <option value="" disabled>Select Start Time</option>
-                              {generateTimeOptions("08:00", "16:00").map((time, idx) => (
+                              {generateTimeOptions("07:00", "16:00").map((time, idx) => (
                                 <option key={idx} value={time}>
                                   {time}
                                 </option>
@@ -492,20 +492,20 @@ export function RequestForm() {
                             </select>
                           </td>
                           <td>
-                          <select
-                            name="endTime"
-                            value={dateInfo.endTime}
-                            onChange={(e) => handleChange(e, "preferredDates", index)}
-                            className="form-control"
-                            required
-                          >
-                            <option value="" disabled>Select End Time</option>
-                            {generateTimeOptions(dateInfo.startTime, "5:00 PM").map((time, idx) => (
-                              <option key={idx} value={time}>
-                                {time}
-                              </option>
-                            ))}
-                          </select>
+                            <select
+                              name="endTime"
+                              value={dateInfo.endTime}
+                              onChange={(e) => handleChange(e, "preferredDates", index)}
+                              className="form-control"
+                              required
+                            >
+                              <option value="" disabled>Select End Time</option>
+                              {generateTimeOptions(dateInfo.startTime, "5:00 PM").map((time, idx) => (
+                                <option key={idx} value={time}>
+                                  {time}
+                                </option>
+                              ))}
+                            </select>
                           </td>
                           <td>
                             <input
@@ -647,19 +647,104 @@ export function RequestForm() {
               </div>
             )}
 
+
             {step === 5 && (
-              <div>
-                <h4 className="mb-3">Review and Submit</h4>
-                <p>Please review your selections before submitting.</p>
-                <div className="d-flex justify-content-between mt-4">
+              <div className="p-3" style={{ maxWidth: "800px", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
+                <h4 className="text-center mb-4" style={{ color: "#ffffff", backgroundColor: "#003366", padding: "10px", borderRadius: "5px" }}>
+                  CYBERSECURITY AWARENESS REQUEST FORM
+                </h4>
+
+                {/* Personal Information Section */}
+                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                    PERSONAL INFORMATION
+                  </h5>
+                  <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
+                    <p><strong>Last Name:</strong> {formData.personalInfo.lastName}</p>
+                    <p><strong>First Name:</strong> {formData.personalInfo.firstName}</p>
+                    <p><strong>Middle Name:</strong> {formData.personalInfo.middleName}</p>
+                    <p><strong>Extension Name:</strong> {formData.personalInfo.extensionName || "N/A"}</p>
+                    <p><strong>Gender:</strong> {formData.personalInfo.gender}</p>
+                    <p><strong>Salutation:</strong> {formData.personalInfo.salutation}</p>
+                    <p><strong>Contact No:</strong> {formData.personalInfo.contactNo}</p>
+                    <p><strong>Email:</strong> {formData.personalInfo.email}</p>
+                    <p><strong>Address:</strong> {formData.personalInfo.address}</p>
+                  </div>
+                </div>
+
+                {/* Organization Information Section */}
+                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                    ORGANIZATION INFORMATION
+                  </h5>
+                  <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
+                    <p><strong>Organization Name:</strong> {formData.organizationInfo.organizationName}</p>
+                    <p><strong>Department:</strong> {formData.organizationInfo.department}</p>
+                    <p><strong>Position:</strong> {formData.organizationInfo.position}</p>
+                  </div>
+                </div>
+
+                {/* Preferred Dates Section */}
+                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                    PREFERRED DATE AND TIME
+                  </h5>
+                  <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
+                    {formData.preferredDates.map((date, index) => (
+                      <div key={index} className="mb-3">
+                        <p><strong>Date:</strong> {date.date || "Not Set"}</p>
+                        <p><strong>Start Time:</strong> {date.startTime || "Not Set"}</p>
+                        <p><strong>End Time:</strong> {date.endTime || "Not Set"}</p>
+                        <p><strong>Total Hours:</strong> {date.totalHours || 0}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Modules Section */}
+                <div style={{ border: "2px solid #003366", marginBottom: "20px", borderRadius: "5px" }}>
+                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0 }}>
+                    MODULES
+                  </h5>
+                  <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
+                    {rows.length > 0 ? (
+                      <table className="table table-bordered" style={{ backgroundColor: "white" }}>
+                        <thead>
+                          <tr style={{ backgroundColor: "#003366", color: "white" }}>
+                            <th>Category</th>
+                            <th>Module</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rows.map((row, index) => (
+                            <tr key={index}>
+                              <td>{row.category || "Not Selected"}</td>
+                              <td>{row.subcategory || "Not Selected"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <p>No modules selected.</p>
+                    )}
+                  </div>
+                </div>
+
+
+                {/* Navigation Buttons */}
+                <div className="d-flex justify-content-between">
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={handlePrevious}
+                    onClick={() => setStep(step - 1)}
                   >
                     Previous
                   </button>
-                  <button type="submit" className="btn btn-success">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={() => toast.success("Form submitted successfully!")}
+                  >
                     Submit
                   </button>
                 </div>
