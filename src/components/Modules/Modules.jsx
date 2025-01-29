@@ -14,7 +14,6 @@ export function Modules() {
       const categorized = { beginners: [], intermediate: [], technical: [] };
 
       modules.forEach((module) => {
-        console.log(module); // Log each module to inspect its properties
         if (module.difficulty === "Beginner") {
           categorized.beginners.push(module);
         } else if (module.difficulty === "Intermediate") {
@@ -28,10 +27,6 @@ export function Modules() {
       setCategorizedModules(categorized);
     }
   }, [modules]);
-
-  useEffect(() => {
-    console.log(categorizedModules); // Check how categorizedModules looks
-  }, [categorizedModules]);
   
 
   const handleModuleClick = (moduleId) => {
@@ -47,8 +42,6 @@ export function Modules() {
 
   const renderCarousel = (category) => {
     const categoryModules = categorizedModules[category];
-    console.log(categoryModules); // Log the modules for the category
-  
     if (categoryModules && categoryModules.length > 0) {
       return (
         <Carousel responsive={responsive} infinite autoPlay>
