@@ -38,11 +38,11 @@ export function Request() {
             <thead>
               <tr style={{ backgroundColor: "#003366", color: "white" }}>
                 <th style={{ width: "30%", textAlign: "center" }}>Name</th>
-                <th style={{ width: "20%", textAlign: "center" }}>Preferred Date</th>
+                <th style={{ width: "15%", textAlign: "center" }}>Preferred Date</th>
                 <th style={{ width: "10%", textAlign: "center" }}>Start Time</th>
                 <th style={{ width: "10%", textAlign: "center" }}>End Time</th>
                 <th style={{ width: "10%", textAlign: "center" }}>Total Hours</th>
-                <th style={{ width: "30%", textAlign: "center" }}>Actions</th>
+                <th style={{ width: "25%", textAlign: "center" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
