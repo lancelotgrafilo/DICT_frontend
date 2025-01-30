@@ -31,77 +31,75 @@ export function Request() {
         className="card shadow-lg p-4 w-100"
         style={{ borderRadius: "10px", backgroundColor: "#ffffff", minHeight: "81.5vh" }}
       >
-        <h3 className="text-center mb-3">Request List</h3>
+        <h3 className="text-center mb-3">List of Requests</h3>
         <div className="table-responsive">
           <table className="table table-bordered text-center bg-white">
             <thead>
               <tr style={{ backgroundColor: "#003366", color: "white" }}>
-                <th style={{ width: "30%", textAlign: "center" }}>Name</th>
-                <th style={{ width: "15%", textAlign: "center" }}>Preferred Date</th>
-                <th style={{ width: "10%", textAlign: "center" }}>Start Time</th>
-                <th style={{ width: "10%", textAlign: "center" }}>End Time</th>
-                <th style={{ width: "10%", textAlign: "center" }}>Total Hours</th>
-                <th style={{ width: "25%", textAlign: "center" }}>Actions</th>
+                <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle"}}>Name</th>
+                <th style={{ width: "16%", textAlign: "center", verticalAlign: "middle"}}>Date Submitted</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>Preferred Date</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>Start Time</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>End Time</th>
+                <th style={{ width: "5%", textAlign: "center", verticalAlign: "middle"}}>Total Hours</th>
+                <th style={{ width: "21%", textAlign: "center", verticalAlign: "middle"}}>Actions</th>
               </tr>
             </thead>
-              <tbody>
-                {pendingRequests.length > 0 ? (
-                  pendingRequests.map((request, reqIndex) =>
-                    request.date_and_time.map((date, dateIndex) => (
-                      <tr key={`${reqIndex}-${dateIndex}`}>
-                        {/* Display Name only for the first date row */}
-                        {dateIndex === 0 ? (
-                          <td
-                            rowSpan={request.date_and_time.length}
-                            style={{ textAlign: "left", paddingLeft: "15px", verticalAlign: "middle" }}
+            <tbody>
+              {pendingRequests.length > 0 ? (
+                pendingRequests.map((request, reqIndex) =>
+                  request.date_and_time.map((date, dateIndex) => (
+                    <tr key={`${reqIndex}-${dateIndex}`}>
+                      {dateIndex === 0 ? (
+                        <td
+                          rowSpan={request.date_and_time.length}
+                          style={{ textAlign: "left", paddingLeft: "15px", verticalAlign: "middle" }}
+                        >
+                          {`${request.salutation || ""} ${request.first_name} ${request.middle_name || ""} ${request.last_name || ""}`}
+                        </td>
+                      ) : null}
+
+                      <td style={{ textAlign: "center" }}>{date.createdAt}</td>
+                      <td style={{ textAlign: "center" }}>{date.date}</td>
+                      <td style={{ textAlign: "center" }}>{date.start_time}</td>
+                      <td style={{ textAlign: "center" }}>{date.end_time}</td>
+                      <td style={{ textAlign: "center" }}>{date.total_hours}</td>
+
+                      {dateIndex === 0 ? (
+                        <td
+                          rowSpan={request.date_and_time.length}
+                          style={{ textAlign: "center", verticalAlign: "middle" }}
+                        >
+                          <button className="btn btn-outline-primary btn-sm mx-1 custom-btn" onClick={() => handleView(reqIndex)}>
+                            <i className="bi bi-eye"></i> View
+                          </button>
+                          <button
+                            className="btn btn-outline-success btn-sm mx-1 custom-btn"
+                            onClick={() => handleAccept(reqIndex)}
+                            disabled={updateLoading}
                           >
-                            {`${request.salutation || ""} ${request.first_name} ${request.middle_name || ""} ${request.last_name || ""}`}
-                          </td>
-                        ) : null}
-                        
-                        <td style={{ textAlign: "center" }}>{date.date}</td>
-                        <td style={{ textAlign: "center" }}>{date.start_time}</td>
-                        <td style={{ textAlign: "center" }}>{date.end_time}</td>
-                        <td style={{ textAlign: "center" }}>{date.total_hours}</td>
-
-                        {/* Display action buttons only for the first row */}
-                        {dateIndex === 0 ? (
-                          <td
-                            rowSpan={request.date_and_time.length}
-                            style={{ textAlign: "center", verticalAlign: "middle" }}
+                            {updateLoading ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
+                          </button>
+                          <button
+                            className="btn btn-outline-danger btn-sm mx-1 custom-btn"
+                            onClick={() => handleReject(reqIndex)}
+                            disabled={updateLoading}
                           >
-                            <button className="btn btn-outline-info btn-sm mx-1" onClick={() => handleView(reqIndex)}>
-                              <i className="bi bi-eye"></i> View
-                            </button>
-                            <button
-                              className="btn btn-outline-success btn-sm mx-1"
-                              onClick={() => handleAccept(reqIndex)}
-                              disabled={updateLoading}
-                            >
-                              {updateLoading ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
-                            </button>
-                            <button
-                              className="btn btn-outline-danger btn-sm mx-1"
-                              onClick={() => handleReject(reqIndex)}
-                              disabled={updateLoading}
-                            >
-                              {updateLoading ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
-                            </button>
-                          </td>
-                        ) : null}
-                      </tr>
-                    ))
-                  )
-                ) : (
-                  <tr>
-                    <td colSpan="6" className="text-center">
-                      {getLoading ? "Loading..." : error ? "Error fetching requests" : "No pending requests available"}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-
-
+                            {updateLoading ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
+                          </button>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))
+                )
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    {getLoading ? "Loading..." : error ? "Error fetching requests" : "No pending requests available"}
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
 
@@ -111,3 +109,5 @@ export function Request() {
     </div>
   );
 }
+
+

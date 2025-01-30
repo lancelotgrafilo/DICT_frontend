@@ -71,10 +71,10 @@ export function Activities() {
                       isToday
                         ? "#808080" // Gray background for today
                         : status === "accepted"
-                        ? "#007bff" // Blue for accepted
-                        : status === "done"
-                          ? "#28a745" // Green for done
-                          : "#f8f9fa", // Default background
+                          ? "#007bff" // Blue for accepted
+                          : status === "done"
+                            ? "#28a745" // Green for done
+                            : "#f8f9fa", // Default background
                     color: isToday || status ? "white" : "black",
                     fontWeight: isToday || status ? "bold" : "normal",
                     border: isToday ? "3px solid #FF4500" : "1px solid #dee2e6",
@@ -189,17 +189,20 @@ export function Activities() {
               <tbody>
                 {filteredRequests.map((activity, index) => (
                   <tr key={index}>
-                    <td style={{ width: "30%", textAlign: "left" }}>{`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}</td>
-                    <td style={{ width: "20%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.date}</div>))}</td>
+                    <td style={{ width: "20%", textAlign: "left" }}>{`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}</td>
+                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.date}</div>))}</td>
                     <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.start_time}</div>))}</td>
                     <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.end_time}</div>))}</td>
                     <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.total_hours}</div>))}</td>
-                    <td>
+                    <td style={{ width: "20%", textAlign: "center" }}>
                       <button className="btn btn-outline-primary btn-sm me-2">
                         <i className="bi bi-eye"></i> View
                       </button>
-                      <button className="btn btn-outline-success btn-sm">
+                      <button className="btn btn-outline-success btn-sm me-2">
                         <i className="bi bi-check-circle"></i> Done
+                      </button>
+                      <button className="btn btn-outline-danger btn-sm">
+                        <i className="bi bi-x-circle"></i> Cancel
                       </button>
                     </td>
                   </tr>
