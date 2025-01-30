@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { RegionUserPage } from './pages/RegionUserPage/RegionUserPage.jsx'; 
 import { AppProviders } from './utils/context/AppProviders.jsx';
 import { Request } from "./components/Request/Request.jsx";
+import { Activities } from './components/Activities/Activities.jsx';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           
           <Route path="admin" element={<RegionUserPage />}>
             <Route path="request" element={<Request />} />
+            <Route path="activities" element={<Activities/>} />
           </Route>
           
         </Routes>
