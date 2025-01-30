@@ -63,9 +63,34 @@
   border-color: #082b94;
 }
 
-.btn-secondary {
+.btn_primary {
   background-color: transparent;
-  border-color: #103cbe;
+  border: 2px solid #0056b3;  /* Red border */
+  color: #0056b3;  /* Red text */
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn_primary:hover {
+  background-color: #0056b3;  /* Red background on hover */
+  color: white;  /* White text on hover */
+}
+
+.btn_secondary {
+  background-color: transparent;
+  border: 2px solid #6c757d;  /* Red border */
+  color: #6c757d;  /* Red text */
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn_secondary:hover {
+  background-color: #6c757d;  /* Red background on hover */
+  color: white;  /* White text on hover */
 }
 
 .btn_cancel {
@@ -83,11 +108,36 @@
   color: white;  /* White text on hover */
 }
 
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #5a6268;
+.btn_submit {
+  background-color: transparent;
+  border: 2px solid #28a745;  /* Red border */
+  color: #28a745;  /* Red text */
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
+
+.btn_submit:hover {
+  background-color: #28a745;  /* Red background on hover */
+  color: white;  /* White text on hover */
+}
+
+.btn_add {
+  background-color: #6c757d;
+  border: 2px solid #6c757d;  /* Red border */
+  color: white;  /* Red text */
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn_add:hover {
+  background-color: transparent;  /* Red background on hover */
+  color: #6c757d;  /* White text on hover */
+}
+
 
 /* Row and Column Spacing */
 .row.g-3 .col-md-4,
@@ -342,4 +392,9 @@ input[type="checkbox"]:checked + label {
 p {
   margin: 0.5rem 0;
 }
+
+.region-dropdown-container {
+  margin-bottom: 200px; /* Adjust as needed */
+}
+
 
