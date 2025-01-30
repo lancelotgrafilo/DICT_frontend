@@ -1,227 +1,110 @@
-.mainContent{
-  height: 100vh;
+/* General Styles */
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem;
 }
-/* General Container */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
+
+/* Card Styling */
+.card-container {
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+/* Title */
+.card-container h3 {
+  text-align: center;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1.5rem;
+}
+
+/* Table Styling */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.table thead {
+  background-color: #003366;
+  color: white;
+}
+
+.table tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+/* Buttons */
+.btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-info {
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.btn-outline-info:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-outline-success {
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-container {
+    padding: 1rem;
   }
-  
-  .card {
-    border-radius: 10px;
-    border: none;
-  }
-  
-  .card h2 {
-    color: #00796b; /* Primary color */
-    font-weight: bold;
-  }
-  
-  .form-label {
-    font-weight: 600;
-    color: #4a4a4a; /* Neutral text color */
-  }
-  
-  .form-control,
-  .form-select {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .form-control:focus,
-  .form-select:focus {
-    border-color: #00796b; /* Primary color */
-    box-shadow: 0 0 5px rgba(0, 121, 107, 0.5);
-  }
-  
+
   .btn {
-    border-radius: 5px;
-    font-weight: 600;
-  }
-  
-  /* Updated Button Colors */
-  .btn-primary {
-    background-color: #103cbe;
-    border-color: #103cbe;
-  }
-  
-  .btn-primary:hover {
-    background-color: #082b94;
-    border-color: #082b94;
-  }
-  
-  .btn-success {
-    background-color: #103cbe;
-    border-color: #103cbe;
-  }
-  
-  .btn-success:hover {
-    background-color: #082b94;
-    border-color: #082b94;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #5a6268;
-  }
-  
-  /* Row and Column Spacing */
-  .row.g-3 .col-md-4,
-  .row.g-3 .col-md-6 {
-    margin-bottom: 1rem;
-  }
-  
-  /* Adjusted Columns for One Row */
-  .row.g-3 .col-md-2 select[name="salutation"],
-  .row.g-3 .col-md-1 input[name="extensionName"] {
     width: 100%;
-    max-width: 80px; /* Smaller width for Salutation and Extension */
-  }
-  
-  .row.g-3 .col-md-3 input[name="firstName"],
-  .row.g-3 .col-md-3 input[name="middleName"],
-  .row.g-3 .col-md-3 input[name="lastName"] {
-    width: 100%; /* Full width for First, Middle, and Last Name */
-  }
-  
-  /* Updated Section Title */
-  h4 {
-    color: #4a4a4a; /* Updated to #103cbe */
-    font-weight: 700;
-    border-bottom: 2px solid #4a4a4a; /* Updated line color to #103cbe */
-    padding-bottom: 5px;
-  }
-  
-  /* Button Alignment */
-  .d-flex {
-    gap: 10px; /* Add spacing between buttons */
-  }
-  
-  /* Adjust Spacing for Next/Previous Buttons */
-  .mt-4 {
-    margin-top: 2rem !important;
-  }
-  
-  /* Mobile Responsive Design */
-  @media (max-width: 576px) {
-    .form-label {
-      font-size: 0.9rem;
-    }
-  
-    .btn {
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-    }
-  
-    /* Stack inputs on smaller screens */
-    .row.g-3 > div {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
+    margin-top: 5px;
   }
 
-  /* Date input field */
-input[type="date"] {
-    background-color: #ffffff; /* Light background for better contrast */
-    color: #333; /* Dark text color */
-    border-radius: 4px;
+  .table th,
+  .table td {
+    font-size: 12px;
     padding: 8px;
   }
-  
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.5); /* Adjust icon visibility for light/dark themes */
-  }
-  
-  /* Time input field */
-  input[type="time"] {
-    background-color: #ffffff;
-    border-radius: 4px;
-    padding: 8px;
-  }
-  
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.5);
-  }
-
-  /* Parent container for the delete button */
-.col-md-1.d-flex {
-    display: flex;
-    justify-content: center; /* Horizontal center alignment */
-    align-items: center; /* Vertical center alignment */
-  }
-  
-  /* Delete button styles */
-  .delete-btn {
-    background-color: #00796b; /* Primary color for delete button */
-    border-color: #00796b; /* Matches primary color */
-    color: #ffffff; /* White text */
-    border-radius: 4px; /* Rounded corners */
-    padding: 6px 10px; /* Compact padding */
-    height: 38px; /* Match input field height for consistent alignment */
-    display: flex;
-    align-items: center; /* Center icon and text vertically */
-    justify-content: center; /* Center icon and text horizontally */
-    font-size: 0.875rem; /* Smaller text size for compact appearance */
-    gap: 5px; /* Space between icon and text */
-  }
-  
-  /* Hover state for delete button */
-  .delete-btn:hover {
-    background-color: #005a4e; /* Darker shade for hover effect */
-    border-color: #005a4e;
-  }
-  
-  /* Categories Section */
-.categories-section {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .categories-section h4 {
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  
-  /* Category Checkbox Styles */
-  .category {
-    margin-bottom: 15px;
-  }
-  
-  .category label {
-    font-weight: 600;
-    font-size: 1rem;
-  }
-  
-  .options {
-    margin-left: 20px;
-    margin-top: 10px;
-  }
-  
-  .options label {
-    display: block;
-    font-weight: 400;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-  }
-  
-  /* Highlighted Checkbox */
-  input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  input[type="checkbox"]:checked + label {
-    font-weight: bold;
-    color: #00796b; /* Primary green */
-  }
-  
-  
-  
+}
