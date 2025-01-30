@@ -5,11 +5,11 @@ import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
 
 export function Activities() {
-  const { requests } = useGetRequest();
+  const { requests, refetch } = useGetRequest();
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState("calendar");
-  const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
+  const { updateRequestStatus } = useUpdateRequestStatus();
   const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
   const changeMonth = (offset) => {
@@ -48,9 +48,15 @@ export function Activities() {
   };
 
   const handleDone = (index) => {
-    const requestId = getCurrentMonthRequests()[index]._id;  // Use the activity's _id directly
-    updateRequestStatus(requestId, "done");  // Update status to "done"
+    const requestId = getCurrentMonthRequests()[index]._id;
+    updateRequestStatus(requestId, "done")
+      .then(() => {
+        console.log("Status updated, refetching...");
+        refetch();
+      })
+      .catch((err) => console.error("Error updating status:", err));
   };
+  
 
   return (
     <div className="container mt-4">
