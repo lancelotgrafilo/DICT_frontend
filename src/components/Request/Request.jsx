@@ -59,7 +59,7 @@ export function Request() {
                         </td>
                       ) : null}
 
-                      <td style={{ textAlign: "center" }}>{date.createdAt}</td>
+                      <td style={{ textAlign: "center" }}>{new Date(request.createdAt).toLocaleString()}</td>
                       <td style={{ textAlign: "center" }}>{date.date}</td>
                       <td style={{ textAlign: "center" }}>{date.start_time}</td>
                       <td style={{ textAlign: "center" }}>{date.end_time}</td>

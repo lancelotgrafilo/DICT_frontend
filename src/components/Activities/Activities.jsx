@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
+import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
 
 export function Activities() {
   const { requests } = useGetRequest();
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState("calendar");
-
+  const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
   const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
   const changeMonth = (offset) => {
@@ -35,6 +36,21 @@ export function Activities() {
 
   // Filter requests to only include those with status "accepted" or "done"
   const filteredRequests = requests.filter((activity) => activity.status === "accepted" || activity.status === "done");
+
+  // Filter requests for the current month
+  const getCurrentMonthRequests = () => {
+    return filteredRequests.filter((activity) => {
+      return activity.date_and_time.some((dateItem) => {
+        const activityDate = new Date(dateItem.date);
+        return activityDate.getMonth() === currentDate.getMonth() && activityDate.getFullYear() === currentDate.getFullYear();
+      });
+    });
+  };
+
+  const handleDone = (index) => {
+    const requestId = getCurrentMonthRequests()[index]._id;  // Use the activity's _id directly
+    updateRequestStatus(requestId, "done");  // Update status to "done"
+  };
 
   return (
     <div className="container mt-4">
@@ -152,7 +168,7 @@ export function Activities() {
                           top: "50%",
                           left: "50%",
                           transform: "translate(-50%, -50%)",
-                        }}>
+                        }} >
                         <i className="bi bi-check-circle" style={{ fontSize: "1.5em" }}></i>
                       </span>
                       <span className="view-text"
@@ -164,7 +180,7 @@ export function Activities() {
                           transform: "translate(-50%, -50%)",
                           color: "white",
                           fontWeight: "bold",
-                        }}>
+                        }} >
                         View
                       </span>
                     </>
@@ -187,27 +203,64 @@ export function Activities() {
                 </tr>
               </thead>
               <tbody>
-                {filteredRequests.map((activity, index) => (
-                  <tr key={index}>
-                    <td style={{ width: "20%", textAlign: "left" }}>{`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.date}</div>))}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.start_time}</div>))}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.end_time}</div>))}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.total_hours}</div>))}</td>
-                    <td style={{ width: "20%", textAlign: "center" }}>
-                      <button className="btn btn-outline-primary btn-sm me-2">
-                        <i className="bi bi-eye"></i> View
-                      </button>
-                      <button className="btn btn-outline-success btn-sm me-2">
-                        <i className="bi bi-check-circle"></i> Done
-                      </button>
-                      <button className="btn btn-outline-danger btn-sm">
-                        <i className="bi bi-x-circle"></i> Cancel
-                      </button>
+                {getCurrentMonthRequests().length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center text-muted" style={{ padding: "20px" }}>
+                      No activities scheduled for this month.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  getCurrentMonthRequests().map((activity, index) => (
+                    <tr key={index}>
+                      <td style={{ width: "20%", textAlign: "left", verticalAlign: "middle" }}>
+                        {`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}
+                      </td>
+                      <td style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>
+                        {activity.date_and_time.map((dateItem, idx) => (
+                          <div key={idx}>{dateItem.date}</div>
+                        ))}
+                      </td>
+                      <td style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>
+                        {activity.date_and_time.map((dateItem, idx) => (
+                          <div key={idx}>{dateItem.start_time}</div>
+                        ))}
+                      </td>
+                      <td style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>
+                        {activity.date_and_time.map((dateItem, idx) => (
+                          <div key={idx}>{dateItem.end_time}</div>
+                        ))}
+                      </td>
+                      <td style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>
+                        {activity.date_and_time.map((dateItem, idx) => (
+                          <div key={idx}>{dateItem.total_hours}</div>
+                        ))}
+                      </td>
+                      <td style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>
+                        <button className="btn btn-outline-primary btn-sm me-2">
+                          <i className="bi bi-eye"></i> View
+                        </button>
+                        {/* Conditionally render Done button based on activity status */}
+                        {activity.status === "done" ? (
+                          <span className="text-success" style={{ fontWeight: "bold" }}>Completed</span>
+                        ) : (
+                          <>
+                            <button
+                              className="btn btn-outline-success btn-sm me-2"
+                              onClick={() => handleDone(index)} // Pass the index of the current activity
+                            >
+                              <i className="bi bi-check-circle"></i> Done
+                            </button>
+                            <button className="btn btn-outline-danger btn-sm">
+                              <i className="bi bi-x-circle"></i> Cancel
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
+
             </table>
           </div>
         )}
@@ -219,7 +272,6 @@ export function Activities() {
           </button>
           <button className="btn btn-outline-primary" onClick={() => changeMonth(1)}>Next ▶</button>
         </div>
-
       </div>
     </div>
   );

@@ -114,7 +114,7 @@ body.dark-theme {
 }
 
 .sidebarMenuItem .sidebarMenuLink.active {
-  border-left: 4px solid var(--first-color);
+  border-left: 2px solid var(--first-color);
   padding-left: 12px;
   transition: border-left 0.2s ease-in-out;
   -webkit-transition: border-left 0.2s ease-in-out;
