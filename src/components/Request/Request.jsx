@@ -3,10 +3,14 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
+import { useState } from "react";
 
 export function Request() {
-  const { requests = [], getLoading, error } = useGetRequest();
+  const { requests = [], getLoading, error, refetch } = useGetRequest();
   const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
+
+  // Track processing state for accept and reject buttons
+  const [processing, setProcessing] = useState({});
 
   // Filter requests to only include those with "pending" status
   const pendingRequests = requests.filter(request => request.status === "pending");
@@ -15,14 +19,36 @@ export function Request() {
     alert(`Viewing request #${index + 1}`);
   };
 
-  const handleAccept = (index) => {
+  const handleAccept = async (index) => {
     const requestId = pendingRequests[index]._id; // Get the correct requestId from pendingRequests
-    updateRequestStatus(requestId, "accept");
+    
+    // Set the processing state for this request
+    setProcessing(prev => ({ ...prev, [requestId]: 'accept' }));
+
+    // Wait for the status update
+    await updateRequestStatus(requestId, "accept");
+
+    // Manually refetch the data after the update
+    refetch();
+
+    // Reset the processing state after the request is processed
+    setProcessing(prev => ({ ...prev, [requestId]: null }));
   };
 
-  const handleReject = (index) => {
+  const handleReject = async (index) => {
     const requestId = pendingRequests[index]._id; // Get the correct requestId from pendingRequests
-    updateRequestStatus(requestId, "reject");
+    
+    // Set the processing state for this request
+    setProcessing(prev => ({ ...prev, [requestId]: 'reject' }));
+
+    // Wait for the status update
+    await updateRequestStatus(requestId, "reject");
+
+    // Manually refetch the data after the update
+    refetch();
+
+    // Reset the processing state after the request is processed
+    setProcessing(prev => ({ ...prev, [requestId]: null }));
   };
 
   return (
@@ -70,22 +96,26 @@ export function Request() {
                           rowSpan={request.date_and_time.length}
                           style={{ textAlign: "center", verticalAlign: "middle" }}
                         >
-                          <button className="btn btn-outline-primary btn-sm mx-1 custom-btn" onClick={() => handleView(reqIndex)}>
+                          <button 
+                            className="btn btn-outline-primary btn-sm mx-1 custom-btn" 
+                            onClick={() => handleView(reqIndex)}
+                            disabled={updateLoading || processing[request._id]}
+                          >
                             <i className="bi bi-eye"></i> View
                           </button>
                           <button
                             className="btn btn-outline-success btn-sm mx-1 custom-btn"
                             onClick={() => handleAccept(reqIndex)}
-                            disabled={updateLoading}
+                            disabled={updateLoading || processing[request._id] === 'accept'}
                           >
-                            {updateLoading ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
+                            {processing[request._id] === 'accept' ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
                           </button>
                           <button
                             className="btn btn-outline-danger btn-sm mx-1 custom-btn"
                             onClick={() => handleReject(reqIndex)}
-                            disabled={updateLoading}
+                            disabled={updateLoading || processing[request._id] === 'reject'}
                           >
-                            {updateLoading ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
+                            {processing[request._id] === 'reject' ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
                           </button>
                         </td>
                       ) : null}
@@ -109,5 +139,3 @@ export function Request() {
     </div>
   );
 }
-
-
