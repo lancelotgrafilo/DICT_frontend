@@ -302,7 +302,7 @@ export function RequestForm() {
                       <option value="Ms.">Ms.</option>
                       <option value="Mrs.">Mrs.</option>
                       <option value="Dr.">Dr.</option>
-                      <option value="Engr.">Engr.</option>
+
                     </select>
                   </div>
                   <div className="col-md-4">
@@ -377,6 +377,20 @@ export function RequestForm() {
                     </select>
                   </div>
                   <div className="col-md-6">
+                    <label className="form-label">Position</label>
+                    <span style={{ color: 'red' }}>*</span>
+                    <input
+                      type="text"
+                      name="position"
+                      value={formValues.position}
+                      onChange={(e) =>
+                        setFormValues({ ...formValues, position: e.target.value })
+                      }
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
                     <label className="form-label">Contact No.</label>
                     <span style={{ color: 'red' }}>*</span>
                     <input
@@ -429,7 +443,7 @@ export function RequestForm() {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className={styleRequestForm.btn_primary}
                     onClick={handleNext}
                   >
                     <i className="bi bi-arrow-right-circle"></i> Next
@@ -470,32 +484,49 @@ export function RequestForm() {
                       required
                     />
                   </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Position</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="position"
-                      value={formValues.position}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, position: e.target.value })
+                  <div className="col-md-6 region-dropdown-container">
+                    <label className="form-label">Region</label>
+                    <span style={{ color: "red" }}>*</span>
+                    <select
+                      name="region"
+                      value={formValues.region}
+                      onChange={(e) => setFormValues({ ...formValues, region: e.target.value })
                       }
                       className="form-control"
                       required
-                    />
+                    >
+                      <option value="">Select a Region</option>
+                      <option value="Region I - Ilocos Region">Region I - Ilocos Region</option>
+                      <option value="Region II - Cagayan Valley">Region II - Cagayan Valley</option>
+                      <option value="Region III - Central Luzon">Region III - Central Luzon</option>
+                      <option value="Region IV-A - CALABARZON">Region IV-A - CALABARZON</option>
+                      <option value="MIMAROPA Region">MIMAROPA Region</option>
+                      <option value="Region V - Bicol Region">Region V - Bicol Region</option>
+                      <option value="Region VI - Western Visayas">Region VI - Western Visayas</option>
+                      <option value="Region VII - Central Visayas">Region VII - Central Visayas</option>
+                      <option value="Region VIII - Eastern Visayas">Region VIII - Eastern Visayas</option>
+                      <option value="Region IX - Zamboanga Peninsula">Region IX - Zamboanga Peninsula</option>
+                      <option value="Region X - Northern Mindanao">Region X - Northern Mindanao</option>
+                      <option value="Region XI - Davao Region">Region XI - Davao Region</option>
+                      <option value="Region XII - SOCCSKSARGEN">Region XII - SOCCSKSARGEN</option>
+                      <option value="Region XIII - Caraga">Region XIII - Caraga</option>
+                      <option value="NCR - National Capital Region">NCR - National Capital Region</option>
+                      <option value="CAR - Cordillera Administrative Region">CAR - Cordillera Administrative Region</option>
+                      <option value="BARMM - Bangsamoro Autonomous Region in Muslim Mindanao">BARMM - Bangsamoro Autonomous Region in Muslim Mindanao</option>
+                    </select>
                   </div>
                 </div>
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className={styleRequestForm.btn_secondary}
                     onClick={handlePrevious}
                   >
                     <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className={styleRequestForm.btn_primary}
                     onClick={handleNext}
                   >
                     <i className="bi bi-arrow-right-circle"></i> Next
@@ -530,8 +561,8 @@ export function RequestForm() {
                                 const day = selectedDate.getDay();
 
                                 // Restrict weekends
-                                if (day === 0 || day === 6) {
-                                  toast.warn("Weekends are not allowed. Please select a weekday.");
+                                if (day === 0 || day === 7) {
+                                  toast.warn("Sunday is not Available.");
                                   e.target.value = ""; // Clear invalid date
                                   return;
                                 }
@@ -636,28 +667,24 @@ export function RequestForm() {
                     </tbody>
                   </table>
                 </div>
-
-                <div className="d-flex justify-content-end mt-3">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={addPreferredDate}
-                  >
-                    Add Another Date
-                  </button>
-                </div>
-
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className={styleRequestForm.btn_secondary}
                     onClick={handlePrevious}
                   >
                     <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className={styleRequestForm.btn_add}
+                    onClick={addPreferredDate}
+                  >
+                    <i className="bi bi-plus-circle me-2"></i> Add Preferred Date and Time
+                  </button>
+                  <button
+                    type="button"
+                    className={styleRequestForm.btn_primary}
                     onClick={handleNext}
                   >
                     <i className="bi bi-arrow-right-circle"></i> Next
@@ -674,10 +701,10 @@ export function RequestForm() {
                 <table className="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Category</th>
-                      <th>Subcategory (Module)</th>
-                      <th>Description</th>
-                      <th>Action</th>
+                      <th style={{ textAlign: "center" }}>Category</th>
+                      <th style={{ textAlign: "center" }}>Subcategory (Module)</th>
+                      <th style={{ textAlign: "center" }}>Description</th>
+                      <th style={{ textAlign: "center" }}>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -725,9 +752,7 @@ export function RequestForm() {
                           </select>
                         </td>
                         <td>
-                          <span className="form-select">
-                            {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
-                          </span>
+                          {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
                         </td>
                         <td>
                           <button
@@ -742,24 +767,24 @@ export function RequestForm() {
                     ))}
                   </tbody>
                 </table>
-                <button
-                  type="button"
-                  className="btn btn-secondary mt-3"
-                  onClick={addRow}
-                >
-                  Add Another Row
-                </button>
                 <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className={styleRequestForm.btn_secondary}
                     onClick={handlePrevious}
                   >
                     <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className={styleRequestForm.btn_add}
+                    onClick={addRow}
+                  >
+                    <i className="bi bi-plus-circle me-2"></i> Add Another Row
+                  </button>
+                  <button
+                    type="button"
+                    className={styleRequestForm.btn_primary}
                     onClick={handleNext}
                   >
                     <i className="bi bi-arrow-right-circle"></i> Next
@@ -776,17 +801,18 @@ export function RequestForm() {
                 </h4>
 
                 {/* Personal Information Section */}
-                <div style={{ border: "2px solid #003366"}}>
+                <div style={{ border: "2px solid #003366" }}>
                   <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
                     PERSONAL INFORMATION
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
+                    <p><strong>Salutation:</strong> {formValues.salutation}</p>
                     <p><strong>Last Name:</strong> {formValues.last_name}</p>
                     <p><strong>First Name:</strong> {formValues.first_name}</p>
                     <p><strong>Middle Name:</strong> {formValues.middle_name}</p>
                     <p><strong>Extension Name:</strong> {formValues.extension_name || "N/A"}</p>
                     <p><strong>Gender:</strong> {formValues.gender}</p>
-                    <p><strong>Salutation:</strong> {formValues.salutation}</p>
+                    <p><strong>Position:</strong> {formValues.position}</p>
                     <p><strong>Contact No:</strong> {formValues.contact_number}</p>
                     <p><strong>Email:</strong> {formValues.email_address}</p>
                     <p><strong>Address:</strong> {formValues.address}</p>
@@ -801,7 +827,7 @@ export function RequestForm() {
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
                     <p><strong>Organization Name:</strong> {formValues.organization_name}</p>
                     <p><strong>Department:</strong> {formValues.department}</p>
-                    <p><strong>Position:</strong> {formValues.position}</p>
+                    <p><strong>Region:</strong> {formValues.region}</p>
                   </div>
                 </div>
 
@@ -820,7 +846,7 @@ export function RequestForm() {
                       textAlign: "center",
                     }}
                   >
-                    PREFERRED DATE AND TIME
+                    PREFERRED DATE AND TIME OF THE EVENT
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
                     {formValues.date_and_time.length > 0 ? (
@@ -851,9 +877,9 @@ export function RequestForm() {
                 </div>
 
                 {/* Modules Section */}
-                <div style={{ border: "2px solid #003366", marginBottom: "20px"}}>
+                <div style={{ border: "2px solid #003366", marginBottom: "20px" }}>
                   <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                    MODULES
+                    SELECTED MODULES
                   </h5>
                   <div style={{ padding: "10px", backgroundColor: "#f5faff" }}>
                     {rows.length > 0 ? (
@@ -907,48 +933,14 @@ export function RequestForm() {
                     <i className="bi bi-arrow-left-circle"></i> Previous
                   </button>
                   <button
-                    type="submit"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "2px solid #007bff",
-                      color: "#007bff",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      fontWeight: "600",
-                      transition: "all 0.3s ease",
-                    }}
-                    disabled={loading}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = "#007bff";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = "transparent";
-                      e.target.style.color = "#007bff";
-                    }}
+                    type="button"
+                    className={styleRequestForm.btn_primary}
                   >
                     <i className="bi bi-printer"></i> Print
                   </button>
                   <button
                     type="submit"
-                    style={{
-                      backgroundColor: "transparent",
-                      border: "2px solid #007bff",
-                      color: "#007bff",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      fontWeight: "600",
-                      transition: "all 0.3s ease",
-                    }}
-                    disabled={loading}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = "#007bff";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = "transparent";
-                      e.target.style.color = "#007bff";
-                    }}
+                    className={styleRequestForm.btn_submit}
                   >
                     <i className="bi bi-check-circle"></i> {loading ? "Submitting..." : "Submit"}
                   </button>
@@ -957,7 +949,7 @@ export function RequestForm() {
               </div>
             )}
 
-          </form> 
+          </form>
         </div>
       </div>
     </div>
