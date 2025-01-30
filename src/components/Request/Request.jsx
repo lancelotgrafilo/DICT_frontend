@@ -44,48 +44,64 @@ export function Request() {
                 <th style={{ width: "25%", textAlign: "center" }}>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {pendingRequests.length > 0 ? (
-                pendingRequests.map((request, reqIndex) =>
-                  request.date_and_time.map((date, dateIndex) => (
-                    <tr key={`${reqIndex}-${dateIndex}`}>
-                      <td style={{ textAlign: "left", paddingLeft: "15px" }}>
-                        {`${request.salutation || ""} ${request.first_name} ${request.middle_name || ""} ${request.last_name || ""}`}
-                      </td>
-                      <td style={{ textAlign: "center" }}>{date.date || "Not Set"}</td>
-                      <td style={{ textAlign: "center" }}>{date.start_time || "Not Set"}</td>
-                      <td style={{ textAlign: "center" }}>{date.end_time || "Not Set"}</td>
-                      <td style={{ textAlign: "center" }}>{date.total_hours || "Not Set"}</td>
-                      <td style={{ textAlign: "center" }}>
-                        <button className="btn btn-outline-info btn-sm mx-1" onClick={() => handleView(reqIndex)}>
-                          <i className="bi bi-eye"></i> View
-                        </button>
-                        <button
-                          className="btn btn-outline-success btn-sm mx-1"
-                          onClick={() => handleAccept(reqIndex)}
-                          disabled={updateLoading}
-                        >
-                          {updateLoading ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
-                        </button>
-                        <button
-                          className="btn btn-outline-danger btn-sm mx-1"
-                          onClick={() => handleReject(reqIndex)}
-                          disabled={updateLoading}
-                        >
-                          {updateLoading ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center">
-                    {getLoading ? "Loading..." : error ? "Error fetching requests" : "No pending requests available"}
-                  </td>
-                </tr>
-              )}
-            </tbody>
+              <tbody>
+                {pendingRequests.length > 0 ? (
+                  pendingRequests.map((request, reqIndex) =>
+                    request.date_and_time.map((date, dateIndex) => (
+                      <tr key={`${reqIndex}-${dateIndex}`}>
+                        {/* Display Name only for the first date row */}
+                        {dateIndex === 0 ? (
+                          <td
+                            rowSpan={request.date_and_time.length}
+                            style={{ textAlign: "left", paddingLeft: "15px", verticalAlign: "middle" }}
+                          >
+                            {`${request.salutation || ""} ${request.first_name} ${request.middle_name || ""} ${request.last_name || ""}`}
+                          </td>
+                        ) : null}
+                        
+                        <td style={{ textAlign: "center" }}>{date.date}</td>
+                        <td style={{ textAlign: "center" }}>{date.start_time}</td>
+                        <td style={{ textAlign: "center" }}>{date.end_time}</td>
+                        <td style={{ textAlign: "center" }}>{date.total_hours}</td>
+
+                        {/* Display action buttons only for the first row */}
+                        {dateIndex === 0 ? (
+                          <td
+                            rowSpan={request.date_and_time.length}
+                            style={{ textAlign: "center", verticalAlign: "middle" }}
+                          >
+                            <button className="btn btn-outline-info btn-sm mx-1" onClick={() => handleView(reqIndex)}>
+                              <i className="bi bi-eye"></i> View
+                            </button>
+                            <button
+                              className="btn btn-outline-success btn-sm mx-1"
+                              onClick={() => handleAccept(reqIndex)}
+                              disabled={updateLoading}
+                            >
+                              {updateLoading ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
+                            </button>
+                            <button
+                              className="btn btn-outline-danger btn-sm mx-1"
+                              onClick={() => handleReject(reqIndex)}
+                              disabled={updateLoading}
+                            >
+                              {updateLoading ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
+                            </button>
+                          </td>
+                        ) : null}
+                      </tr>
+                    ))
+                  )
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      {getLoading ? "Loading..." : error ? "Error fetching requests" : "No pending requests available"}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+
+
           </table>
         </div>
 
