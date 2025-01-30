@@ -94,7 +94,7 @@ export function Activities() {
                       e.target.querySelector(".view-text").style.display = "block";
                     } else if (status === "done") {
                       e.target.style.backgroundColor = "#218838"; // Darker green for done on hover
-                      e.target.querySelector(".day-number").style.display = "none";
+                      e.target.querySelector(".check-icon").style.display = "none";
                       e.target.querySelector(".view-text").style.display = "block";
                     }
                   }}
@@ -109,7 +109,7 @@ export function Activities() {
                       e.target.querySelector(".view-text").style.display = "none";
                     } else if (status === "done") {
                       e.target.style.backgroundColor = "#28a745"; // Green for done
-                      e.target.querySelector(".day-number").style.display = "block";
+                      e.target.querySelector(".check-icon").style.display = "block";
                       e.target.querySelector(".view-text").style.display = "none";
                     }
                   }}
@@ -145,18 +145,29 @@ export function Activities() {
                   )}
 
                   {status === "done" && (
-                    <span className="view-text"
-                      style={{
-                        display: "none",
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        color: "white",
-                        fontWeight: "bold",
-                      }} >
-                      Done
-                    </span>
+                    <>
+                      <span className="check-icon"
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                        }}>
+                        <i className="bi bi-check-circle" style={{ fontSize: "1.5em" }}></i>
+                      </span>
+                      <span className="view-text"
+                        style={{
+                          display: "none",
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          color: "white",
+                          fontWeight: "bold",
+                        }}>
+                        View
+                      </span>
+                    </>
                   )}
                 </div>
               );
