@@ -28,6 +28,7 @@ export function RequestForm() {
     organization_name: '',
     department: '',
     position: '',
+    region: '',
     date_and_time: [
       { date: '', start_time: '', end_time: '', total_hours: 0 },
     ],
@@ -294,12 +295,14 @@ export function RequestForm() {
                         setFormValues({ ...formValues, salutation: e.target.value })
                       }
                       className="form-select"
+                      required
                     >
                       <option value=""></option>
                       <option value="Mr.">Mr.</option>
                       <option value="Ms.">Ms.</option>
                       <option value="Mrs.">Mrs.</option>
                       <option value="Dr.">Dr.</option>
+
                     </select>
                   </div>
                   <div className="col-md-4">

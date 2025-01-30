@@ -20,10 +20,12 @@ export default function App() {
           <Route path="request-form" element={ <RequestForm/> }> </Route>
           
           <Route path="admin" element={<RegionUserPage />}>
-            <Route path="dashboard" element={<FocalDashboard/>} />
+            <Route index element={<FocalDashboard />} /> {/* Default route */}
+            <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
-            <Route path="activities" element={<Activities/>} />
+            <Route path="activities" element={<Activities />} />
           </Route>
+
 
           <Route path="training" element={ <TrainingPage /> }>
 
