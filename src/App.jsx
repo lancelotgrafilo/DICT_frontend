@@ -7,7 +7,7 @@ import { AppProviders } from './utils/context/AppProviders.jsx';
 import { Request } from "./components/Request/Request.jsx";
 import { Activities } from './components/Activities/Activities.jsx';
 import { TrainingPage } from './pages/TrainingPage/TrainingPage.jsx';
-import { FocalDashboard } from './components/FocalDashboard/FocalDashboard.jsx';
+import { FocalDashboard } from './components/Users/Focal/Dashboard/FocalDashboard.jsx';
 
 export default function App() {
   return (

@@ -847,7 +847,6 @@ export function RequestForm() {
                   </div>
                 </div>
 
-
                 {/* Modules Section */}
                 <div style={{ border: "2px solid #003366", marginBottom: "20px"}}>
                   <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
@@ -878,7 +877,6 @@ export function RequestForm() {
                     )}
                   </div>
                 </div>
-
 
                 {/* Navigation Buttons */}
                 <div className="d-flex justify-content-between">

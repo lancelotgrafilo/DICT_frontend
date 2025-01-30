@@ -1,6 +1,5 @@
 import styleRegionUserPage from "./regionUserPage.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
-import dict from '../../assets/logo/DICT_Pic.png';
 import { Outlet, Link } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
 import { usePath } from '../../utils/context/PathContext';
@@ -44,7 +43,7 @@ export function RegionUserPage() {
           </div>
           <div className={styleRegionUserPage.usernameContainer}>
             <h2>Freddie Alicante</h2>
-            <p>saiba@gmail.com</p>
+            <p>Region: V</p>
           </div>
         </div>
 
