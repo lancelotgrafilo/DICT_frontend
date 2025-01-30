@@ -6,10 +6,14 @@ import { toast } from 'react-toastify';
 import { Header } from "../../components/Header/Header";
 import { useNavigate } from 'react-router-dom';
 
+import useGetAcceptedRequest from "../../utils/Hooks/RequestHooks/useGetAcceptedRequest";
+
 import usePostRequest from "../../utils/Hooks/RequestHooks/usePostRequest";
 import useModules from "../../utils/Hooks/ModulesHooks/useGetModules";
 
 export function RequestForm() {
+  const { requests } = useGetAcceptedRequest();
+
   const { data, loading, error, addRequest } = usePostRequest();
   const [formValues, setFormValues] = useState({
     salutation: '',
@@ -497,7 +501,6 @@ export function RequestForm() {
               </div>
             )}
 
-
             {step === 3 && (
               <div>
                 <h4 className="mb-3">Preferred Date and Time</h4>
@@ -530,12 +533,27 @@ export function RequestForm() {
                                   return;
                                 }
 
+                                // Check if the selected date is already booked
+                                const isDateBooked = requests.some(request =>
+                                  request.date_and_time.some(bookedDate => bookedDate.date === e.target.value)
+                                );
+
+                                if (isDateBooked) {
+                                  toast.warn("This date is already booked. Please select another date.");
+                                  e.target.value = ""; // Clear invalid date
+                                  return;
+                                }
+
                                 // Update the date field in the array
                                 handleChange(e, "date_and_time", index);
                               }}
                               className="form-control"
                               required
                               min={getOneWeekAfterDate()} // Restrict date selection to 1 week after today
+                              // Add this new logic to disable the booked dates
+                              disabled={requests.some(request =>
+                                request.date_and_time.some(bookedDate => bookedDate.date === dateInfo.date)
+                              )}
                             />
                           </td>
                           <td>
@@ -612,8 +630,6 @@ export function RequestForm() {
                           </td>
                         </tr>
                       ))}
-
-
                     </tbody>
                   </table>
                 </div>
@@ -646,6 +662,7 @@ export function RequestForm() {
                 </div>
               </div>
             )}
+
 
 
             {step === 4 && (
