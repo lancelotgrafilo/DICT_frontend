@@ -113,6 +113,17 @@ body.dark-theme {
   transition: background-color .3s, color .3s;
 }
 
+.sidebarMenuItem .sidebarMenuLink.active {
+  border-left: 4px solid var(--first-color);
+  padding-left: 12px;
+  transition: border-left 0.2s ease-in-out;
+  -webkit-transition: border-left 0.2s ease-in-out;
+  -moz-transition: border-left 0.2s ease-in-out;
+  -ms-transition: border-left 0.2s ease-in-out;
+  -o-transition: border-left 0.2s ease-in-out;
+}
+
+
 .sidebarMenuLink {
   display: flex;
   align-items: center;
