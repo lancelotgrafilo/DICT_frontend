@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 
 export function Activities() {
-  const activities = [
-    { date: "2025-02-10", title: "Meeting with Team", startTime: "10:00 AM", endTime: "12:00 PM", status: "done" },
-    { date: "2025-02-20", title: "Project Deadline", startTime: "2:00 PM", endTime: "4:00 PM", status: "accepted" },
-  ];
+  const { requests } = useGetRequest();
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState("calendar");
@@ -35,6 +33,9 @@ export function Activities() {
 
   const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD
 
+  // Filter requests to only include those with status "accepted" or "done"
+  const filteredRequests = requests.filter((activity) => activity.status === "accepted" || activity.status === "done");
+
   return (
     <div className="container mt-4">
       <div className="card shadow-lg p-4" style={{ minHeight: "80vh", borderRadius: "10px" }}>
@@ -54,7 +55,9 @@ export function Activities() {
             ))}
 
             {generateCalendar().map((date, index) => {
-              const activity = activities.find((a) => a.date === date);
+              const activity = filteredRequests.find((a) =>
+                a.date_and_time.some(item => item.date === date)
+              );
               const status = activity?.status;
               const isToday = date === today;
 
@@ -68,10 +71,10 @@ export function Activities() {
                       isToday
                         ? "#808080" // Gray background for today
                         : status === "accepted"
-                          ? "#007bff"
-                          : status === "done"
-                            ? "#28a745"
-                            : "#f8f9fa",
+                        ? "#007bff" // Blue for accepted
+                        : status === "done"
+                          ? "#28a745" // Green for done
+                          : "#f8f9fa", // Default background
                     color: isToday || status ? "white" : "black",
                     fontWeight: isToday || status ? "bold" : "normal",
                     border: isToday ? "3px solid #FF4500" : "1px solid #dee2e6",
@@ -86,12 +89,12 @@ export function Activities() {
                       e.target.querySelector(".view-text").style.display = "block"; // Show "Today"
                       e.target.querySelector(".view-text").style.color = "white"; // Change "Today" text to white
                     } else if (status === "accepted") {
-                      e.target.style.backgroundColor = "#0056b3";
+                      e.target.style.backgroundColor = "#0056b3"; // Darker blue for accepted on hover
                       e.target.querySelector(".day-number").style.display = "none";
                       e.target.querySelector(".view-text").style.display = "block";
                     } else if (status === "done") {
-                      e.target.style.backgroundColor = "#218838";
-                      e.target.querySelector(".check-icon").style.display = "none";
+                      e.target.style.backgroundColor = "#218838"; // Darker green for done on hover
+                      e.target.querySelector(".day-number").style.display = "none";
                       e.target.querySelector(".view-text").style.display = "block";
                     }
                   }}
@@ -101,12 +104,12 @@ export function Activities() {
                       e.target.querySelector(".view-text").style.display = "none"; // Hide "Today"
                       e.target.querySelector(".day-number").style.display = "block"; // Show number again
                     } else if (status === "accepted") {
-                      e.target.style.backgroundColor = "#007bff";
+                      e.target.style.backgroundColor = "#007bff"; // Blue for accepted
                       e.target.querySelector(".day-number").style.display = "block";
                       e.target.querySelector(".view-text").style.display = "none";
                     } else if (status === "done") {
-                      e.target.style.backgroundColor = "#28a745";
-                      e.target.querySelector(".check-icon").style.display = "block";
+                      e.target.style.backgroundColor = "#28a745"; // Green for done
+                      e.target.querySelector(".day-number").style.display = "block";
                       e.target.querySelector(".view-text").style.display = "none";
                     }
                   }}
@@ -120,7 +123,7 @@ export function Activities() {
                       transform: "translate(-50%, -50%)",
                       color: "white", // Today text color is white
                       fontWeight: "bold",
-                    }}>
+                    }} >
                     Today
                   </span>}
 
@@ -142,29 +145,18 @@ export function Activities() {
                   )}
 
                   {status === "done" && (
-                    <>
-                      <span className="check-icon"
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                        }}>
-                        <i className="bi bi-check-circle" style={{ fontSize: "1.5em" }}></i>
-                      </span>
-                      <span className="view-text"
-                        style={{
-                          display: "none",
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          color: "white",
-                          fontWeight: "bold",
-                        }}>
-                        View
-                      </span>
-                    </>
+                    <span className="view-text"
+                      style={{
+                        display: "none",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        fontWeight: "bold",
+                      }} >
+                      Done
+                    </span>
                   )}
                 </div>
               );
@@ -184,15 +176,13 @@ export function Activities() {
                 </tr>
               </thead>
               <tbody>
-                {activities.map((activity, index) => (
+                {filteredRequests.map((activity, index) => (
                   <tr key={index}>
-                    <td style={{ width: "30%", textAlign: "left" }}>John Doe</td>
-                    <td style={{ width: "20%", textAlign: "center" }}>{activity.date}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.startTime}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>{activity.endTime}</td>
-                    <td style={{ width: "10%", textAlign: "center" }}>
-                      {Math.abs(new Date(`2000-01-01 ${activity.endTime}`) - new Date(`2000-01-01 ${activity.startTime}`)) / 36e5}
-                    </td>
+                    <td style={{ width: "30%", textAlign: "left" }}>{`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}</td>
+                    <td style={{ width: "20%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.date}</div>))}</td>
+                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.start_time}</div>))}</td>
+                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.end_time}</div>))}</td>
+                    <td style={{ width: "10%", textAlign: "center" }}>{activity.date_and_time.map((dateItem, idx) => (<div key={idx}>{dateItem.total_hours}</div>))}</td>
                     <td>
                       <button className="btn btn-outline-primary btn-sm me-2">
                         <i className="bi bi-eye"></i> View
