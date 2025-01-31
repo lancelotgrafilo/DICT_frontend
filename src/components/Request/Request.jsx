@@ -63,12 +63,12 @@ export function Request() {
             <thead>
               <tr style={{ backgroundColor: "#003366", color: "white" }}>
                 <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Name</th>
-                <th style={{ width: "16%", textAlign: "center", verticalAlign: "middle" }}>Date Submitted</th>
+                <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Date Submitted</th>
                 <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Preferred Date</th>
                 <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Start Time</th>
                 <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>End Time</th>
                 <th style={{ width: "5%", textAlign: "center", verticalAlign: "middle" }}>Total Hours</th>
-                <th style={{ width: "21%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
+                <th style={{ width: "25%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
