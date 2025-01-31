@@ -11,6 +11,7 @@ import {
   Title,
   PointElement,
 } from "chart.js";
+import { FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa"; // Importing icons
 import styleFocalDashboard from "./focalDashboard.module.css";
 import useGetRequest from "../../../../utils/Hooks/RequestHooks/useGetRequest";
 
@@ -116,7 +117,9 @@ export function FocalDashboard() {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6" style={{ marginTop: "16px" }} >📊 Analytics Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6" style={{ marginTop: "16px" }}>
+        📊 Analytics Dashboard
+      </h1>
       <div className={`grid ${styleFocalDashboard.grid}`}>
         <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Request Summary</h2>
@@ -128,26 +131,66 @@ export function FocalDashboard() {
         </div>
       </div>
       <div className={`grid ${styleFocalDashboard.cardGrid}`}>
-        <div className={`card ${styleFocalDashboard.card}`}>
-          <h2 className="text-xl font-semibold">Total Requests</h2>
-          <p className="text-2xl font-bold">{data.totalRequest}</p>
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaCheckCircle size={48} color="#4caf50" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalRequest}</p>
+            <span className="text-sm mt-2">Total Requests</span>
+          </div>
         </div>
-        <div className={`card ${styleFocalDashboard.card}`}>
-          <h2 className="text-xl font-semibold">Total Pending Requests</h2>
-          <p className="text-2xl font-bold">{data.totalPendingRequest}</p>
+      </div>
+
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaClock size={48} color="#ff9800" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalPendingRequest}</p>
+            <span className="text-sm mt-2">Pending Requests</span>
+          </div>
         </div>
-        <div className={`card ${styleFocalDashboard.card}`}>
-          <h2 className="text-xl font-semibold">Total Accepted Requests</h2>
-          <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
+      </div>
+
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaCheckCircle size={48} color="#4caf50" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
+            <span className="text-sm mt-2">Accepted Requests</span>
+          </div>
         </div>
-        <div className={`card ${styleFocalDashboard.card}`}>
-          <h2 className="text-xl font-semibold">Total Rejected Requests</h2>
-          <p className="text-2xl font-bold">{data.totalRejectedRequest}</p>
+      </div>
+
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaTimesCircle size={48} color="#f44336" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalRejectedRequest}</p>
+            <span className="text-sm mt-2">Rejected Requests</span>
+          </div>
         </div>
-        <div className={`card ${styleFocalDashboard.card}`}>
-          <h2 className="text-xl font-semibold">Total Completed Requests</h2>
-          <p className="text-2xl font-bold">{data.totalCompletedRequest}</p>
+      </div>
+
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaCheckCircle size={48} color="#4caf50" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalCompletedRequest}</p>
+            <span className="text-sm mt-2">Completed Requests</span>
+          </div>
         </div>
+      </div>
+
       </div>
     </div>
   );
