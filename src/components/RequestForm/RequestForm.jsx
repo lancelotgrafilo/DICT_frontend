@@ -272,6 +272,34 @@ export function RequestForm() {
     return `${year}-${month}-${day}`;
   };
 
+  const sanitizeInput = (input) => {
+    // Remove leading/trailing spaces and sanitize by removing special characters
+    return input.trim().replace(/[^\w\s.-]/g, '');
+  };
+
+  const sanitizeInputAddress = (input) => {
+    // Allow only alphanumeric characters, spaces, and commas
+    return input.replace(/[^a-zA-Z0-9\s,]/g, '');
+  };
+
+  const handleContactNumberChange = (e) => {
+    const input = e.target.value;
+    // Allow only numbers and ensure the length is exactly 11 digits
+    if (/^\d{0,11}$/.test(input)) {
+      setFormValues({ ...formValues, contact_number: input });
+    }
+  };
+  
+  const sanitizeEmailInput = (input) => {
+    // Replace any special characters except for "@" with an empty string
+    return input.replace(/[^a-zA-Z0-9@.]/g, '');
+  };
+  const validateEmail = (email) => {
+    // Simple regex for basic email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <div className={styleRequestForm.mainContent}>
       <Header />
@@ -279,6 +307,7 @@ export function RequestForm() {
         <div className="card shadow p-4">
           <h2 className="text-center mb-4">Cybersecurity Awareness Request Form</h2>
           <form onSubmit={handleSubmit}>
+          
             {step === 1 && (
               <div>
                 <h4 className="mb-3">Personal Information</h4>
@@ -292,7 +321,7 @@ export function RequestForm() {
                       name="salutation"
                       value={formValues.salutation}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, salutation: e.target.value })
+                        setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
                       }
                       className="form-select"
                       required
@@ -303,7 +332,6 @@ export function RequestForm() {
                       <option value="Mrs.">Mrs.</option>
                       <option value="Dr.">Dr.</option>
                       <option value="Engr.">Engr.</option>
-
                     </select>
                   </div>
                   <div className="col-md-4">
@@ -314,7 +342,7 @@ export function RequestForm() {
                       name="lastName"
                       value={formValues.last_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, last_name: e.target.value })
+                        setFormValues({ ...formValues, last_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                       required
@@ -328,7 +356,7 @@ export function RequestForm() {
                       name="firstName"
                       value={formValues.first_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, first_name: e.target.value })
+                        setFormValues({ ...formValues, first_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                       required
@@ -342,7 +370,7 @@ export function RequestForm() {
                       name="middleName"
                       value={formValues.middle_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, middle_name: e.target.value })
+                        setFormValues({ ...formValues, middle_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                     />
@@ -354,7 +382,7 @@ export function RequestForm() {
                       name="extensionName"
                       value={formValues.extension_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, extension_name: e.target.value })
+                        setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                     />
@@ -366,7 +394,7 @@ export function RequestForm() {
                       name="gender"
                       value={formValues.gender}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, gender: e.target.value })
+                        setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
                       }
                       className="form-select"
                       required
@@ -385,7 +413,7 @@ export function RequestForm() {
                       name="position"
                       value={formValues.position}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, position: e.target.value })
+                        setFormValues({ ...formValues, position: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                       required
@@ -398,11 +426,10 @@ export function RequestForm() {
                       type="tel"
                       name="contactNo"
                       value={formValues.contact_number}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, contact_number: e.target.value })
-                      }
+                      onChange={handleContactNumberChange}
                       className="form-control"
                       required
+                      maxLength="11" // Restricts input to 11 characters in the UI
                     />
                   </div>
                   <div className="col-md-6">
@@ -412,9 +439,11 @@ export function RequestForm() {
                       type="email"
                       name="email"
                       value={formValues.email_address}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, email_address: e.target.value })
-                      }
+                      onChange={(e) => {
+                        const sanitizedValue = sanitizeEmailInput(e.target.value);
+                        
+                        setFormValues({ ...formValues, email_address: sanitizedValue });
+                      }}
                       className="form-control"
                       required
                     />
@@ -423,11 +452,11 @@ export function RequestForm() {
                     <label className="form-label">Address</label>
                     <span style={{ color: 'red' }}>*</span>
                     <input
-                      type="address"
+                      type="text"
                       name="address"
                       value={formValues.address}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, address: e.target.value })
+                        setFormValues({ ...formValues, address: sanitizeInputAddress(e.target.value) })
                       }
                       className="form-control"
                       required
@@ -445,13 +474,26 @@ export function RequestForm() {
                   <button
                     type="button"
                     className={styleRequestForm.btn_primary}
-                    onClick={handleNext}
+                    onClick={() => {
+                      const sanitizedEmail = sanitizeEmailInput(formValues.email_address);
+
+                      // Validate the email format
+                      if (!validateEmail(sanitizedEmail)) {
+                        toast.warn("Please input a valid email");
+                        return; // Prevent proceeding if the email is invalid
+                      }
+
+                      // Proceed with the next action
+                      handleNext();
+                    }}
                   >
                     <i className="bi bi-arrow-right-circle"></i> Next
                   </button>
+
                 </div>
               </div>
             )}
+
 
             {step === 2 && (
               <div>
@@ -465,7 +507,7 @@ export function RequestForm() {
                       name="organizationName"
                       value={formValues.organization_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, organization_name: e.target.value })
+                        setFormValues({ ...formValues, organization_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                       required
@@ -474,12 +516,12 @@ export function RequestForm() {
                   <div className="col-md-6">
                     <label className="form-label">Department</label>
                     <span style={{ color: 'red' }}>*</span>
-                    <input
+                    <input  
                       type="text"
                       name="department"
                       value={formValues.department}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, department: e.target.value })
+                        setFormValues({ ...formValues, department: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
                       required
