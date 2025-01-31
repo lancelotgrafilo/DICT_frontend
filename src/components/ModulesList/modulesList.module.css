@@ -162,6 +162,7 @@ button {
   border-radius: 5px;
   padding: 15px 16px; /* Increased padding */
   transition: all 0.3s ease;
+  flex: 1;
 }
 
 .modal_btn_primary:hover {
@@ -177,6 +178,7 @@ button {
   border-radius: 5px;
   padding: 15px 16px; /* Increased padding */
   transition: all 0.3s ease;
+  flex: 1;
 }
 
 .modal_btn_cancel:hover {
@@ -187,6 +189,7 @@ button {
 
 /* Primary Button (Blue) */
 .btn_primary {
+  margin: 5px;
   background-color: transparent;
   border: 1px solid #0056b3; /* Blue border */
   color: #0056b3;
@@ -202,6 +205,7 @@ button {
 
 /* Secondary Button (Gray) */
 .btn_secondary {
+  margin: 5px;
   background-color: transparent;
   border: 1px solid #6c757d; /* Gray border */
   color: #6c757d;
@@ -217,6 +221,7 @@ button {
 
 /* Cancel Button (Red) */
 .btn_cancel {
+  margin: 5px;
   background-color: transparent;
   border: 1px solid #dc3545; /* Red border */
   color: #dc3545;
@@ -232,6 +237,7 @@ button {
 
 /* Submit Button (Green) */
 .btn_submit {
+  margin: 5px;
   background-color: transparent;
   border: 1px solid #28a745; /* Green border */
   color: #28a745;
@@ -246,8 +252,9 @@ button {
 }
 
 .btn_add {
+  margin: 5px;
   justify-content: center;
-  width: 30%;
+  width: 20%;
   background-color: #6c757d;
   border: 2px solid #6c757d;
   color: white;

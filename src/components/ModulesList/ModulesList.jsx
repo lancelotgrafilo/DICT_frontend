@@ -134,7 +134,7 @@ export function ModulesList() {
           />
           <select
             value={selectedDifficulty}
-            style={{ width: "20%" }}
+            style={{ width: "30%" }}
             onChange={(e) => setSelectedDifficulty(e.target.value)}
             className="form-select"
           >
