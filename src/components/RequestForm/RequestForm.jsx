@@ -279,7 +279,7 @@ export function RequestForm() {
 
   const sanitizeInputAddress = (input) => {
     // Allow only alphanumeric characters, spaces, and commas
-    return input.replace(/[^a-zA-Z0-9\s,]/g, '');
+    return input.replace(/[^a-zA-Z0-9\s.,]/g);
   };
 
   const handleContactNumberChange = (e) => {
