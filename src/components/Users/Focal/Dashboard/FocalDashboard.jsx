@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Doughnut, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title, PointElement } from 'chart.js';
 import styleFocalDashboard from './focalDashboard.module.css'; // Assuming this is for custom styles
 
-ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title);
+ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title, PointElement);
 
 export function FocalDashboard() {
   const [data, setData] = useState({
@@ -111,8 +111,6 @@ export function FocalDashboard() {
           <h2 className="text-xl font-semibold">Total Activities Per Month</h2>
           <p className="text-2xl font-bold">{data.totalActivitiesPerMonth}</p>
         </div>
-
-        
       </div>
     </div>
   );
