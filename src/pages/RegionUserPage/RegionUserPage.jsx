@@ -56,7 +56,7 @@ export function RegionUserPage() {
             { to: "dashboard", label: "Dashboard", icon: "ri-pie-chart-2-fill", btnId: "dashboard" },
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
-            { to: "modules", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
+            { to: "modules-lists", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li

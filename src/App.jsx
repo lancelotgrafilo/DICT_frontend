@@ -8,6 +8,7 @@ import { Request } from "./components/Request/Request.jsx";
 import { Activities } from './components/Activities/Activities.jsx';
 import { TrainingPage } from './pages/TrainingPage/TrainingPage.jsx';
 import { FocalDashboard } from './components/Users/Focal/Dashboard/FocalDashboard.jsx';
+import { ModulesList } from './components/ModulesList/ModulesList.jsx';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
             <Route path="activities" element={<Activities />} />
+            <Route path='modules-lists' element={<ModulesList/>} />
           </Route>
 
 
