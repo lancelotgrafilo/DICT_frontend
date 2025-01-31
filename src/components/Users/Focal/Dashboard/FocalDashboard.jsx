@@ -84,6 +84,7 @@ export function FocalDashboard() {
     }
   }, [requests]);
 
+  // Doughnut Chart Data & Options
   const chartData = {
     labels: ["Completed Requests", "Pending Requests", "Rejected Requests"],
     datasets: [
@@ -99,6 +100,12 @@ export function FocalDashboard() {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    cutout: "80%", // Adjusted cutout size for thinner doughnut
+  };
+
+  // Line Chart Data
   const lineChartData = {
     labels: data.requestsPerMonth.map((item) => item.month),
     datasets: [
@@ -123,7 +130,7 @@ export function FocalDashboard() {
       <div className={`grid ${styleFocalDashboard.grid}`}>
         <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Request Summary</h2>
-          <Doughnut data={chartData} options={{ responsive: true }} />
+          <Doughnut data={chartData} options={chartOptions} />
         </div>
         <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Completed Requests Per Month</h2>
@@ -131,77 +138,26 @@ export function FocalDashboard() {
         </div>
       </div>
       <div className={`grid ${styleFocalDashboard.cardGrid}`}>
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaCheckCircle size={48} color="#4caf50" />
+        {[
+          { label: "Total Activities", value: data.totalAcceptedRequest, icon: FaCheckCircle, color: "#4caf50" },
+          { label: "Total Requests", value: data.totalRequest, icon: FaCheckCircle, color: "#4caf50" },
+          { label: "Pending Requests", value: data.totalPendingRequest, icon: FaClock, color: "#ff9800" },
+          { label: "Accepted Requests", value: data.totalAcceptedRequest, icon: FaCheckCircle, color: "#4caf50" },
+          { label: "Rejected Requests", value: data.totalRejectedRequest, icon: FaTimesCircle, color: "#f44336" },
+          { label: "Completed Requests", value: data.totalCompletedRequest, icon: FaCheckCircle, color: "#4caf50" },
+        ].map(({ label, value, icon: Icon, color }, index) => (
+          <div key={index} className={`card ${styleFocalDashboard.cardRec}`}>
+            <div className={styleFocalDashboard.cardContainer}>
+              <div className={styleFocalDashboard.cardIcon}>
+                <Icon size={48} color={color} />
+              </div>
+              <div className={styleFocalDashboard.cardInfo}>
+                <p className="text-2xl font-bold">{value}</p>
+                <span className="text-sm mt-2">{label}</span>
+              </div>
+            </div>
           </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
-            <span className="text-sm mt-2">Total Activities</span>
-          </div>
-        </div>
-      </div>
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaCheckCircle size={48} color="#4caf50" />
-          </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalRequest}</p>
-            <span className="text-sm mt-2">Total Requests</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaClock size={48} color="#ff9800" />
-          </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalPendingRequest}</p>
-            <span className="text-sm mt-2">Pending Requests</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaCheckCircle size={48} color="#4caf50" />
-          </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
-            <span className="text-sm mt-2">Accepted Requests</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaTimesCircle size={48} color="#f44336" />
-          </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalRejectedRequest}</p>
-            <span className="text-sm mt-2">Rejected Requests</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={`card ${styleFocalDashboard.cardRec}`}>
-        <div className={styleFocalDashboard.cardContainer}>
-          <div className={styleFocalDashboard.cardIcon}>
-            <FaCheckCircle size={48} color="#4caf50" />
-          </div>
-          <div className={styleFocalDashboard.cardInfo}>
-            <p className="text-2xl font-bold">{data.totalCompletedRequest}</p>
-            <span className="text-sm mt-2">Completed Requests</span>
-          </div>
-        </div>
-      </div>
-
+        ))}
       </div>
     </div>
   );
