@@ -67,7 +67,7 @@ export function Activities() {
         <h4 className="text-center mb-3">
           {viewMode === "calendar"
             ? currentDate.toLocaleString("default", { month: "long", year: "numeric" })
-            : `List of Activities (${currentDate.toLocaleString("default", { month: "long" })})`}
+            : `List of Activities (${currentDate.toLocaleString("default", { month: "long", year: "numeric" })})`}
         </h4>
 
         {/* Calendar View */}
