@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
+import { FaRegCalendarAlt, FaRegListAlt } from 'react-icons/fa';
 
 export function Activities() {
   const { requests, refetch } = useGetRequest();
@@ -273,9 +274,18 @@ export function Activities() {
 
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-outline-primary" onClick={() => changeMonth(-1)}>◀ Prev</button>
-          <button className="btn btn-outline-secondary" onClick={() => setViewMode(viewMode === "calendar" ? "table" : "calendar")}>
-            📋 {viewMode === "calendar" ? "Table View" : "Calendar View"}
+          <button className="btn btn-outline-secondary d-flex align-items-center" onClick={() => setViewMode(viewMode === "calendar" ? "table" : "calendar")}>
+            {viewMode === "calendar" ? (
+              <>
+                <FaRegListAlt className="me-2" /> Table View
+              </>
+            ) : (
+              <>
+                <FaRegCalendarAlt className="me-2" /> Calendar View
+              </>
+            )}
           </button>
+
           <button className="btn btn-outline-primary" onClick={() => changeMonth(1)}>Next ▶</button>
         </div>
       </div>
