@@ -1,5 +1,44 @@
-/* focalDashboard.module.css */
+/* Default grid layout for small screens */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
 
+/* 2-column layout for charts */
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 16px;
+}
+
+/* For the charts grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) { /* Tablet view */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) { /* Larger screens */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card style */
 .card {
   background-color: #fff;
   border-radius: 8px;
@@ -24,24 +63,6 @@
   font-size: 2rem;
   font-weight: 600;
   color: #333;
-}
-
-/* Grid layout styles */
-.grid {
-  display: grid;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 /* To make the cards square-shaped */

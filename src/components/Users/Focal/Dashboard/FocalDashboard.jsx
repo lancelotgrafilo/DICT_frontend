@@ -57,7 +57,6 @@ export function FocalDashboard() {
         (req) => req.status === "done"
       ).length;
 
-      // Reset request counts per month
       let updatedRequestsPerMonth = data.requestsPerMonth.map((item) => ({
         ...item,
         requests: 0,
@@ -67,7 +66,7 @@ export function FocalDashboard() {
         if (req.status === "done" && req.date_and_time) {
           req.date_and_time.forEach((dt) => {
             const date = new Date(dt.date);
-            const month = date.getUTCMonth(); // Get month index (0-11)
+            const month = date.getUTCMonth();
             updatedRequestsPerMonth[month].requests++;
           });
         }
@@ -117,7 +116,7 @@ export function FocalDashboard() {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">📊 Analytics Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6" style={{ marginTop: "16px" }} >📊 Analytics Dashboard</h1>
       <div className={`grid ${styleFocalDashboard.grid}`}>
         <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Request Summary</h2>
@@ -127,6 +126,8 @@ export function FocalDashboard() {
           <h2 className="text-xl font-semibold">Completed Requests Per Month</h2>
           <Line data={lineChartData} options={{ responsive: true }} />
         </div>
+      </div>
+      <div className={`grid ${styleFocalDashboard.cardGrid}`}>
         <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Requests</h2>
           <p className="text-2xl font-bold">{data.totalRequest}</p>
