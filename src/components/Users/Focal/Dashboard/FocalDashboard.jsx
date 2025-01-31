@@ -1,60 +1,116 @@
-import { useState } from "react";
-import { Doughnut, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title, PointElement } from 'chart.js';
-import styleFocalDashboard from './focalDashboard.module.css'; // Assuming this is for custom styles
+import { useState, useEffect } from "react";
+import { Doughnut, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  PointElement,
+} from "chart.js";
+import styleFocalDashboard from "./focalDashboard.module.css";
+import useGetRequest from "../../../../utils/Hooks/RequestHooks/useGetRequest";
 
-ChartJS.register(ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, Title, PointElement);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  PointElement
+);
 
 export function FocalDashboard() {
+  const { requests, getLoading, error, refetch } = useGetRequest();
   const [data, setData] = useState({
-    totalRequest: 150,
-    totalPendingRequest: 30,
-    totalAcceptedRequest: 100,
-    totalRejectedRequest: 10,
-    totalCompletedRequest: 120,
-    totalActivitiesPerMonth: 15,
-    requestsPerMonth: [
-      { month: 'January', requests: 20 },
-      { month: 'February', requests: 18 },
-      { month: 'March', requests: 22 },
-      { month: 'April', requests: 25 },
-      { month: 'May', requests: 30 },
-      { month: 'June', requests: 28 },
-      { month: 'July', requests: 35 },
-      { month: 'August', requests: 40 },
-      { month: 'September', requests: 38 },
-      { month: 'October', requests: 45 },
-      { month: 'November', requests: 50 },
-      { month: 'December', requests: 55 },
-    ],
+    totalRequest: 0,
+    totalPendingRequest: 0,
+    totalAcceptedRequest: 0,
+    totalRejectedRequest: 0,
+    totalCompletedRequest: 0,
+    requestsPerMonth: Array.from({ length: 12 }, (_, i) => ({
+      month: new Date(Date.UTC(2025, i, 1)).toLocaleString("default", {
+        month: "long",
+      }),
+      requests: 0,
+    })),
   });
 
-  // Doughnut chart data for summary
+  useEffect(() => {
+    if (requests) {
+      const totalRequest = requests.length;
+      const totalPendingRequest = requests.filter(
+        (req) => req.status === "pending"
+      ).length;
+      const totalAcceptedRequest = requests.filter(
+        (req) => req.status === "accepted"
+      ).length;
+      const totalRejectedRequest = requests.filter(
+        (req) => req.status === "rejected"
+      ).length;
+      const totalCompletedRequest = requests.filter(
+        (req) => req.status === "done"
+      ).length;
+
+      // Reset request counts per month
+      let updatedRequestsPerMonth = data.requestsPerMonth.map((item) => ({
+        ...item,
+        requests: 0,
+      }));
+
+      requests.forEach((req) => {
+        if (req.status === "done" && req.date_and_time) {
+          req.date_and_time.forEach((dt) => {
+            const date = new Date(dt.date);
+            const month = date.getUTCMonth(); // Get month index (0-11)
+            updatedRequestsPerMonth[month].requests++;
+          });
+        }
+      });
+
+      setData({
+        totalRequest,
+        totalPendingRequest,
+        totalAcceptedRequest,
+        totalRejectedRequest,
+        totalCompletedRequest,
+        requestsPerMonth: updatedRequestsPerMonth,
+      });
+    }
+  }, [requests]);
+
   const chartData = {
-    labels: ['Completed Requests', 'Pending Requests', 'Rejected Requests'],
+    labels: ["Completed Requests", "Pending Requests", "Rejected Requests"],
     datasets: [
       {
         data: [
           data.totalCompletedRequest,
           data.totalPendingRequest,
-          data.totalRejectedRequest
+          data.totalRejectedRequest,
         ],
-        backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
+        backgroundColor: ["#4caf50", "#ff9800", "#f44336"],
         borderWidth: 1,
       },
     ],
   };
 
-  // Line chart data for requests per month
   const lineChartData = {
-    labels: data.requestsPerMonth.map(item => item.month), // months
+    labels: data.requestsPerMonth.map((item) => item.month),
     datasets: [
       {
-        label: 'Requests per Month',
-        data: data.requestsPerMonth.map(item => item.requests), // number of requests
+        label: "Completed Requests per Month",
+        data: data.requestsPerMonth.map((item) => item.requests),
         fill: false,
-        borderColor: '#42a5f5',
-        tension: 0.1,
+        borderColor: "#42a5f5",
+        backgroundColor: "#42a5f5",
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        tension: 0.3,
       },
     ],
   };
@@ -62,54 +118,34 @@ export function FocalDashboard() {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">📊 Analytics Dashboard</h1>
-
       <div className={`grid ${styleFocalDashboard.grid}`}>
-        {/* Request Summary Chart */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Request Summary</h2>
           <Doughnut data={chartData} options={{ responsive: true }} />
         </div>
-
-        {/* Line Chart Card for Requests Per Month */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
-          <h2 className="text-xl font-semibold">Requests Per Month</h2>
+        <div className={`card ${styleFocalDashboard.card}`}>
+          <h2 className="text-xl font-semibold">Completed Requests Per Month</h2>
           <Line data={lineChartData} options={{ responsive: true }} />
         </div>
-
-        {/* Total Requests Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Requests</h2>
           <p className="text-2xl font-bold">{data.totalRequest}</p>
         </div>
-
-        {/* Total Pending Requests Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Pending Requests</h2>
           <p className="text-2xl font-bold">{data.totalPendingRequest}</p>
         </div>
-
-        {/* Total Accepted Requests Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Accepted Requests</h2>
           <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
         </div>
-
-        {/* Total Rejected Requests Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Rejected Requests</h2>
           <p className="text-2xl font-bold">{data.totalRejectedRequest}</p>
         </div>
-
-        {/* Total Completed Requests Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
+        <div className={`card ${styleFocalDashboard.card}`}>
           <h2 className="text-xl font-semibold">Total Completed Requests</h2>
           <p className="text-2xl font-bold">{data.totalCompletedRequest}</p>
-        </div>
-
-        {/* Total Activities Per Month Card */}
-        <div className={`card ${styleFocalDashboard.card} w-full h-full`}>
-          <h2 className="text-xl font-semibold">Total Activities Per Month</h2>
-          <p className="text-2xl font-bold">{data.totalActivitiesPerMonth}</p>
         </div>
       </div>
     </div>

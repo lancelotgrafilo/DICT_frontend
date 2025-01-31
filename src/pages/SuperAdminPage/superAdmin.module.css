@@ -1,0 +1,343 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200..1000&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  --first-color: hsl(228, 85%, 63%);
+  --title-color: hsl(228, 18%, 16%);
+  --text-color: hsl(228, 8%, 56%);
+  --body-color: hsl(228, 100%, 99%);
+  --shadow-color: hsla(228, 80%, 4%, .1);
+
+  /*========== Font and typography ==========*/
+  --body-font: "Nunito Sans", system-ui;
+  --normal-font-size: .938rem;
+  --smaller-font-size: .75rem;
+  --tiny-font-size: .75rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1150px) {
+  :root {
+    --normal-font-size: 1rem;
+    --smaller-font-size: .813rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  color: var(--text-color);
+  transition: background-color .4s;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  all: unset;
+}
+
+/*=============== VARIABLES DARK THEME ===============*/
+body.dark-theme {
+  --first-color: hsl(228, 70%, 63%);
+  --title-color: hsl(228, 18%, 96%);
+  --text-color: hsl(228, 12%, 61%);
+  --body-color: hsl(228, 24%, 16%);
+  --shadow-color: hsla(228, 80%, 4%, .3);
+}
+
+/*=============== SIDEBAR ===============*/
+.dashboardContainer {
+  display: flex;
+  height: auto;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: var(--body-color);
+  box-shadow: 2px 0 24px var(--shadow-color);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  margin-left: 16px;
+  margin-bottom: 16px;
+  border-radius: 1rem;
+  transition: left .4s, background-color .4s, width .4s;
+}
+
+.manageTxt{
+  font-size: 12px;
+  color: var(--text-color);
+}
+
+.sidebarMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarMenuItem {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+}
+
+.sidebarMenuItem .sidebarMenuLink.active {
+  border-left: 2px solid var(--first-color);
+  padding-left: 12px;
+  transition: border-left 0.2s ease-in-out;
+  -webkit-transition: border-left 0.2s ease-in-out;
+  -moz-transition: border-left 0.2s ease-in-out;
+  -ms-transition: border-left 0.2s ease-in-out;
+  -o-transition: border-left 0.2s ease-in-out;
+}
+
+
+.sidebarMenuLink {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  text-decoration: none;
+  width: 100%;
+}
+
+.sidebarMenuItem:hover {
+  color: var(--first-color);
+}
+
+.sidebarMenuLink i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  transition: color 0.3s;
+}
+
+/* Apply hover color only on icons */
+.sidebarMenuLink:hover {
+  color: var(--first-color);
+}
+
+.sidebarMenuLink.active {
+  color: var(--first-color);
+}
+
+.sidebarIcons {
+  font-size: 1.5rem;
+}
+
+.sidebarMenuBottom {
+  margin-top: auto;
+}
+
+.sidebarMenuItem button {
+  width: 100%;
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.sidebarMenuItem button:hover {
+  background-color: var(--first-color);
+  color: white;
+}
+
+/* Header styles */
+.logoContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo img {
+  width: 40px;
+  height: auto;
+}
+
+.usernameContainer {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column; /* Stack the h2 and p elements */
+  justify-content: start;
+  align-items: start; /* Center elements horizontally */
+  text-align: left; /* Center text inside the h2 and p elements */
+}
+
+.usernameContainer h2 {
+  font-size: 1rem;
+  font-weight: var(--font-semi-bold);
+  margin: 0; /* Remove any margin for better centering */
+}
+
+.usernameContainer p {
+  font-size: .875rem;
+  color: var(--text-color);
+  margin: 0; /* Remove any margin for better centering */
+}
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal {
+  background-color: var(--body-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 24px var(--shadow-color);
+  width: 300px;
+}
+
+.modal h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.modal h4 {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirmLogoutBtn,
+.cancelBtn {
+  padding: .75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmLogoutBtn {
+  background-color: var(--first-color);
+  color: white;
+}
+
+.cancelBtn {
+  background-color: lightgray;
+  color: var(--text-color);
+}
+
+.mainContent {
+  margin-left: 266px; /* Matches the sidebar width */
+  padding: 1rem; /* Optional: Adds padding inside the content */
+  width: calc(100% - 250px); /* Ensures the content adjusts to the remaining space */
+  position: relative;
+}
+
+/* ================= HORIZONTAL Menu ================ */
+.horizontalMenu {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  background-color: var(--sidebar-bg-color); /* Match the sidebar background */
+  padding: 10px 20px;
+  border-radius: 10px; /* Optional for rounded edges */
+  box-shadow: 2px 0 24px var(--shadow-color);
+  width: 100%;
+  height: 80px;
+
+}
+
+.dict{
+  width: 100px;
+  height: auto;
+}
+
+/*=============== BREAKPOINTS ===============*/
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebarMenuItem {
+    padding: 1rem 2rem;
+  }
+
+  .sidebarMenuLink {
+    font-size: .875rem;
+  }
+
+  .logo img {
+    width: 30px;
+  }
+
+  .usernameContainer h2 {
+    font-size: .875rem;
+  }
+
+  .usernameContainer p {
+    font-size: .75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 100;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  .sidebarMenu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebarMenuItem {
+    padding: 1rem;
+  }
+
+  .header {
+    margin-left: 0;
+  }
+}

@@ -1,4 +1,4 @@
-import styleRegionUserPage from "./regionUserPage.module.css";
+import styleSuperAdmin from "./superAdmin.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
 import { Outlet, Link } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'remixicon/fonts/remixicon.css';
 import { Header } from '../../components/Header/Header';
 
-export function RegionUserPage() {
+export function SuperAdminPage() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const { updatePath } = usePath();
@@ -19,7 +19,7 @@ export function RegionUserPage() {
   const { activeButton, updateActiveButton } = useContext(ActiveButtonContext);
 
   const handleHover = (isHovered) => {
-    const sidebar = document.querySelector(`.${styleRegionUserPage.sidebar}`);
+    const sidebar = document.querySelector(`.${styleSuperAdmin.sidebar}`);
     if (sidebar) {
       sidebar.style.zIndex = isHovered ? '9999' : 'initial';
     }
@@ -35,24 +35,24 @@ export function RegionUserPage() {
   };
 
   return (
-    <div className={styleRegionUserPage.dashboardContainer}>
-      <div className={styleRegionUserPage.sidebar}>
-        <div className={styleRegionUserPage.logoContainer}>
-          <div className={styleRegionUserPage.logo}>
+    <div className={styleSuperAdmin.dashboardContainer}>
+      <div className={styleSuperAdmin.sidebar}>
+        <div className={styleSuperAdmin.logoContainer}>
+          <div className={styleSuperAdmin.logo}>
             <img src={dict_logo} alt="" />
           </div>
-          <div className={styleRegionUserPage.usernameContainer}>
+          <div className={styleSuperAdmin.usernameContainer}>
             <h2>Freddie Alicante</h2>
-            <p>Region IV-A: Calabarzon</p>
-            <p>Admin</p>
+            <p>Region V: Bicol</p>
+            <p>Super Admin</p>
           </div>
         </div>
 
-        <div className={styleRegionUserPage.manageTxt}>
+        <div className={styleSuperAdmin.manageTxt}>
           <p>MANAGE</p>
         </div>
 
-        <ul className={styleRegionUserPage.sidebarMenu}>
+        <ul className={styleSuperAdmin.sidebarMenu}>
           {[ 
             { to: "dashboard", label: "Dashboard", icon: "ri-pie-chart-2-fill", btnId: "dashboard" },
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
@@ -63,7 +63,7 @@ export function RegionUserPage() {
           ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li
               key={btnId}
-              className={`${styleRegionUserPage.sidebarMenuItem} ${disabled ? styleRegionUserPage.disabled : ''}`}
+              className={`${styleSuperAdmin.sidebarMenuItem} ${disabled ? styleSuperAdmin.disabled : ''}`}
               onMouseEnter={() => handleHover(true)}
               onMouseLeave={() => handleHover(false)}
               ref={(el) => (sidebarMenuRefs.current[index] = el)}
@@ -71,36 +71,36 @@ export function RegionUserPage() {
             >
               <Link
                 to={disabled ? '#' : to}
-                className={`${styleRegionUserPage.sidebarMenuLink} ${activeButton === btnId ? styleRegionUserPage.active : ''} ${disabled ? styleRegionUserPage.disabledLink : ''}`}
+                className={`${styleSuperAdmin.sidebarMenuLink} ${activeButton === btnId ? styleSuperAdmin.active : ''} ${disabled ? styleSuperAdmin.disabledLink : ''}`}
                 onClick={() => !disabled && updateActiveButton(btnId)}
               >
-                <i className={`ri ${icon} ${styleRegionUserPage.sidebarIcons}`} alt={`${label} Icon`} />
-                <span className={styleRegionUserPage.navItem}>{label}</span>
+                <i className={`ri ${icon} ${styleSuperAdmin.sidebarIcons}`} alt={`${label} Icon`} />
+                <span className={styleSuperAdmin.navItem}>{label}</span>
               </Link>
             </li>
           ))}
 
           {/* Theme Link */}
           <li
-            className={styleRegionUserPage.sidebarMenuItem}
+            className={styleSuperAdmin.sidebarMenuItem}
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)}
             ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
           >
             <a 
               href="#"
-              className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
+              className={`${styleSuperAdmin.sidebarMenuLink} ${styleSuperAdmin.sidebarMenuLink}`}
               id="theme-button"
               style={{ display: 'flex', alignItems: 'center' }}
             >
               <i className="ri-moon-clear-fill" style={{ marginRight: '10px' }} />
-              <span className={styleRegionUserPage.navItem}>Theme</span>
+              <span className={styleSuperAdmin.navItem}>Theme</span>
             </a>
           </li>
 
           {/* Logout Link */}
           <li
-            className={styleRegionUserPage.sidebarMenuItem}
+            className={styleSuperAdmin.sidebarMenuItem}
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)}
             ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
@@ -108,38 +108,38 @@ export function RegionUserPage() {
             <a
               href="#"
               onClick={handleLogoutClick}
-              className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
+              className={`${styleSuperAdmin.sidebarMenuLink} ${styleSuperAdmin.sidebarMenuLink}`}
               style={{ display: 'flex', alignItems: 'center' }}
             >
               <i className="ri-logout-box-r-fill" style={{ marginRight: '10px' }}></i>
-              <span className={styleRegionUserPage.navItem}>Logout</span>
+              <span className={styleSuperAdmin.navItem}>Logout</span>
             </a>
           </li>
 
         </ul>
       </div>
           
-      <div className={styleRegionUserPage.mainContent}>
+      <div className={styleSuperAdmin.mainContent}>
         <Header/>
         <Outlet/>
       </div>
       
 
       {isLogoutModalOpen && (
-        <div className={styleRegionUserPage.modalOverlay}>
-          <div className={styleRegionUserPage.modal}>
+        <div className={styleSuperAdmin.modalOverlay}>
+          <div className={styleSuperAdmin.modal}>
             <h2>Confirm Logout</h2>
             <h4>Are you sure you want to logout?</h4>
-            <div className={styleRegionUserPage.buttonRow}>
+            <div className={styleSuperAdmin.buttonRow}>
               <button 
                 // onClick={handleConfirmLogout} 
-                className={styleRegionUserPage.confirmLogoutBtn}
+                className={styleSuperAdmin.confirmLogoutBtn}
               >
                 Yes, Logout
               </button>
               <button 
                 onClick={() => setLogoutModalOpen(false)} 
-                className={styleRegionUserPage.cancelBtn}
+                className={styleSuperAdmin.cancelBtn}
               >
                 Cancel
               </button>
