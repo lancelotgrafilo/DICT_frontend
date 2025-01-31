@@ -58,7 +58,7 @@ export function SuperAdminPage() {
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
             { to: "modules-lists", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
-            { to: "history", label: "History", icon: "ri-history-line", btnId: "history" },
+            { to: "history", label: "History", icon: "ri-time-line", btnId: "history" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li
