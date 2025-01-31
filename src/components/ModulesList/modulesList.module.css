@@ -16,59 +16,63 @@
   background-color: var(--body-color);
   width: 100%;
   margin-top: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 .searchBarContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* Better spacing */
+  gap: 10px;
 }
 
 .searchBar {
-  width: 80%; /* Adjust as needed */
+  width: 60%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #D3D3D3;
+  border: 1px solid #d3d3d3;
   border-radius: 5px;
   font-family: var(--body-font);
-  background-color: #F5F5F5;
-  color: #333333;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 .addModuleButton {
   padding: 10px 20px;
-  margin-left: 10px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .addModuleButton:hover {
   background-color: #45a049;
 }
 
-
 .card {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px var(--shadow-color);
   width: 100%;
+  height: 100%;
 }
+
 .tableContainer {
-  max-height: 510px; /* Adjust as needed */
   overflow-y: auto;
 }
 
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate; /* Prevent double border issue */
+  border-spacing: 0;
   font-family: var(--body-font);
 }
 
-.table th, .table td {
+.table th,
+.table td {
   border: 1px solid var(--text-color);
   padding: 10px;
   text-align: left;
@@ -83,6 +87,7 @@
   background-color: var(--body-color);
 }
 
+/* Modal Overlay */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -93,17 +98,166 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 1000;
 }
 
+/* Modal Container */
 .modal {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 450px;
   width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
+/* Modal Title */
+.modal h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Form Fields */
+.modal input,
+.modal textarea,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.modal textarea {
+  resize: none;
+  height: 100px;
+}
+
+/* Button Container */
+.modal .buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  gap: 5px; /* Reduced gap between buttons */
+}
+
+/* Button Styles */
 button {
-  margin: 10px;
+  margin: 5px; /* Removed extra margin */
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1; /* Ensures buttons take equal width */
+}
+
+/* Primary Button (Blue) */
+.modal_btn_primary {
+  background-color: #0056b3;
+  border: 1px solid #0056b3; /* Blue border */
+  color: white;
+  border-radius: 5px;
+  padding: 15px 16px; /* Increased padding */
+  transition: all 0.3s ease;
+}
+
+.modal_btn_primary:hover {
+  background-color: #004186;
+  border: 1px solid #004186;
+  color: white;
+}
+
+.modal_btn_cancel {
+  background-color: #dc3545;
+  border: 1px solid #dc3545; /* Blue border */
+  color: white;
+  border-radius: 5px;
+  padding: 15px 16px; /* Increased padding */
+  transition: all 0.3s ease;
+}
+
+.modal_btn_cancel:hover {
+  background-color: #7f212b;
+  border: 1px solid #7f212b;
+  color: white;
+}
+
+/* Primary Button (Blue) */
+.btn_primary {
+  background-color: transparent;
+  border: 1px solid #0056b3; /* Blue border */
+  color: #0056b3;
+  border-radius: 5px;
+  padding: 5px 8px; /* Increased padding */
+  transition: all 0.3s ease;
+}
+
+.btn_primary:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Secondary Button (Gray) */
+.btn_secondary {
+  background-color: transparent;
+  border: 1px solid #6c757d; /* Gray border */
+  color: #6c757d;
+  border-radius: 5px;
+  padding: 5px 8px;;
+  transition: all 0.3s ease;
+}
+
+.btn_secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Cancel Button (Red) */
+.btn_cancel {
+  background-color: transparent;
+  border: 1px solid #dc3545; /* Red border */
+  color: #dc3545;
+  border-radius: 5px;
+  padding: 5px 8px;;
+  transition: all 0.3s ease;
+}
+
+.btn_cancel:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Submit Button (Green) */
+.btn_submit {
+  background-color: transparent;
+  border: 1px solid #28a745; /* Green border */
+  color: #28a745;
+  border-radius: 5px;
+  padding: 5px 8px;;
+  transition: all 0.3s ease;
+}
+
+.btn_submit:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn_add {
+  justify-content: center;
+  width: 30%;
+  background-color: #6c757d;
+  border: 2px solid #6c757d;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 8px;;
+  transition: all 0.3s ease;
+}
+
+.btn_add:hover {
+  background-color:#545b61;
+  border: 2px solid #545b61; 
+  color: white;
 }

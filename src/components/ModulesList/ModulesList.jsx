@@ -4,36 +4,36 @@ import useGetModules from "../../utils/Hooks/ModulesHooks/useGetModules";
 import usePostModule from "../../utils/Hooks/ModulesHooks/usePostModule";
 import useDeleteModule from "../../utils/Hooks/ModulesHooks/useDeleteModule";
 import useUpdateModule from "../../utils/Hooks/ModulesHooks/useUpdateModule";
-import { FaEdit, FaTrash } from 'react-icons/fa'; // Import Bootstrap icons
-import { toast } from "react-toastify";  // Import toastify
+import { FaEdit, FaTrash, FaPlus, FaEye } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export function ModulesList() {
-  const { modules, refetch } = useGetModules(); // Hook to fetch modules
+  const { modules, refetch } = useGetModules();
   const { postModule, loading: postLoading, error: postError, success: postSuccess } = usePostModule();
   const { deleteModule, loading: deleteLoading, error: deleteError, success: deleteSuccess } = useDeleteModule();
   const { updateModule, loading: updateLoading, error: updateError, success: updateSuccess } = useUpdateModule();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState(""); // New state for difficulty filter
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Delete confirmation modal state
-  const [currentModule, setCurrentModule] = useState(null); // To store the module being edited
-  const [moduleToDelete, setModuleToDelete] = useState(null); // Store module to delete
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [currentModule, setCurrentModule] = useState(null);
+  const [moduleToDelete, setModuleToDelete] = useState(null);
 
   const sortedModules = [...modules]
     .sort((a, b) => {
       const order = { Beginner: 1, Intermediate: 2, Technical: 3 };
       return order[a.difficulty] - order[b.difficulty];
     })
-    .filter((module) => 
+    .filter((module) =>
       module.module_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedDifficulty ? module.difficulty === selectedDifficulty : true) // Apply difficulty filter
+      (selectedDifficulty ? module.difficulty === selectedDifficulty : true)
     );
 
   useEffect(() => {
     if (postSuccess) {
       toast.success("New module successfully added!");
-      refetch(); // Refetch data after adding module
+      refetch();
     }
     if (postError) {
       toast.error(`Error: ${postError}`);
@@ -43,7 +43,7 @@ export function ModulesList() {
   useEffect(() => {
     if (updateSuccess) {
       toast.success("Module successfully updated!");
-      refetch(); // Refetch data after updating module
+      refetch();
     }
     if (updateError) {
       toast.error(`Error: ${updateError}`);
@@ -53,7 +53,7 @@ export function ModulesList() {
   useEffect(() => {
     if (deleteSuccess) {
       toast.success("Module successfully deleted!");
-      refetch(); // Refetch data after deleting module
+      refetch();
     }
     if (deleteError) {
       toast.error(`Error: ${deleteError}`);
@@ -61,20 +61,17 @@ export function ModulesList() {
   }, [deleteSuccess, deleteError, refetch]);
 
   const handleEdit = (moduleId) => {
-    // Set current module and show the modal for editing
     const module = modules.find((module) => module._id === moduleId);
     setCurrentModule(module);
     setShowModal(true);
   };
 
   const handleDelete = (moduleId) => {
-    // Set the module to delete and show confirmation modal
     setModuleToDelete(moduleId);
     setShowDeleteConfirmation(true);
   };
 
   const handleConfirmDelete = () => {
-    // Call delete hook to delete the module
     deleteModule(moduleToDelete);
     setShowDeleteConfirmation(false);
     setModuleToDelete(null);
@@ -86,13 +83,13 @@ export function ModulesList() {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Hide modal
-    setCurrentModule(null); // Reset current module
+    setShowModal(false);
+    setCurrentModule(null);
   };
 
   const handleAddModule = () => {
-    setCurrentModule(null); // No module selected for adding
-    setShowModal(true); // Show modal for adding
+    setCurrentModule(null);
+    setShowModal(true);
   };
 
   const handleSubmit = (e) => {
@@ -105,133 +102,139 @@ export function ModulesList() {
     };
 
     if (currentModule) {
-      // Update the module
       updateModule(currentModule._id, moduleData);
     } else {
-      // Add a new module
       postModule(moduleData);
     }
-    setShowModal(false); // Close the modal after submission
+    setShowModal(false);
+  };
+
+  const handleView = (moduleId) => {
+    const module = modules.find((module) => module._id === moduleId);
+    if (module) {
+      toast.info(`Viewing Module: ${module.module_name}`);
+    }
   };
 
   return (
     <div className={styleModulesList.mainContent}>
       <div className={styleModulesList.card}>
-        <div className={styleModulesList.searchBarContainer}>
+        {/* Search, Dropdown, and Add Module Button */}
+        <div className={styleModulesList.searchBarContainer} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
           <input
             type="text"
             className={styleModulesList.searchBar}
             placeholder="Search modules..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              let sanitizedInput = e.target.value.replace(/[^a-zA-Z0-9\s]/g, "");
+              sanitizedInput = sanitizedInput.slice(0, 50);
+              setSearchTerm(sanitizedInput);
+            }}
           />
           <select
-            className={styleModulesList.difficultySelect}
             value={selectedDifficulty}
-            onChange={(e) => setSelectedDifficulty(e.target.value)} // Difficulty filter
+            style={{ width: "20%" }}
+            onChange={(e) => setSelectedDifficulty(e.target.value)}
+            className="form-select"
           >
-            <option value="">All Difficulty Levels</option>
+            <option value="">Category Levels</option>
             <option value="Beginner">Beginner</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Technical">Technical</option>
           </select>
-          <button
-            className={styleModulesList.addModuleButton}
-            onClick={handleAddModule}
-          >
-            Add Module
+          <button className={styleModulesList.btn_add} onClick={handleAddModule} style={{display: "flex", alignItems: "center", gap: "5px" }}>
+            <FaPlus /> Add Module
           </button>
         </div>
+
+        {/* Modules Table */}
         <div className={styleModulesList.tableContainer}>
           <table className={styleModulesList.table}>
             <thead>
               <tr>
-                <th>Module Name</th>
-                <th>Description</th>
-                <th>Difficulty</th>
-                <th>Actions</th> {/* Added Actions column */}
+                <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Module Name</th>
+                <th style={{ width: "40%", textAlign: "center", verticalAlign: "middle" }}>Description</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Difficulty</th>
+                <th style={{ width: "25%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {sortedModules.map((module) => (
-                <tr key={module._id}>
-                  <td>{module.module_name}</td>
-                  <td>{module.module_description}</td>
-                  <td>{module.difficulty}</td>
-                  <td>
-                    {/* Action buttons */}
-                    <button
-                      className="btn btn-sm btn-warning"
-                      onClick={() => handleEdit(module._id)}
-                    >
-                      <FaEdit /> {/* Edit icon */}
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleDelete(module._id)}
-                    >
-                      <FaTrash /> {/* Delete icon */}
-                    </button>
+              {sortedModules.length > 0 ? (
+                sortedModules.map((module) => (
+                  <tr key={module._id}>
+                    <td>{module.module_name}</td>
+                    <td>{module.module_description}</td>
+                    <td style={{ textAlign: "center", verticalAlign: "middle" }}>{module.difficulty}</td>
+                    <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                      <button className={styleModulesList.btn_primary} onClick={() => handleView(module._id)}>
+                        <FaEye /> View
+                      </button>
+                      <button className={styleModulesList.btn_submit} onClick={() => handleEdit(module._id)}>
+                        <FaEdit /> Edit
+                      </button>
+                      <button className={styleModulesList.btn_cancel} onClick={() => handleDelete(module._id)}>
+                        <FaTrash /> Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: "center", padding: "10px", color: "gray" }}>
+                    No Modules Found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Modal Overlay for Add/Edit */}
       {showModal && (
         <div className={styleModulesList.modalOverlay}>
           <div className={styleModulesList.modal}>
             <h2>{currentModule ? "Edit Module" : "Add Module"}</h2>
-            <form onSubmit={handleSubmit}>
+
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+
               <input
                 type="text"
                 name="module_name"
                 placeholder="Module Name"
-                defaultValue={currentModule ? currentModule.module_name : ""}
+                defaultValue={currentModule?.module_name || ""}
+                required
               />
+
               <textarea
                 name="module_description"
                 placeholder="Module Description"
-                defaultValue={currentModule ? currentModule.module_description : ""}
+                defaultValue={currentModule?.module_description || ""}
+                required
               />
-              <select
-                name="difficulty"
-                defaultValue={currentModule ? currentModule.difficulty : "Beginner"}
-              >
+
+              <select name="difficulty" defaultValue={currentModule?.difficulty || ""} required>
+                <option value="">Category Levels</option>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Technical">Technical</option>
               </select>
-              <button type="submit" disabled={postLoading || updateLoading}>
-                {currentModule ? "Update" : "Add"} Module
-              </button>
-              <button type="button" onClick={handleCloseModal}>
-                Cancel
-              </button>
+
+              <div className={styleModulesList.buttonContainer}>
+                {/* Cancel Button First */}
+                <button type="button" className={styleModulesList.modal_btn_cancel} onClick={handleCloseModal}>
+                  Cancel
+                </button>
+                {/* Submit Button Second */}
+                <button type="submit" className={styleModulesList.modal_btn_primary}>
+                  {currentModule ? "Update" : "Add"} Module
+                </button>
+              </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Modal Overlay for Delete Confirmation */}
-      {showDeleteConfirmation && (
-        <div className={styleModulesList.modalOverlay}>
-          <div className={styleModulesList.modal}>
-            <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this module?</p>
-            <div>
-              <button onClick={handleConfirmDelete} disabled={deleteLoading}>
-                Yes, Delete
-              </button>
-              <button onClick={handleCancelDelete}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
-      
     </div>
   );
 }
