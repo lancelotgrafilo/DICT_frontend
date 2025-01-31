@@ -15,13 +15,13 @@ export function Homepage() {
       <Header />
       <Modules />
 
-      <div className={styleHomePage.requestContainer}>  
-        <h3>Request Speaker</h3>
-        <button aria-placeholder="Request Speaker">
-          <Link to="/request-form">
-            Request Speaker
+      <div className="d-flex align-items-center justify-content-center min-vh-50 bg-light">
+        <div className="w-100 p-5 d-flex flex-column align-items-center bg-white shadow-lg rounded-4">
+          <h2 className="mb-4 fw-bold text-primary">Need a Speaker?</h2>
+          <Link to="/request-form" className="btn btn-primary btn-lg px-4">
+            Request Now
           </Link>
-        </button>
+        </div>
       </div>
 
       
