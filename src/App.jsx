@@ -10,6 +10,7 @@ import { TrainingPage } from './pages/TrainingPage/TrainingPage.jsx';
 import { FocalDashboard } from './components/Users/Focal/Dashboard/FocalDashboard.jsx';
 import { ModulesList } from './components/ModulesList/ModulesList.jsx';
 import { FocalSettings } from './components/Users/Focal/Settings/FocalSettings.jsx';
+import { History } from './components/Users/Focal/History/History.jsx';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="request" element={<Request />} />
             <Route path="activities" element={<Activities />} />
             <Route path='modules-lists' element={<ModulesList/>} />
+            <Route path='history' element={<History/>} />
             <Route path='focal-settings' element={<FocalSettings/>} /> 
           </Route>
 
