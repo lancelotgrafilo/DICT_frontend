@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styleModulesList from "./modulesList.module.css";
 import useGetModules from "../../utils/Hooks/ModulesHooks/useGetModules";
+import usePostModule from "../../utils/Hooks/ModulesHooks/usePostModule";
+import useDeleteModule from "../../utils/Hooks/ModulesHooks/useDeleteModule";
+import useUpdateModule from "../../utils/Hooks/ModulesHooks/useUpdateModule";
 import { FaEdit, FaTrash } from 'react-icons/fa'; // Import Bootstrap icons
+import { toast } from "react-toastify";  // Import toastify
 
 export function ModulesList() {
-  const { modules } = useGetModules(); // Assuming this hook fetches the module data
+  const { modules, refetch } = useGetModules(); // Hook to fetch modules
+  const { postModule, loading: postLoading, error: postError, success: postSuccess } = usePostModule();
+  const { deleteModule, loading: deleteLoading, error: deleteError, success: deleteSuccess } = useDeleteModule();
+  const { updateModule, loading: updateLoading, error: updateError, success: updateSuccess } = useUpdateModule();
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState(""); // New state for difficulty filter
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Delete confirmation modal state
   const [currentModule, setCurrentModule] = useState(null); // To store the module being edited
@@ -16,9 +25,40 @@ export function ModulesList() {
       const order = { Beginner: 1, Intermediate: 2, Technical: 3 };
       return order[a.difficulty] - order[b.difficulty];
     })
-    .filter((module) =>
-      module.module_name.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter((module) => 
+      module.module_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedDifficulty ? module.difficulty === selectedDifficulty : true) // Apply difficulty filter
     );
+
+  useEffect(() => {
+    if (postSuccess) {
+      toast.success("New module successfully added!");
+      refetch(); // Refetch data after adding module
+    }
+    if (postError) {
+      toast.error(`Error: ${postError}`);
+    }
+  }, [postSuccess, postError, refetch]);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      toast.success("Module successfully updated!");
+      refetch(); // Refetch data after updating module
+    }
+    if (updateError) {
+      toast.error(`Error: ${updateError}`);
+    }
+  }, [updateSuccess, updateError, refetch]);
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      toast.success("Module successfully deleted!");
+      refetch(); // Refetch data after deleting module
+    }
+    if (deleteError) {
+      toast.error(`Error: ${deleteError}`);
+    }
+  }, [deleteSuccess, deleteError, refetch]);
 
   const handleEdit = (moduleId) => {
     // Set current module and show the modal for editing
@@ -34,8 +74,8 @@ export function ModulesList() {
   };
 
   const handleConfirmDelete = () => {
-    // Add your delete logic here
-    console.log(`Delete module with ID: ${moduleToDelete}`);
+    // Call delete hook to delete the module
+    deleteModule(moduleToDelete);
     setShowDeleteConfirmation(false);
     setModuleToDelete(null);
   };
@@ -55,6 +95,25 @@ export function ModulesList() {
     setShowModal(true); // Show modal for adding
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const moduleData = {
+      module_name: formData.get("module_name"),
+      module_description: formData.get("module_description"),
+      difficulty: formData.get("difficulty"),
+    };
+
+    if (currentModule) {
+      // Update the module
+      updateModule(currentModule._id, moduleData);
+    } else {
+      // Add a new module
+      postModule(moduleData);
+    }
+    setShowModal(false); // Close the modal after submission
+  };
+
   return (
     <div className={styleModulesList.mainContent}>
       <div className={styleModulesList.card}>
@@ -66,6 +125,16 @@ export function ModulesList() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <select
+            className={styleModulesList.difficultySelect}
+            value={selectedDifficulty}
+            onChange={(e) => setSelectedDifficulty(e.target.value)} // Difficulty filter
+          >
+            <option value="">All Difficulty Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Technical">Technical</option>
+          </select>
           <button
             className={styleModulesList.addModuleButton}
             onClick={handleAddModule}
@@ -116,25 +185,29 @@ export function ModulesList() {
         <div className={styleModulesList.modalOverlay}>
           <div className={styleModulesList.modal}>
             <h2>{currentModule ? "Edit Module" : "Add Module"}</h2>
-            <form>
-              {/* Add input fields for module details here */}
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
+                name="module_name"
                 placeholder="Module Name"
                 defaultValue={currentModule ? currentModule.module_name : ""}
               />
               <textarea
+                name="module_description"
                 placeholder="Module Description"
                 defaultValue={currentModule ? currentModule.module_description : ""}
               />
               <select
+                name="difficulty"
                 defaultValue={currentModule ? currentModule.difficulty : "Beginner"}
               >
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Technical">Technical</option>
               </select>
-              <button type="submit">Save</button>
+              <button type="submit" disabled={postLoading || updateLoading}>
+                {currentModule ? "Update" : "Add"} Module
+              </button>
               <button type="button" onClick={handleCloseModal}>
                 Cancel
               </button>
@@ -150,12 +223,15 @@ export function ModulesList() {
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this module?</p>
             <div>
-              <button onClick={handleConfirmDelete}>Yes, Delete</button>
+              <button onClick={handleConfirmDelete} disabled={deleteLoading}>
+                Yes, Delete
+              </button>
               <button onClick={handleCancelDelete}>Cancel</button>
             </div>
           </div>
         </div>
       )}
+      
     </div>
   );
 }

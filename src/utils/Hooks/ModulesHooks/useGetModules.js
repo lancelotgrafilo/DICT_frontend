@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const useModules = () => {
@@ -6,31 +6,33 @@ const useModules = () => {
   const [loadingModules, setLoading] = useState(true);
   const [errorModule, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await axios.get('/api/get-module');
-        
-        // Check if the response is valid JSON (array)
-        if (Array.isArray(response.data)) {
-          setModules(response.data);
-        } else {
-          console.error("Expected an array, but got:", response.data);
-          setModules([]);
-        }
-      } catch (err) {
-        console.error("Error fetching modules:", err);
-        setError(err.message || 'An error occurred while fetching modules');
-        setModules([]); // Optionally clear modules
-      } finally {
-        setLoading(false);
+  const fetchModules = useCallback(async () => {
+    try {
+      setLoading(true); // Set loading to true before fetching
+      const response = await axios.get('/api/get-module');
+      
+      // Check if the response is valid JSON (array)
+      if (Array.isArray(response.data)) {
+        setModules(response.data);
+      } else {
+        console.error("Expected an array, but got:", response.data);
+        setModules([]);
       }
-    };    
-
-    fetchModules();
+    } catch (err) {
+      console.error("Error fetching modules:", err);
+      setError(err.message || 'An error occurred while fetching modules');
+      setModules([]); // Optionally clear modules
+    } finally {
+      setLoading(false); // Set loading to false once the request is done
+    }
   }, []);
 
-  return { modules, loadingModules, errorModule };
+  // Initial fetch when the component mounts
+  useEffect(() => {
+    fetchModules();
+  }, [fetchModules]);
+
+  return { modules, loadingModules, errorModule, refetch: fetchModules };
 };
 
 export default useModules;
