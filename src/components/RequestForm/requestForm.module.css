@@ -354,7 +354,7 @@ input[type="checkbox"]:checked + label {
 #nav-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 0 auto;
 }
 
 #prev-button,
