@@ -38,16 +38,34 @@
   }
 }
 
+.cardContainer{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.cardInfo{
+  margin-left: 16px;
+}
+.cardInfo p{
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+}
 /* Card style */
 .card {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Hover effect for cards */
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -59,25 +77,99 @@
   margin-bottom: 0.75rem;
 }
 
+/* Card number style */
 .card p {
   font-size: 2rem;
   font-weight: 600;
   color: #333;
+  margin-top: 1rem;
 }
 
-/* To make the cards square-shaped */
+/* To make the cards rectangular */
 .card {
-  aspect-ratio: 1;
+  aspect-ratio: 1.5; /* Rectangular shape */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 1.5rem;
 }
 
-.card h2 {
+.card .icon-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
-.card p {
-  font-size: 1.5rem;
+.card .icon-container svg {
+  margin-right: 1rem; /* Space between icon and text */
 }
+
+.card .label {
+  font-size: 0.875rem;
+  color: #777;
+  margin-top: 0.5rem;
+}
+
+/* For the labels to appear at the bottom */
+.card .number {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: auto; /* Ensure the number stays at the top */
+}
+
+/* Aligning the text in the center for rectangular cards */
+.cardGrid {
+  grid-template-columns: repeat(3, 1fr); /* Ensure rectangular cards in grid */
+}
+
+/* Card style for rectangular shape */
+.cardRec {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start; /* Align to the start for better layout */
+  text-align: left; /* Align text to the left */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 1.5; /* Rectangular shape */
+}
+
+/* Hover effect for cards */
+.cardRec:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon container (left side of the card) */
+.cardRec .icon-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardRec .icon-container svg {
+  margin-right: 1rem; /* Space between icon and number */
+}
+
+/* Number styling (on top) */
+.cardRec .number {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 0.5rem; /* Space between number and icon */
+}
+
+/* Label styling (on bottom) */
+.cardRec .label {
+  font-size: 0.875rem;
+  color: #777;
+  margin-top: auto; /* Ensure label is positioned at the bottom */
+}
+
