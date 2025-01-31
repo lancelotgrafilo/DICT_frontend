@@ -1,4 +1,3 @@
-import React from 'react';
 import styleHistory from './history.module.css';
 import useGetHistory from '../../../../utils/Hooks/HistoryHooks/useGetHistory'; // Import the custom hook
 
