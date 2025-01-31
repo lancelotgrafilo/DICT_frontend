@@ -137,6 +137,17 @@ export function FocalDashboard() {
             <FaCheckCircle size={48} color="#4caf50" />
           </div>
           <div className={styleFocalDashboard.cardInfo}>
+            <p className="text-2xl font-bold">{data.totalAcceptedRequest}</p>
+            <span className="text-sm mt-2">Total Activities</span>
+          </div>
+        </div>
+      </div>
+      <div className={`card ${styleFocalDashboard.cardRec}`}>
+        <div className={styleFocalDashboard.cardContainer}>
+          <div className={styleFocalDashboard.cardIcon}>
+            <FaCheckCircle size={48} color="#4caf50" />
+          </div>
+          <div className={styleFocalDashboard.cardInfo}>
             <p className="text-2xl font-bold">{data.totalRequest}</p>
             <span className="text-sm mt-2">Total Requests</span>
           </div>
