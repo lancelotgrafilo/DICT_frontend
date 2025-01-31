@@ -235,6 +235,24 @@ export function ModulesList() {
         </div>
       )}
 
+      {showDeleteConfirmation && (
+        <div className={styleModulesList.modalOverlay}>
+          <div className={styleModulesList.modal}>
+            <h2>Are you sure you want to delete this module?</h2>
+            <div className={styleModulesList.buttonContainer}>
+              {/* Cancel Button */}
+              <button type="button" className={styleModulesList.modal_btn_cancel} onClick={handleCancelDelete}>
+                Cancel
+              </button>
+              {/* Confirm Delete Button */}
+              <button type="button" className={styleModulesList.modal_btn_primary} onClick={handleConfirmDelete}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
