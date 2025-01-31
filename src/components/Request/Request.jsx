@@ -21,7 +21,7 @@ export function Request() {
 
   const handleAccept = async (index) => {
     const requestId = pendingRequests[index]._id; // Get the correct requestId from pendingRequests
-    
+
     // Set the processing state for this request
     setProcessing(prev => ({ ...prev, [requestId]: 'accept' }));
 
@@ -37,7 +37,7 @@ export function Request() {
 
   const handleReject = async (index) => {
     const requestId = pendingRequests[index]._id; // Get the correct requestId from pendingRequests
-    
+
     // Set the processing state for this request
     setProcessing(prev => ({ ...prev, [requestId]: 'reject' }));
 
@@ -62,13 +62,13 @@ export function Request() {
           <table className="table table-bordered text-center bg-white">
             <thead>
               <tr style={{ backgroundColor: "#003366", color: "white" }}>
-                <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle"}}>Name</th>
-                <th style={{ width: "16%", textAlign: "center", verticalAlign: "middle"}}>Date Submitted</th>
-                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>Preferred Date</th>
-                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>Start Time</th>
-                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle"}}>End Time</th>
-                <th style={{ width: "5%", textAlign: "center", verticalAlign: "middle"}}>Total Hours</th>
-                <th style={{ width: "21%", textAlign: "center", verticalAlign: "middle"}}>Actions</th>
+                <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Name</th>
+                <th style={{ width: "16%", textAlign: "center", verticalAlign: "middle" }}>Date Submitted</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Preferred Date</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Start Time</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>End Time</th>
+                <th style={{ width: "5%", textAlign: "center", verticalAlign: "middle" }}>Total Hours</th>
+                <th style={{ width: "21%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -96,8 +96,8 @@ export function Request() {
                           rowSpan={request.date_and_time.length}
                           style={{ textAlign: "center", verticalAlign: "middle" }}
                         >
-                          <button 
-                            className="btn btn-outline-primary btn-sm mx-1 custom-btn" 
+                          <button
+                            className="btn btn-outline-primary btn-sm mx-1 custom-btn"
                             onClick={() => handleView(reqIndex)}
                             disabled={updateLoading || processing[request._id]}
                           >
@@ -124,7 +124,7 @@ export function Request() {
                 )
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center">
+                  <td colSpan="100%" className="text-center">
                     {getLoading ? "Loading..." : error ? "Error fetching requests" : "No pending requests available"}
                   </td>
                 </tr>

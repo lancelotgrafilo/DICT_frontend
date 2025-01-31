@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-card {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .green {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .red {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  
+  .orange {
+    background: #fff3cd;
+    color: #856404;
+  }
+  
