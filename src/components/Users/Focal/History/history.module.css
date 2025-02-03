@@ -1,18 +1,51 @@
-.mainContent {
-  padding: 20px;
+/* Centered Main Container */
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  min-height: 100vh ;
+  margin-top: 20px;
+  background-color: #f4f4f4;
 }
 
+/* Full-Screen Card View */
+.card {
+  background: white;
+  padding: 25px;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures content is spaced properly */
+}
+
+/* Table Styling */
 .transactionTable {
   width: 100%;
   border-collapse: collapse;
+  flex-grow: 1; /* Allows table to expand within the card */
 }
 
 .transactionTable th, .transactionTable td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
 }
 
 .transactionTable th {
   background-color: #f2f2f2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card {
+    padding: 15px;
+  }
+
+  .transactionTable th, .transactionTable td {
+    padding: 8px;
+  }
 }
