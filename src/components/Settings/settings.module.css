@@ -1,26 +1,163 @@
-.mainContent {
-  padding: 20px;
+/* Main container with flexbox for center alignment */
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
-.configForm, .passwordForm {
+/* Card View Styling */
+.card {
+  background: white;
+  padding: 25px;
+  width: 100%; /* Adjusted width to be responsive */
+  max-width: 1200px; /* Allow it to be wider */
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Title Styling */
+.card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+  text-align: center;
+}
+
+/* Form Row: Used for side-by-side input fields */
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.row .inputGroup {
+  flex: 1; /* Make both input fields in a row take equal width */
+}
+
+/* Input Field Styling */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.inputGroup input,
+.inputGroup select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: white;
+  color: gray; /* Gray text color */
+  transition: all 0.3s ease;
+}
+
+.inputGroup input::placeholder {
+  color: lightgray; /* Light gray placeholder text */
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0px 0px 5px rgba(0, 86, 179, 0.3);
+}
+
+.inputGroup {
+  margin-top: 20px;
+}
+
+/* Centered Button Group */
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Button Styles */
+.btnPrimary,
+.btnSubmit,
+.btnCancel {
+  background-color: transparent;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btnPrimary {
+  border-color: #0056b3;
+  color: #0056b3;
   margin-bottom: 20px;
 }
 
-.configForm input, .passwordForm input {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
+.btnPrimary:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.btnSubmit {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.btnSubmit:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btnCancel {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btnCancel:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Align "New Password" and "Confirm New Password" in a row */
+.passwordForm .row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Ensure equal width for both fields */
+.passwordForm .row .inputGroup {
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  align-items: center; /* Ensure items align properly */
+  justify-content: space-between;
+  gap: 20px;
   width: 100%;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+.leftColumn, .rightColumn {
+  flex: 1; /* Make them take equal width */
 }
 
-button:hover {
-  background-color: #0056b3;
+.verticalDivider {
+  width: 100%; /* Thicker line */
+  height: 5px; /* Ensures full height */
+  background-color: #00796b; /* Visible color */
+  min-height: 80px; /* Ensure it appears properly */
 }
+
+
