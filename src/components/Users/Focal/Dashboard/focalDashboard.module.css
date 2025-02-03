@@ -13,11 +13,24 @@
   margin-top: 16px;
 }
 
+
 /* For the charts grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+}
+.cardGrid2 {
+  display: grid;
+  grid-template-columns: 3fr;
+}
+
+.cardGrid2 .cardRec {
+  margin-bottom: 16px;
+}
+
+.graphContainer{
+  margin-top: 16px;
 }
 
 @media (min-width: 768px) { /* Tablet view */
@@ -43,11 +56,13 @@
   justify-content: start;
   align-items: center;
 }
+
 .cardInfo{
   margin-left: 16px;
 }
-.cardInfo p{
-  font-size: 2rem;
+
+.cardInfo p {
+  font-size: 3rem;
   font-weight: 600;
   color: #333;
 }
@@ -56,7 +71,7 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -66,19 +81,19 @@
 }
 
 /* Hover effect for cards */
-.card:hover {
+.card:hover{
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.card h2 {
-  font-size: 1.25rem;
+.card h2{
+  font-size: 3rem;
   color: #4a4a4a;
   margin-bottom: 0.75rem;
 }
 
-/* Card number style */
-.card p {
+
+.card p{
   font-size: 2rem;
   font-weight: 600;
   color: #333;
