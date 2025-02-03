@@ -123,9 +123,9 @@ export function FocalDashboard() {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-0" style={{ marginTop: "16px" }}>
       <div className="card shadow p-4">
-        <h1 className="text-3xl font-bold mb-6" style={{ marginTop: "16px", textAlign: "center" }}>
+        <h1 className="text-3xl font-bold mb-6" style={{ marginBottom: "16px", textAlign: "center" }}>
           Analytics Dashboard
         </h1>
         <div className={`grid ${styleFocalDashboard.grid}`}>
@@ -133,19 +133,43 @@ export function FocalDashboard() {
             <h2 className="text-xl font-semibold">Request Summary</h2>
             <Doughnut data={chartData} options={chartOptions} />
           </div>
-          <div className={`card ${styleFocalDashboard.card}`}>
+
+          <div className={styleFocalDashboard.cardGrid2}>
+            {[
+              { label: "Completed Requests", value: data.totalCompletedRequest, icon: FaCheckCircle, color: "#4caf50" },
+              { label: "Pending Requests", value: data.totalPendingRequest, icon: FaClock, color: "#ff9800" },
+              { label: "Rejected Requests", value: data.totalRejectedRequest, icon: FaTimesCircle, color: "#f44336" },
+              
+            ].map(({ label, value, icon: Icon, color }, index) => (
+              <div key={index} className={`card ${styleFocalDashboard.cardRec}`}>
+                <div className={styleFocalDashboard.cardContainer}>
+                  <div className={styleFocalDashboard.cardIcon}>
+                    <Icon size={48} color={color} />
+                  </div>
+                  <div className={styleFocalDashboard.cardInfo}>
+                    <p className="text-2xl font-bold">{value}</p>
+                    <span className="text-sm mt-2">{label}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+        </div>
+            
+        <div className={styleFocalDashboard.graphContainer}>
+          <div className={`card ${styleFocalDashboard.card}`} id={styleFocalDashboard.graph}>
             <h2 className="text-xl font-semibold">Completed Requests Per Month</h2>
             <Line data={lineChartData} options={{ responsive: true }} />
           </div>
         </div>
+
         <div className={`grid ${styleFocalDashboard.cardGrid}`}>
+          
           {[
             { label: "Total Activities", value: data.totalAcceptedRequest, icon: FaCheckCircle, color: "#4caf50" },
             { label: "Total Requests", value: data.totalRequest, icon: FaCheckCircle, color: "#4caf50" },
-            { label: "Pending Requests", value: data.totalPendingRequest, icon: FaClock, color: "#ff9800" },
             { label: "Accepted Requests", value: data.totalAcceptedRequest, icon: FaCheckCircle, color: "#4caf50" },
-            { label: "Rejected Requests", value: data.totalRejectedRequest, icon: FaTimesCircle, color: "#f44336" },
-            { label: "Completed Requests", value: data.totalCompletedRequest, icon: FaCheckCircle, color: "#4caf50" },
           ].map(({ label, value, icon: Icon, color }, index) => (
             <div key={index} className={`card ${styleFocalDashboard.cardRec}`}>
               <div className={styleFocalDashboard.cardContainer}>
@@ -160,6 +184,7 @@ export function FocalDashboard() {
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
