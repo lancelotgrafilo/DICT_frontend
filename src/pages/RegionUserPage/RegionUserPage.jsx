@@ -15,7 +15,7 @@ export function RegionUserPage() {
   const { updatePath } = usePath();
 
   const sidebarMenuRefs = useRef([]);
-  
+
   const { activeButton, updateActiveButton } = useContext(ActiveButtonContext);
 
   const handleHover = (isHovered) => {
@@ -43,8 +43,10 @@ export function RegionUserPage() {
           </div>
           <div className={styleRegionUserPage.usernameContainer}>
             <h2>Freddie Alicante</h2>
-            <p>Region IV-A: Calabarzon</p>
-            <p>Admin</p>
+            <p style={{ fontSize: "12px"}}>
+              Region IV-A: Calabarzon
+            </p>
+            <p style={{ fontSize: "14px" }}>Admin</p>
           </div>
         </div>
 
@@ -53,7 +55,7 @@ export function RegionUserPage() {
         </div>
 
         <ul className={styleRegionUserPage.sidebarMenu}>
-          {[ 
+          {[
             { to: "dashboard", label: "Analytics", icon: "ri-pie-chart-2-fill", btnId: "dashboard" },
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
@@ -87,7 +89,7 @@ export function RegionUserPage() {
             onMouseLeave={() => handleHover(false)}
             ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
           >
-            <a 
+            <a
               href="#"
               className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
               id="theme-button"
@@ -118,12 +120,12 @@ export function RegionUserPage() {
 
         </ul>
       </div>
-          
+
       <div className={styleRegionUserPage.mainContent}>
-        <Header/>
-        <Outlet/>
+        <Header />
+        <Outlet />
       </div>
-      
+
 
       {isLogoutModalOpen && (
         <div className={styleRegionUserPage.modalOverlay}>
@@ -131,14 +133,14 @@ export function RegionUserPage() {
             <h2>Confirm Logout</h2>
             <h4>Are you sure you want to logout?</h4>
             <div className={styleRegionUserPage.buttonRow}>
-              <button 
+              <button
                 // onClick={handleConfirmLogout} 
                 className={styleRegionUserPage.confirmLogoutBtn}
               >
                 Yes, Logout
               </button>
-              <button 
-                onClick={() => setLogoutModalOpen(false)} 
+              <button
+                onClick={() => setLogoutModalOpen(false)}
                 className={styleRegionUserPage.cancelBtn}
               >
                 Cancel
