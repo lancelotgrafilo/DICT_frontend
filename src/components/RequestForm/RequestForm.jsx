@@ -203,15 +203,15 @@ export function RequestForm() {
   const validateStep = (step) => {
     switch (step) {
       case 1:
-        return formValues.first_name && formValues.last_name && formValues.gender && formValues.contact_number && formValues.email_address;
+        return formValues.salutation && formValues.first_name && formValues.last_name && formValues.middle_name && formValues.gender && formValues.position && formValues.contact_number && formValues.email_address && formValues.address;
       case 2:
-        return formValues.organization_name && formValues.department && formValues.position;
+        return formValues.organization_name && formValues.department && formValues.region;
       case 3:
         return formValues.date_and_time.every((dateInfo) => dateInfo.date && dateInfo.start_time && dateInfo.end_time);
       case 4:
         return rows.every((row) => row.category && row.subcategory);
       case 5:
-        return true; // No additional validation needed for review step
+        return true;
       default:
         return true;
     }
@@ -329,7 +329,7 @@ export function RequestForm() {
   return (
     <div className={styleRequestForm.mainContent} style={{borderColor:"black"}}>
       <Header />
-      <div className="container my-5" style={{ borderRadius: "5px"}}>
+      <div className="container my-3" style={{ borderRadius: "5px"}}>
         <div className="card shadow p-4">
           <h2 style={{backgroundColor: "#003366", textAlign: "center", color: 'white', padding:" 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
           <form onSubmit={handleSubmit}>
