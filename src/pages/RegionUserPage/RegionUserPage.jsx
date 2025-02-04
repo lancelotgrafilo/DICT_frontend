@@ -130,8 +130,8 @@ export function RegionUserPage() {
       {isLogoutModalOpen && (
         <div className={styleRegionUserPage.modalOverlay}>
           <div className={styleRegionUserPage.modal}>
-            <h2>Confirm Logout</h2>
-            <h4>Are you sure you want to logout?</h4>
+            <h2 style={{textAlign: "center"}}>Confirm Logout</h2>
+            <h6 style={{fontSize: "14px", textAlign: "center", marginBottom: "20px"}}>Are you sure you want to logout?</h6>
             <div className={styleRegionUserPage.buttonRow}>
               <button
                 // onClick={handleConfirmLogout} 
