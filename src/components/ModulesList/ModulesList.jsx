@@ -156,7 +156,7 @@ export function ModulesList() {
                 <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Module Name</th>
                 <th style={{ width: "40%", textAlign: "center", verticalAlign: "middle" }}>Description</th>
                 <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Difficulty</th>
-                <th style={{ width: "25%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
+                <th style={{ width: "15%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -167,9 +167,6 @@ export function ModulesList() {
                     <td>{module.module_description}</td>
                     <td style={{ textAlign: "center", verticalAlign: "middle" }}>{module.difficulty}</td>
                     <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                      <button className={styleModulesList.btn_primary} onClick={() => handleView(module._id)}>
-                        <FaEye /> View
-                      </button>
                       <button className={styleModulesList.btn_submit} onClick={() => handleEdit(module._id)}>
                         <FaEdit /> Edit
                       </button>
@@ -219,6 +216,8 @@ export function ModulesList() {
                 <option value="Intermediate">Intermediate</option>
                 <option value="Technical">Technical</option>
               </select>
+
+              <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
 
               <div className={styleModulesList.buttonContainer}>
                 {/* Cancel Button First */}

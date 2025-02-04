@@ -24,7 +24,7 @@ export function Settings() {
   return (
     <div className="mainContainer p-0 mt-3">
       <div className={styleSettings.card}>
-        <h2>Personal Information</h2>
+      <h2 style={{ fontWeight: "bold" }}>Personal Information</h2>
         <form className={styleSettings.configForm}>
           <div className={styleSettings.row}>
             <div className={styleSettings.inputGroup}>
@@ -71,7 +71,7 @@ export function Settings() {
 
         <hr className={styleSettings.verticalLine}></hr>
 
-        <h2>Change Password</h2>
+        <h2 style={{ fontWeight: "bold" }}>Change Password</h2>
         <form className={styleSettings.passwordForm}>
           <div className={styleSettings.inputGroup}>
             <label htmlFor="oldPassword">Old Password</label>
