@@ -1,5 +1,31 @@
-.loginContainer{
-  width: 200px;
-  height: 150px;
-  padding: 16px ;
+.container {
+  max-width: 1000px; /* Set a max width to prevent it from being too wide */
+  width: 100%;       /* Ensures responsiveness */
+  min-height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.card {
+  min-height: 550px;  /* Ensures a reasonable minimum height */
+  max-height: 90vh;   /* Prevents it from being too tall */
+  width: 100%;        /* Makes sure it fits the container */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;  /* Make it more adaptive on small screens */
+    height: auto;
+  }
+  
+  .card {
+    min-height: 500px; /* Adjust height for smaller screens */
+  }
 }

@@ -2,16 +2,17 @@ import React from 'react';
 import styleSignUp from './signUp.module.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useNavigate } from 'react-router-dom';
 
 import dict_logo from '../../assets/logo/logo.png';
 
 
 export function SignUpPage() {
+  const navigate = useNavigate();
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+    <div className={`container d-flex justify-content-center align-items-center min-vh-100 ${styleSignUp.container}`}>
       {/* Sign Up Container */}
       <div className="row border rounded-5 p-3 bg-blue shadow box-area">
-        
         {/* Right Box (Now on the Left) */}
         <div className="col-md-6 right-box">
           <div className="row align-items-center">
@@ -35,7 +36,7 @@ export function SignUpPage() {
               <button className="btn btn-lg btn-primary w-100 fs-6">Sign Up</button>
             </div>
             <div className="row">
-              <small>Already have an account? <a href="#">Login</a></small>
+              <small>Already have an account? <button onClick={() => navigate("/login")}>Login</button></small>
             </div>
           </div>
         </div>
