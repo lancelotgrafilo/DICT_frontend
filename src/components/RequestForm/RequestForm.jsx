@@ -209,7 +209,7 @@ export function RequestForm() {
       case 3:
         return formValues.date_and_time.every((dateInfo) => dateInfo.date && dateInfo.start_time && dateInfo.end_time);
       case 4:
-        return rows.every((row) => row.category && row.subcategory);
+        return rows.every((row) => row.category && row.subcategory.module_name && row.subcategory.module_description && row.subcategory.difficulty);
       case 5:
         return true;
       default:
@@ -814,6 +814,7 @@ export function RequestForm() {
                             type="button"
                             className="btn btn-danger btn-sm"
                             onClick={() => removeRow(index)}
+                            style={{ display: "block", margin: "0 auto" }}
                           >
                             Remove
                           </button>
