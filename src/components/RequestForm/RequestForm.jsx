@@ -329,13 +329,13 @@ export function RequestForm() {
   return (
     <div className={styleRequestForm.mainContent} style={{borderColor:"black"}}>
       <Header />
-      <div className="container my-3" style={{ borderRadius: "5px"}}>
-        <div className="card shadow p-4">
+      <div className="container my-5" style={{ borderRadius: "12px", marginBottom: "24px",}}>
+        <div className="card shadow p-4" style={{ borderRadius: "12px", marginTop: "-24px" }}>
           <h2 style={{backgroundColor: "#003366", textAlign: "center", color: 'white', padding:" 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
           <form onSubmit={handleSubmit}>
           
             {step === 1 && (
-              <div>
+              <div >
                 <h4 className="mb-3">Personal Information</h4>
                 <hr />
                 <div className="row g-3">
