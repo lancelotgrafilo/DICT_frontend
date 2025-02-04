@@ -636,27 +636,13 @@ export function RequestForm() {
                                   return;
                                 }
 
-                                // Check if the selected date is already booked
-                                const isDateBooked = requests.some(request =>
-                                  request.date_and_time.some(bookedDate => bookedDate.date === e.target.value)
-                                );
-
-                                if (isDateBooked) {
-                                  toast.warn("This date is already booked. Please select another date.");
-                                  e.target.value = ""; // Clear invalid date
-                                  return;
-                                }
-
                                 // Update the date field in the array
                                 handleChange(e, "date_and_time", index);
                               }}
                               className="form-control"
                               required
-                              min={getOneWeekAfterDate()} // Restrict date selection to 1 week after today
-                              // Add this new logic to disable the booked dates
-                              disabled={requests.some(request =>
-                                request.date_and_time.some(bookedDate => bookedDate.date === dateInfo.date)
-                              )}
+                              min={getOneWeekAfterDate()} 
+                              
                             />
                           </td>
                           <td>
