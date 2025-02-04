@@ -12,6 +12,7 @@ import { ModulesList } from './components/ModulesList/ModulesList.jsx';
 import { Settings } from './components/Settings/Settings.jsx';
 import { History } from './components/Users/Focal/History/History.jsx';
 import { SuperAdminPage } from './pages/SuperAdminPage/SuperAdminPage.jsx';
+import { FocalForm } from './components/FocalForm/FocalForm.jsx';
 
 export default function App() {
   return (
@@ -44,9 +45,9 @@ export default function App() {
           </Route>
 
 
-          <Route path="training" element={ <TrainingPage /> }>
+          <Route path="training" element={ <TrainingPage /> } />
+          <Route path="focal-form" element={ <FocalForm/>} />
 
-          </Route>
           
         </Routes>
       </Router>
