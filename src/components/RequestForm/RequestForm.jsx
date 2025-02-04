@@ -170,6 +170,12 @@ export function RequestForm() {
       setStep(step + 1);
     } else {
       toast.info("Please fill in all required fields.");
+      // Scroll to the first invalid field
+      const firstInvalidField = document.querySelector(".form-control:invalid");
+      if (firstInvalidField) {
+        firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstInvalidField.focus();
+      }
     }
   };
 
@@ -279,7 +285,7 @@ export function RequestForm() {
 
   const sanitizeInputAddress = (input) => {
     // Allow only alphanumeric characters, spaces, and commas
-    return input.replace(/[^a-zA-Z0-9\s.,]/g);
+    return input.replace(/[^a-zA-Z0-9\s.,]/g, '');
   };
 
   const handleContactNumberChange = (e) => {
@@ -311,7 +317,6 @@ export function RequestForm() {
             {step === 1 && (
               <div>
                 <h4 className="mb-3">Personal Information</h4>
-                <hr />
                 <div className="row g-3">
                   {/* Personal Info Fields */}
                   <div className="col-md-4">
@@ -332,6 +337,7 @@ export function RequestForm() {
                       <option value="Mrs.">Mrs.</option>
                       <option value="Dr.">Dr.</option>
                       <option value="Engr.">Engr.</option>
+                      <option value="Prof.">Prof.</option>
                     </select>
                   </div>
                   <div className="col-md-4">
@@ -377,15 +383,23 @@ export function RequestForm() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">Extension Name</label>
-                    <input
-                      type="text"
-                      name="extensionName"
-                      value={formValues.extension_name}
+                    <select
+                      name="extension_name"
+                      value={formValues.gender}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
+                        setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
                       }
-                      className="form-control"
-                    />
+                      className="form-select"
+                      required
+                    >
+                      <option value="">Select</option>
+                      <option value="Male">Sr.,</option>
+                      <option value="Female">Jr.,</option>
+                      <option value="Other">I.,</option>
+                      <option value="Other">II.,</option>
+                      <option value="Other">III.,</option>
+                      <option value="Other">N/A</option>
+                    </select>
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">Gender</label>
@@ -430,6 +444,7 @@ export function RequestForm() {
                       className="form-control"
                       required
                       maxLength="11" // Restricts input to 11 characters in the UI
+                      
                     />
                   </div>
                   <div className="col-md-6">
@@ -581,19 +596,19 @@ export function RequestForm() {
             {step === 3 && (
               <div>
                 <h4 className="mb-3">Preferred Date and Time</h4>
-                <div className="table-responsive">
+                <div>
                   <table className="table">
                     <thead className="table-light">
-                      <tr>
+                     
                         <th scope="col">Preferred Date</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                         <th scope="col">Total Hours</th>
-                      </tr>
+                     
                     </thead>
                     <tbody>
                       {formValues.date_and_time.map((dateInfo, index) => (
-                        <tr key={index}>
+                        <tr key={index} style={{borderColor:"white"}}>
                           <td>
                             <input
                               type="date"
@@ -1028,5 +1043,5 @@ export function RequestForm() {
         </div>
       </div>
     </div>
-  );  
+  );
 };

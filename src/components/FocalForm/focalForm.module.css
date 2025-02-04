@@ -1,0 +1,131 @@
+ body {
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+   background-color: #f5f5f5;
+ }
+ .container {
+   width: 90%;
+   max-width: 800px;
+   margin: auto;
+   padding: 20px;
+   background-color: white;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+   border-radius: 5px;
+   border: 2px solid black;
+ }
+ .header {
+   border-radius: 3px;
+   font-size:x-large;
+   text-align: center;
+   background-color: #003366;
+   color: white;
+   padding: 20px;
+   margin-bottom: 20px;
+ }
+ .sectionHeader {
+   text-align: center;
+   border-radius: 3px;
+   background-color: #003366;
+   color: white;
+   padding: 5px 10px;
+   margin-top: 20px;
+ }
+ .formGroup {
+   display: flex;
+   align-items: center;
+   margin-bottom: 15px;
+ }
+ .formGroup label {
+   width: 115px;
+   margin-right: 5px;
+ }
+    
+ .formGroup input,
+ .formGroup select {
+   flex: 1;
+   padding: 8px;
+   box-sizing: border-box;
+   background-color: #cbf0f7;
+   border: 1px solid black;
+   margin-top: 6px;
+ }
+ .formGroupContainer {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   flex-wrap: wrap;
+ }
+ .formRight{
+   margin-top: 31px;
+ }
+ .formGroupContainer .formGroup {
+   width: 48%;
+ }
+ .formContainer {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+ }
+ .formLeft, .formRight {
+   width: 100%;
+ }
+ @media (min-width: 768px) {
+   .formLeft, .formRight {
+     width: 48%;
+   }
+ }
+ .buttons {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   margin-top: 20px;
+ }
+ .buttons button {
+   flex: 1 1 auto;
+   min-width: 100px;
+   padding: 10px;
+   background-color: #003366;
+   color: white;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   margin: 5px;
+ }
+ .buttons button:hover {
+   background-color: #00509e;
+ }
+ .submitBtn {
+   display: block;
+   margin: 20px auto;
+   background-color: #003366;
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 16px;
+ }
+ .submitBtn:hover {
+   background-color: #00509e;
+ }
+ .focalStatus {
+   margin-top: 20px;
+   border: 1px dashed #003366;
+   padding: 10px;
+ }
+ .formGroupContact {
+   margin-bottom: 15px;
+ }
+ .formGroupContact label {
+   display: block;
+   margin-bottom: 5px;
+ }
+ .formGroupContact input {
+   width: 100%;
+   padding: 8px;
+   box-sizing: border-box;
+   background-color: #cbf0f7; 
+   border: 1px solid black;
+   ;
+ }
