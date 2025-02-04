@@ -60,8 +60,8 @@ export function Activities() {
   
 
   return (
-    <div className="container mt-4">
-      <div className="card shadow-lg p-4" style={{ minHeight: "80vh", borderRadius: "10px" }}>
+    <div className="container p-0 mt-3">
+      <div className="card shadow-lg p-4" style={{ minHeight: "80vh", borderRadius: "12px" }}>
 
         {/* Title */}
         <h4 className="text-center mb-3">
