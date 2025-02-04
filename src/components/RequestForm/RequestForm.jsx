@@ -180,8 +180,6 @@ export function RequestForm() {
     }
   };
 
-
-
   const calculateEndTime = (startTime) => {
     const start = new Date(`1970-01-01T${startTime}:00`);
     start.setHours(start.getHours() + 1); // Add 1 hour
@@ -199,7 +197,7 @@ export function RequestForm() {
       toast.info("Please fill in all required fields.");
     }
   };
-
+  
   const validateStep = (step) => {
     switch (step) {
       case 1:

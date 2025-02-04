@@ -253,7 +253,7 @@ body.dark-theme {
 }
 
 .confirmLogoutBtn {
-  background-color: var(--first-color);
+  background-color: #dc3545;
   color: white;
 }
 
