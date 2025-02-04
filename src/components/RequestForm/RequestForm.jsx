@@ -36,6 +36,7 @@ export function RequestForm() {
     modules_selected: [
       { module_name: '', module_description: '', difficulty: '' },
     ],
+    pdfFile: '',
   });
 
 
@@ -68,14 +69,64 @@ export function RequestForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Values:', formValues);  // Log all the formValues before submitting
+  
+    // Step 1: Generate the PDF as a Blob
+    const element = document.getElementById('step-5-content'); // The content to convert
+    const pdfOptions = {
+      margin: 5,
+      filename: `Cybersecurity Awareness Request Form ${formValues.region}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 3, scrollY: 0, windowWidth: 800 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+    };
+  
     try {
-      const response = await addRequest(formValues);
+      // Generate the PDF and get it as a Blob
+      const pdfBlob = await new Promise((resolve, reject) => {
+        html2pdf()
+          .set(pdfOptions)
+          .from(element)
+          .outputPdf('blob') // Get the PDF as a Blob
+          .then(resolve)
+          .catch(reject);
+      });
+  
+      if (!pdfBlob) {
+        throw new Error("Failed to generate PDF");
+      }
+  
+      // Step 2: Create FormData and include all formValues
+      const formData = new FormData();
+      Object.entries(formValues).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          // Convert arrays (e.g., date_and_time, modules_selected) to JSON strings
+          formData.append(key, JSON.stringify(value));
+        } else if (typeof value === 'object' && value !== null) {
+          // Handle objects (if any) by converting them to JSON strings
+          formData.append(key, JSON.stringify(value));
+        } else {
+          // Append other fields as-is
+          formData.append(key, value);
+        }
+      });
+  
+      // Step 3: Append the generated PDF file to FormData
+      formData.append('pdfFile', pdfBlob, pdfOptions.filename);
+  
+      // Log FormData contents for debugging
+      console.log('FormData Contents:');
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+  
+      // Step 4: Send the FormData to the backend
+      const response = await addRequest(formData); // Assuming addRequest accepts FormData
       console.log('Request submitted successfully:', response);
-      toast.success('Request submitted successfully:', response);
+      toast.success('Request submitted successfully!');
       navigate('/home');
     } catch (err) {
       console.error('Error submitting request:', err);
+      toast.error('Failed to submit request. Please try again.');
     }
   };
 
@@ -409,20 +460,20 @@ export function RequestForm() {
                     <label className="form-label">Extension Name</label>
                     <select
                       name="extension_name"
-                      value={formValues.gender}
+                      value={formValues.salutation}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
+                        setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
                       }
                       className="form-select"
                       required
                     >
                       <option value="">Select</option>
-                      <option value="Male">Sr.,</option>
-                      <option value="Female">Jr.,</option>
-                      <option value="Other">I.,</option>
-                      <option value="Other">II.,</option>
-                      <option value="Other">III.,</option>
-                      <option value="Other">N/A</option>
+                      <option value="Sr.">Sr.</option>
+                      <option value="Jr.">Jr.</option>
+                      <option value="I">I</option>
+                      <option value="II">II</option>
+                      <option value="III">III</option>
+                      <option value="">N/A</option>
                     </select>
                   </div>
                   <div className="col-md-4">
@@ -865,7 +916,6 @@ export function RequestForm() {
 
             {step === 5 && (
               <>
-              
               <div className="p-3" id="step-5-content" style={{ maxWidth: "100%", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
                 {/* Personal Information Section */}
                 <div style={{ border: "2px solid white", borderColor:"lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
