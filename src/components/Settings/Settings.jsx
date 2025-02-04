@@ -22,7 +22,7 @@ export function Settings() {
   ];
 
   return (
-    <div className={styleSettings.mainContainer}>
+    <div className="mainContainer p-0 mt-3">
       <div className={styleSettings.card}>
         <h2>Personal Information</h2>
         <form className={styleSettings.configForm}>

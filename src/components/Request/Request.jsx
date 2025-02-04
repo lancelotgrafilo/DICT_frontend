@@ -52,10 +52,10 @@ export function Request() {
   };
 
   return (
-    <div className="container-fluid d-flex justify-content-center align-items-center mt-4">
+    <div className="container-fluid d-flex justify-content-center p-0 align-items-center mt-3">
       <div
         className="card shadow-lg p-4 w-100"
-        style={{ borderRadius: "10px", backgroundColor: "#ffffff", minHeight: "81.5vh" }}
+        style={{ borderRadius: "12px", backgroundColor: "#ffffff", minHeight: "81.5vh" }}
       >
         <h3 className="text-center mb-3">List of Requests</h3>
         <div className="table-responsive">

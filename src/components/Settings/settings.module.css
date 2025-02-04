@@ -1,14 +1,4 @@
-/* Main container with flexbox for center alignment */
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  background-color: #f4f4f4;
-  margin-top: 20px;
-  min-height: 100vh;
-}
+
 
 /* Card View Styling */
 .card {
