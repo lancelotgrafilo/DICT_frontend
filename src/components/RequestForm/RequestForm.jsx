@@ -460,9 +460,9 @@ export function RequestForm() {
                     <label className="form-label">Extension Name</label>
                     <select
                       name="extension_name"
-                      value={formValues.salutation}
+                      value={formValues.extension_name}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
+                        setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
                       }
                       className="form-select"
                       required
@@ -470,7 +470,6 @@ export function RequestForm() {
                       <option value="">Select</option>
                       <option value="Sr.">Sr.</option>
                       <option value="Jr.">Jr.</option>
-                      <option value="I">I</option>
                       <option value="II">II</option>
                       <option value="III">III</option>
                       <option value="">N/A</option>

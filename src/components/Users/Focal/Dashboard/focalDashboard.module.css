@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  height: 520px;
+  height: 650px;
 }
 
 /* 2-column layout for charts */
@@ -71,7 +71,7 @@
   align-items: center;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 520px;
+  height: 650px;
 }
 
 /* Hover effect for cards */
