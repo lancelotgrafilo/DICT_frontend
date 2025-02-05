@@ -14,24 +14,18 @@ export function Header() {
         <div className={styleHeader.imageContainer}>
           <img src={dict} alt="DICT" className={styleHeader.dict} />
         </div>
-
         <div className={styleHeader.rightSection}>
           {/* Contact Container */}
           <div className={styleHeader.contactContainer}>
-            <ul>
-              <li>
+            <ul className={styleHeader.contactList}>
+              <li className={styleHeader.contactItem}>
                 <svg
                   stroke="currentColor"
                   fill="none"
                   strokeWidth="2"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
-                  style={{
-                    color: 'rgba(13, 114, 185, 1)',
-                    width: '1em',
-                    height: '1em',
-                    verticalAlign: 'middle',
-                  }}
+                  className={styleHeader.contactIcon}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -40,21 +34,16 @@ export function Header() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   ></path>
                 </svg>
-                <span>Trunkline: 8-920-0101</span>
+                <span className={styleHeader.contactText}>Trunkline: 8-920-0101</span>
               </li>
-              <li>
+              <li className={styleHeader.contactItem}>
                 <svg
                   stroke="currentColor"
                   fill="none"
                   strokeWidth="2"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
-                  style={{
-                    color: 'rgba(13, 114, 185, 1)',
-                    width: '1em',
-                    height: '1em',
-                    verticalAlign: 'middle',
-                  }}
+                  className={styleHeader.contactIcon}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -63,46 +52,47 @@ export function Header() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   ></path>
                 </svg>
-                <span>information@dict.gov.ph</span>
+                <span className={styleHeader.contactText}>information@dict.gov.ph</span>
               </li>
             </ul>
           </div>
-
           {/* Logo Container */}
           <div className={styleHeader.logoContainer}>
-            <img
-              src={transparencySeal}
-              alt="Transparency Seal"
-              className={styleHeader.logo}
-            />
-            <img src={foi} alt="FOI" className={styleHeader.logo} />
+            <a href="https://dict.gov.ph/transparency-seal" target='blank' className={styleHeader.logoLink}>
+              <img
+                src={transparencySeal}
+                alt="Transparency Seal"
+                className={styleHeader.logoImage}
+              />
+            </a>
+            <a href="https://dict.gov.ph/foi" target='blank' className={styleHeader.logoLink}>
+              <img src={foi} alt="FOI" className={styleHeader.logoImage} />
+            </a>
             <img
               src={bagongPilipinas}
               alt="Bagong Pilipinas"
-              className={styleHeader.logo}
+              className={styleHeader.logoImage}
             />
           </div>
         </div>
-
       </div>
-
       {/* Navigation Container */}
       <div className={styleHeader.navContainer}>
         <ul className={styleHeader.navList}>
-          <li>
-            <Link to="/home">HOME</Link>
+          <li className={styleHeader.navItem}>
+            <Link to="/home" className={styleHeader.navLink}>HOME</Link>
           </li>
-          <li>
-            <a href="https://dict.gov.ph/pnpki">DCD</a>
+          <li className={styleHeader.navItem}>
+            <a href="https://dict.gov.ph/pnpki" target='blank' className={styleHeader.navLink}>DCD</a>
           </li>
-          <li>
-            <a href="https://dict.gov.ph/cybersecurity">CIE-CSSD</a>
+          <li className={styleHeader.navItem}>
+            <a href="https://dict.gov.ph/cybersecurity" target='blank' className={styleHeader.navLink}>CIE-CSSD</a>
           </li>
-          <li>
-            <a href="https://www.ncert.gov.ph/">NCERT</a>
+          <li className={styleHeader.navItem}>
+            <a href="https://www.ncert.gov.ph/" target='blank' className={styleHeader.navLink}>NCERT</a>
           </li>
-          <li>
-            <Link to="/request-form">REQUEST SPEAKER</Link>
+          <li className={styleHeader.navItem}>
+            <Link to="/request-form" className={styleHeader.navLink}>REQUEST SPEAKER</Link>
           </li>
         </ul>
       </div>
