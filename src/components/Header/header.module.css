@@ -1,26 +1,27 @@
+/* Font Faces */
 @font-face {
   font-family: 'Gilroy';
   src: url('../../assets/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'Gilroy';
   src: url('../../assets/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
-
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
 @font-face {
   font-family: 'Gilroy';
   src: url('../../assets/fonts/gilroy/Gilroy-ExtraBold.ttf') format('truetype');
   font-weight: bolder;
   font-style: normal;
-}
-
-body {
-  font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
 }
 
 /* Main Content */
@@ -31,89 +32,126 @@ body {
   z-index: 1000;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex; /* Flex container for stacking children vertically */
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center items horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
 }
 
 /* Horizontal Menu */
 .horizontalMenu {
   display: flex;
-  justify-content: space-between; /* Space out content horizontally */
+  justify-content: space-between;
   align-items: center;
-  background-color: var(--sidebar-bg-color); /* Matches sidebar background */
+  background-color: var(--sidebar-bg-color);
   padding-left: 6rem;
   padding-right: 6rem;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 12px; /* Rounded edges */
-  box-shadow: 2px 0 24px var(--shadow-color); /* Subtle shadow */
+  border-radius: 12px;
+  box-shadow: 2px 0 24px var(--shadow-color);
   width: 100%;
   height: 100px;
-  overflow: hidden; /* Ensures content doesn't spill out */
+  overflow: hidden;
+  border-top-left-radius: 12px; 
+  border-top-right-radius: 12px; 
+  border-bottom-left-radius: 0; 
+  border-bottom-right-radius: 0;
 }
 
 /* DICT Styling */
 .dict {
   width: 350px;
-  height: auto; /* Maintains aspect ratio */
+  height: auto;
 }
 
-/* Navigation Container */
 .navContainer {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 60px;
-  background-color: #f8f9fa; /* Light background for contrast */
-  border-top: 1px solid #ddd; /* Separator line */
-  padding-left: 7rem; /* Add padding to match the horizontal menu */
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+  padding-left: 7rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 /* Navigation List */
 .navList {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   align-items: center;
-  gap: 20px; /* Adds spacing between navigation items */
-  list-style: none; /* Removes bullet points */
+  gap: 20px;
+  list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.navItem {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #333;
+  font-weight: 800;
+}
+
+.navLink:hover {
+  color: #0d72b9;
 }
 
 /* Right Section */
 .rightSection {
   display: flex;
-  flex-direction: column; /* Stack contactContainer and logoContainer vertically */
-  justify-content: end; /* Align content to the end */
-  align-items: flex-end; /* Align items to the right */
+  flex-direction: column;
+  justify-content: end;
+  align-items: flex-end;
 }
 
 /* Contact Container */
 .contactContainer {
   display: flex;
-  flex-direction: row; /* Arrange items in a row */
-  gap: 20px; /* Add spacing between items */
-  margin-bottom: 10px; /* Space between contactContainer and logoContainer */
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 10px;
 }
 
-.contactContainer ul {
+.contactList {
   display: flex;
-  list-style: none; /* Remove bullet points */
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.contactContainer li {
+.contactItem {
   display: flex;
-  align-items: center; /* Align text with icons */
-  gap: 8px; /* Space between icon and text */
-  padding-left: .5rem;
-  padding-right: .5rem;
+  align-items: center;
+  gap: 8px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
-.contactContainer span {
+.contactIcon {
+  color: rgba(13, 114, 185, 1);
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.contactText {
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 600;
@@ -123,36 +161,78 @@ body {
 /* Logo Container */
 .logoContainer {
   display: flex;
-  gap: 10px; /* Add spacing between logos */
+  gap: 10px;
 }
 
-.logo {
+.logoLink {
+  text-decoration: none;
+}
+
+.logoImage {
   width: auto;
-  height: 50px; /* Maintain aspect ratio */
+  height: 50px;
 }
 
-/* Navigation List */
-.navList li {
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  font-weight: bolder; /* Add this line to make the text bold */
+/* Responsive Styles */
+
+@media (max-width: 1024px) {
+  .horizontalMenu {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .navContainer {
+    padding-left: 2rem;
+  }
+  .dict {
+    width: 250px;
+  }
+  .navList {
+    gap: 15px;
+  }
+  .contactItem {
+    gap: 6px;
+  }
+  .logoImage {
+    height: 40px;
+  }
 }
 
-.navList li a {
-  text-decoration: none; /* Removes underline */
-  color: #333;
-  font-weight: bolder; /* Ensure links are also bold */
-}
-
-.navList li a:hover {
-  color: #0d72b9; /* Highlight color on hover */
-}
-
-span{
-  --tw-text-opacity: 1;
-  color: rgb(15 23 42 / var(--tw-text-opacity));
-  font-size: .75rem;
-  line-height: 1rem;
-  font-weight: 600;
+/* For Mobile Phones */
+@media (max-width: 768px) {
+  .horizontalMenu {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem;
+  }
+  .navContainer {
+    padding-left: 1rem;
+    height: auto;
+  }
+  .navList {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rightSection {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .contactContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dict {
+    width: 100%;
+    height: auto;
+  }
+  .logoImage {
+    height: 30px;
+  }
+  .navItem {
+    font-size: 12px;
+  }
+  .contactText {
+    font-size: 0.65rem;
+  }
 }
