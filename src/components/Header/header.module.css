@@ -1,33 +1,158 @@
-.mainContent {
-  padding: 0; /* Adds padding inside the content */
-  width: 100%; /* Ensures the content adjusts to the full width */
-  position: sticky; /* Keeps the header at the top during scrolling */
-  top: 0px; /* Sticks the header at the top of the viewport */
-  z-index: 1000; /* Ensures it appears above other elements */
-  background-color: #ffffff; /* Sets a solid background color */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  border-radius: 12px; /* Rounded edges */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-/* ================= HORIZONTAL Menu ================ */
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-ExtraBold.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
+}
+
+/* Main Content */
+.mainContent {
+  padding: 0;
+  width: 100%;
+  top: 0px;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex; /* Flex container for stacking children vertically */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+/* Horizontal Menu */
 .horizontalMenu {
   display: flex;
-  justify-content: end;
+  justify-content: space-between; /* Space out content horizontally */
   align-items: center;
   background-color: var(--sidebar-bg-color); /* Matches sidebar background */
-  padding: 10px 20px;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 12px; /* Rounded edges */
   box-shadow: 2px 0 24px var(--shadow-color); /* Subtle shadow */
   width: 100%;
-  height: 80px;
+  height: 100px;
   overflow: hidden; /* Ensures content doesn't spill out */
 }
 
-/* ================= DICT Styling =================== */
+/* DICT Styling */
 .dict {
-  width: 100px;
+  width: 350px;
   height: auto; /* Maintains aspect ratio */
+}
+
+/* Navigation Container */
+.navContainer {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: #f8f9fa; /* Light background for contrast */
+  border-top: 1px solid #ddd; /* Separator line */
+  padding-left: 7rem; /* Add padding to match the horizontal menu */
+}
+
+/* Navigation List */
+.navList {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  gap: 20px; /* Adds spacing between navigation items */
+  list-style: none; /* Removes bullet points */
+  margin: 0;
+  padding: 0;
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  flex-direction: column; /* Stack contactContainer and logoContainer vertically */
+  justify-content: end; /* Align content to the end */
+  align-items: flex-end; /* Align items to the right */
+}
+
+/* Contact Container */
+.contactContainer {
+  display: flex;
+  flex-direction: row; /* Arrange items in a row */
+  gap: 20px; /* Add spacing between items */
+  margin-bottom: 10px; /* Space between contactContainer and logoContainer */
+}
+
+.contactContainer ul {
+  display: flex;
+  list-style: none; /* Remove bullet points */
+  margin: 0;
+  padding: 0;
+}
+
+.contactContainer li {
+  display: flex;
+  align-items: center; /* Align text with icons */
+  gap: 8px; /* Space between icon and text */
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+.contactContainer span {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
+}
+
+/* Logo Container */
+.logoContainer {
+  display: flex;
+  gap: 10px; /* Add spacing between logos */
+}
+
+.logo {
+  width: auto;
+  height: 50px; /* Maintain aspect ratio */
+}
+
+/* Navigation List */
+.navList li {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bolder; /* Add this line to make the text bold */
+}
+
+.navList li a {
+  text-decoration: none; /* Removes underline */
+  color: #333;
+  font-weight: bolder; /* Ensure links are also bold */
+}
+
+.navList li a:hover {
+  color: #0d72b9; /* Highlight color on hover */
+}
+
+span{
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
+  font-size: .75rem;
+  line-height: 1rem;
+  font-weight: 600;
 }
