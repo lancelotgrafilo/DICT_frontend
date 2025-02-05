@@ -9,65 +9,51 @@ export function Request() {
   const { requests = [], getLoading, error, refetch } = useGetRequest();
   const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
   const { files, loading: fileLoading, errorFile } = useGetFiles();
-
   // Track processing state for accept and reject buttons
   const [processing, setProcessing] = useState({});
   // State to manage modal visibility and selected request
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
-
   // Filter requests to only include those with "pending" status
   const pendingRequests = requests.filter(request => request.status === "pending");
-
   // Function to retrieve the file URL
   const getFileUrl = (fileName) => {
     if (!fileName || !files.cybersecurityForms) return null;
     const file = files.cybersecurityForms.find(file => file.name === fileName);
     return file ? `${'http://localhost:5000'}${file.url}` : null;
   };
-
+  
   const handleView = (index) => {
     const request = pendingRequests[index];
     setSelectedRequest(request); // Set the selected request
     console.log("Selected PDF File:", request.pdfFile); // Log the selected request's pdfFile
     setShowModal(true); // Open the modal
   };
-
   const handleCloseModal = () => {
     setShowModal(false); // Close the modal
     setSelectedRequest(null); // Reset the selected request
   };
+  const handleAccept = async (requestId) => {
+    if (!requestId) return;
 
-  const handleAccept = async () => {
-    if (!selectedRequest) return;
-
-    const requestId = selectedRequest._id; // Get the correct requestId from the selected request
-    // Set the processing state for this request
-    setProcessing(prev => ({ ...prev, [requestId]: 'accept' }));
-    // Wait for the status update
+    setProcessing((prev) => ({ ...prev, [requestId]: 'accept' }));
     await updateRequestStatus(requestId, "accept");
-    // Manually refetch the data after the update
     refetch();
-    // Reset the processing state after the request is processed
-    setProcessing(prev => ({ ...prev, [requestId]: null }));
-    // Close the modal
-    handleCloseModal();
+    setProcessing((prev) => ({ ...prev, [requestId]: null }));
+
+    // Close the modal only if it's active
+    if (showModal) handleCloseModal();
   };
 
-  const handleReject = async () => {
-    if (!selectedRequest) return;
+  const handleReject = async (requestId) => {
+    if (!requestId) return;
 
-    const requestId = selectedRequest._id; // Get the correct requestId from the selected request
-    // Set the processing state for this request
-    setProcessing(prev => ({ ...prev, [requestId]: 'reject' }));
-    // Wait for the status update
+    setProcessing((prev) => ({ ...prev, [requestId]: 'reject' }));
     await updateRequestStatus(requestId, "reject");
-    // Manually refetch the data after the update
     refetch();
-    // Reset the processing state after the request is processed
-    setProcessing(prev => ({ ...prev, [requestId]: null }));
-    // Close the modal
-    handleCloseModal();
+    setProcessing((prev) => ({ ...prev, [requestId]: null }));
+
+    if (showModal) handleCloseModal();
   };
 
   return (
@@ -87,7 +73,6 @@ export function Request() {
           }}
         ></div>
       )}
-
       <div
         className="card shadow-lg p-4 w-100"
         style={{ borderRadius: "12px", backgroundColor: "#ffffff", minHeight: "81.5vh" }}
@@ -128,14 +113,14 @@ export function Request() {
                           </button>
                           <button
                             className="btn btn-outline-success btn-sm mx-1 custom-btn"
-                            onClick={() => handleAccept(reqIndex)}
+                            onClick={() => handleAccept(request._id)} // Pass the requestId directly
                             disabled={updateLoading || processing[request._id] === 'accept'}
                           >
                             {processing[request._id] === 'accept' ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
                           </button>
                           <button
                             className="btn btn-outline-danger btn-sm mx-1 custom-btn"
-                            onClick={() => handleReject(reqIndex)}
+                            onClick={() => handleReject(request._id)} // Pass the requestId directly
                             disabled={updateLoading || processing[request._id] === 'reject'}
                           >
                             {processing[request._id] === 'reject' ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
@@ -155,7 +140,6 @@ export function Request() {
             </tbody>
           </table>
         </div>
-
         {/* Modal for displaying PDF */}
         <div
           className={`modal fade ${showModal ? 'show' : ''}`}
@@ -191,14 +175,14 @@ export function Request() {
               <div className="modal-footer">
                 <button
                   className="btn btn-outline-success btn-sm mx-1 custom-btn"
-                  onClick={handleAccept}
+                  onClick={() => handleAccept(selectedRequest?._id)} // Pass the requestId directly
                   disabled={updateLoading || processing[selectedRequest?._id] === 'accept'}
                 >
                   {processing[selectedRequest?._id] === 'accept' ? "Processing..." : <><i className="bi bi-check-circle"></i> Accept</>}
                 </button>
                 <button
                   className="btn btn-outline-danger btn-sm mx-1 custom-btn"
-                  onClick={handleReject}
+                  onClick={() => handleReject(selectedRequest?._id)} // Pass the requestId directly
                   disabled={updateLoading || processing[selectedRequest?._id] === 'reject'}
                 >
                   {processing[selectedRequest?._id] === 'reject' ? "Processing..." : <><i className="bi bi-x-circle"></i> Reject</>}
@@ -210,7 +194,6 @@ export function Request() {
             </div>
           </div>
         </div>
-
         {/* Error and success messages */}
         {updateError && <div className="alert alert-danger mt-3">{updateError}</div>}
         {response && !updateError && <div className="alert alert-success mt-3">Request status updated successfully!</div>}

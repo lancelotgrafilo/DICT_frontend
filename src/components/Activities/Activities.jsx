@@ -4,13 +4,18 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
 import { FaRegCalendarAlt, FaRegListAlt } from 'react-icons/fa';
+import { useGetFiles } from '../../utils/Hooks/FIleHooks/useGetFiles'
 
 export function Activities() {
+    const { files, loading: fileLoading, errorFile } = useGetFiles();
+    const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [processing, setProcessing] = useState({});
   const { requests, refetch } = useGetRequest();
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState("calendar");
-  const { updateRequestStatus } = useUpdateRequestStatus();
   const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
   const changeMonth = (offset) => {
@@ -36,7 +41,7 @@ export function Activities() {
   const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD
 
   // Filter requests to only include those with status "accepted" or "done"
-  const filteredRequests = requests.filter((activity) => activity.status === "accepted" || activity.status === "done");
+  const filteredRequests = requests.filter((activity) => activity.status === "accepted" || activity.status === "done" || activity.status === "canceled");
 
   // Filter requests for the current month
   const getCurrentMonthRequests = () => {
@@ -57,10 +62,93 @@ export function Activities() {
       })
       .catch((err) => console.error("Error updating status:", err));
   };
+
+  const getFileUrl = (fileName) => {
+    if (!fileName || !files.cybersecurityForms) return null;
+    const file = files.cybersecurityForms.find(file => file.name === fileName);
+    return file ? `${'http://localhost:5000'}${file.url}` : null;
+  };
+
+  const handleView = (index) => {
+    const request = getCurrentMonthRequests()[index];
+    setSelectedRequest(request); // Set the selected request
+    setShowModal(true); // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Close the modal
+    setSelectedRequest(null); // Reset the selected request
+  };
   
+  const handleDoneInModal = async (requestId) => {
+    if (!requestId) return;
+  
+    // Prevent multiple clicks while processing
+    setProcessing((prev) => ({ ...prev, [requestId]: 'done' }));
+  
+    try {
+      await updateRequestStatus(requestId, "done");
+      console.log("Status updated, refetching...");
+      refetch(); // Refetch the requests to reflect the updated status
+      handleCloseModal(); // Close the modal after updating the status
+    } catch (err) {
+      console.error("Error updating status:", err);
+    } finally {
+      setProcessing((prev) => ({ ...prev, [requestId]: null }));
+    }
+  };
+
+  const handleCancel = async (requestId) => {
+    if (!requestId) return;
+
+    // Prevent multiple clicks while processing
+    setProcessing((prev) => ({ ...prev, [requestId]: 'cancel' }));
+    try {
+        await updateRequestStatus(requestId, "canceled");
+        console.log("Request canceled, refetching...");
+        refetch(); // Refetch the requests to reflect the updated status
+        handleCloseModal(); // Close the modal after canceling the request
+    } catch (err) {
+        console.error("Error canceling request:", err);
+    } finally {
+        setProcessing((prev) => ({ ...prev, [requestId]: null }));
+    }
+  };
+
+  const handleCancelInModal = async (requestId) => {
+    if (!requestId) return;
+
+    // Prevent multiple clicks while processing
+    setProcessing((prev) => ({ ...prev, [requestId]: 'cancel' }));
+    try {
+        await updateRequestStatus(requestId, "canceled");
+        console.log("Request canceled, refetching...");
+        refetch(); // Refetch the requests to reflect the updated status
+        handleCloseModal(); // Close the modal after canceling the request
+    } catch (err) {
+        console.error("Error canceling request:", err);
+    } finally {
+        setProcessing((prev) => ({ ...prev, [requestId]: null }));
+    }
+  };
 
   return (
     <div className="container p-0 mt-3">
+      {showModal && (
+        <div
+          className="modal-backdrop show"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+            zIndex: 1040, // Ensure it appears behind the modal
+          }}
+        ></div>
+      )}
+
       <div className="card shadow-lg p-4" style={{ minHeight: "80vh", borderRadius: "12px" }}>
 
         {/* Title */}
@@ -220,7 +308,7 @@ export function Activities() {
                   getCurrentMonthRequests().map((activity, index) => (
                     <tr key={index}>
                       <td style={{ width: "20%", textAlign: "left", verticalAlign: "middle" }}>
-                        {`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""}`}
+                        {`${activity.salutation || ""} ${activity.first_name} ${activity.middle_name || ""} ${activity.last_name || ""} ${activity.extension_name}`}
                       </td>
                       <td style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>
                         {activity.date_and_time.map((dateItem, idx) => (
@@ -243,24 +331,32 @@ export function Activities() {
                         ))}
                       </td>
                       <td style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>
-                        <button className="btn btn-outline-primary btn-sm me-2">
+                        <button 
+                          className="btn btn-outline-primary btn-sm me-2"
+                          onClick={() => handleView(index)}
+                        >
                           <i className="bi bi-eye"></i> View
                         </button>
                         {/* Conditionally render Done button based on activity status */}
                         {activity.status === "done" ? (
-                          <span className="text-success" style={{ fontWeight: "bold" }}>Completed</span>
+                            <span className="text-success" style={{ fontWeight: "bold" }}>Completed</span>
+                        ) : activity.status === "canceled" ? (
+                            <span className="text-danger" style={{ fontWeight: "bold" }}>Canceled</span>
                         ) : (
-                          <>
-                            <button
-                              className="btn btn-outline-success btn-sm me-2"
-                              onClick={() => handleDone(index)} // Pass the index of the current activity
-                            >
-                              <i className="bi bi-check-circle"></i> Done
-                            </button>
-                            <button className="btn btn-outline-danger btn-sm">
-                              <i className="bi bi-x-circle"></i> Cancel
-                            </button>
-                          </>
+                            <>
+                                <button
+                                    className="btn btn-outline-success btn-sm me-2"
+                                    onClick={() => handleDone(index)} // Pass the index of the current activity
+                                >
+                                    <i className="bi bi-check-circle"></i> Done
+                                </button>
+                                <button
+                                    className="btn btn-outline-danger btn-sm"
+                                    onClick={() => handleCancel(activity._id)}
+                                >
+                                    <i className="bi bi-x-circle"></i> Cancel
+                                </button>
+                            </>
                         )}
                       </td>
                     </tr>
@@ -288,6 +384,73 @@ export function Activities() {
 
           <button className="btn btn-outline-primary" onClick={() => changeMonth(1)}>Next ▶</button>
         </div>
+
+        <div
+          className={`modal fade ${showModal ? 'show' : ''}`}
+          tabIndex="-1"
+          style={{
+            display: showModal ? 'block' : 'none',
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: Add semi-transparent background to modal itself
+          }}
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Request Details</h5>
+                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+              </div>
+              <div className="modal-body">
+                {selectedRequest && (
+                  <>
+                    {getFileUrl(selectedRequest.pdfFile) ? (
+                      <iframe
+                        src={getFileUrl(selectedRequest.pdfFile)}
+                        title="Request PDF"
+                        width="100%"
+                        height="500px"
+                        style={{ border: "none" }}
+                      ></iframe>
+                    ) : (
+                      <p>No PDF available for this request.</p>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="modal-footer">
+                {selectedRequest?.status === "done" ? (
+                  <span className="text-success" style={{ fontWeight: "bold" }}>
+                    Completed
+                  </span>
+                ) : selectedRequest?.status === "canceled" ? (
+                  <span className="text-danger" style={{ fontWeight: "bold" }}>
+                    Canceled
+                  </span>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-outline-success btn-sm mx-1 custom-btn"
+                      onClick={() => handleDoneInModal(selectedRequest?._id)}
+                      disabled={processing[selectedRequest?._id] === 'done'}
+                    >
+                      {processing[selectedRequest?._id] === 'done' ? "Processing..." : <><i className="bi bi-check-circle"></i> Done</>}
+                    </button>
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={() => handleCancelInModal(selectedRequest?._id)}
+                    >
+                      <i className="bi bi-x-circle"></i> Cancel
+                    </button>
+                  </>
+                )}
+                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
       </div>
     </div>
   );
