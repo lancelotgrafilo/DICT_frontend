@@ -1,16 +1,17 @@
 import styleRegionUserPage from "./regionUserPage.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
 import { usePath } from '../../utils/context/PathContext';
 import { useState, useContext, useRef } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'remixicon/fonts/remixicon.css';
-import { Header } from '../../components/Header/Header';
+import { AdminHeader } from '../../components/AdminHeader/AdminHeader';
 
 export function RegionUserPage() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { updatePath } = usePath();
 
@@ -33,6 +34,10 @@ export function RegionUserPage() {
     updateActiveButton(btnId);
     updatePath(null, null); // Set both paths to null
   };
+
+  const handleConfirmLogout = () => {
+    navigate('/home');
+  }
 
   return (
     <div className={styleRegionUserPage.dashboardContainer}>
@@ -122,7 +127,7 @@ export function RegionUserPage() {
       </div>
 
       <div className={styleRegionUserPage.mainContent}>
-        <Header />
+        <AdminHeader />
         <Outlet />
       </div>
 
@@ -134,13 +139,15 @@ export function RegionUserPage() {
             <h6 style={{fontSize: "14px", textAlign: "center", marginBottom: "20px"}}>Are you sure you want to logout?</h6>
             <div className={styleRegionUserPage.buttonRow}>
               <button
-                // onClick={handleConfirmLogout} 
+                onClick={handleConfirmLogout} 
                 className={styleRegionUserPage.confirmLogoutBtn}
               >
                 Yes, Logout
               </button>
               <button
-                onClick={() => setLogoutModalOpen(false)}
+                onClick={() => {
+                  setLogoutModalOpen(false);
+                }}
                 className={styleRegionUserPage.cancelBtn}
               >
                 Cancel

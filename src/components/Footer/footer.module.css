@@ -1,0 +1,176 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-ExtraBold.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/gilroy/Gilroy-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+
+
+/* Main container for the footer */
+.mainContent {
+  height: 350px;
+  width: 100%;
+  background-color: rgb(15 23 42);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 2.5rem;
+  box-sizing: border-box;
+  color: white; /* Default text color */
+  font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
+  font-weight: 500;
+}
+
+.logoCopyContainer{
+  margin-right: auto;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.rightSection{
+  display:  flex;
+  justify-content: end;
+  align-items: start;
+  flex-direction: row;
+}
+
+.republicContainer{
+  margin-right: 5rem;
+}
+.republicIcon{
+  width: 8rem;
+  height: auto;
+}
+
+.logoContainer{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+}
+.logo1{
+  height: 60px;
+  width: auto;
+}
+.logo2{
+  height: 100px;
+  width: auto;
+}
+
+/* Logo container */
+.logoContainer {
+  display: flex;
+  gap: 10px; /* Space between logos */
+  align-items: center;
+}
+
+.copyContainer{
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+.copy {
+  text-align: center;
+  font-size: 0.75rem; /* Adjust font size as needed */
+  line-height: 1.5;
+}
+
+/* Social media icons container */
+.socialMediaContainer {
+  display: flex;
+  gap: 15px; /* Space between icons */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Links for social media */
+.socialMediaContainer a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit parent text color */
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+}
+
+/* Social media icons */
+.socialMediaContainer svg {
+  width: 16px;
+  height: auto;
+  fill: currentColor; 
+}
+
+/* Developed by section */
+.developedBy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Space between text and logo */
+}
+
+.linksContainer{
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.linksContainer a{
+  text-decoration: none; /* Remove underline */
+  color: hsla(0, 0%, 100%, .75); /* White text color */
+  margin-bottom: 12px;
+}
+/* Footer links */
+.footerLinks {
+  display: flex;
+  gap: 15px; /* Space between links */
+}
+
+.footerLinks a {
+  text-decoration: none; /* Remove underline */
+  color: white; /* White text color */
+  font-size: 0.875rem; /* Adjust font size as needed */
+}
+
+.dictContainer,
+.socialLinkContainer{
+  font-weight: 600;
+  --tw-space-x-reverse: 0;
+  margin-right: calc(5rem* var(--tw-space-x-reverse));
+  margin-left: calc(5rem* calc(1 - var(--tw-space-x-reverse)));
+}
+.dict_logo{
+  width: 50px;
+  height: auto;
+}
