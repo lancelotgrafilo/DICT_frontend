@@ -87,24 +87,6 @@ export function RegionUserPage() {
             </li>
           ))}
 
-          {/* Theme Link */}
-          <li
-            className={styleRegionUserPage.sidebarMenuItem}
-            onMouseEnter={() => handleHover(true)}
-            onMouseLeave={() => handleHover(false)}
-            ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
-          >
-            <a
-              href="#"
-              className={`${styleRegionUserPage.sidebarMenuLink} ${styleRegionUserPage.sidebarMenuLink}`}
-              id="theme-button"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <i className="ri-moon-clear-fill" style={{ marginRight: '10px' }} />
-              <span className={styleRegionUserPage.navItem}>Theme</span>
-            </a>
-          </li>
-
           {/* Logout Link */}
           <li
             className={styleRegionUserPage.sidebarMenuItem}
