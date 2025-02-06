@@ -55,12 +55,14 @@ export function Activities() {
 
   const handleDone = (index) => {
     const requestId = getCurrentMonthRequests()[index]._id;
-    updateRequestStatus(requestId, "done")
-      .then(() => {
-        console.log("Status updated, refetching...");
-        refetch();
-      })
-      .catch((err) => console.error("Error updating status:", err));
+    setSelectedRequest(requestId);
+    // updateRequestStatus(requestId, "done")
+    //   .then(() => {
+    //     console.log("Status updated, refetching...");
+    //     refetch();
+    //   })
+    //   .catch((err) => console.error("Error updating status:", err));
+    setShowConfirmationModal(true);
   };
 
   const getFileUrl = (fileName) => {
@@ -141,6 +143,39 @@ export function Activities() {
         setProcessing((prev) => ({ ...prev, [requestId]: null }));
     }
   };
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false); 
+  const [eventName, setEventName] = useState("");
+  const [attendeesFile, setAttendeesFile] = useState(null);
+
+  const handleConfirmationSubmit = async () => {
+    if (!selectedRequest) return;
+
+    // Prevent multiple clicks while processing
+    setProcessing((prev) => ({ ...prev, [selectedRequest]: 'done' }));
+
+    try {
+        // Simulate sending the event name and attendees file to the backend
+        console.log("Event Name:", eventName);
+        console.log("Attendees File:", attendeesFile);
+
+        // Update the request status to "done"
+        await updateRequestStatus(selectedRequest, "done");
+        console.log("Status updated, refetching...");
+        refetch(); // Refetch the requests to reflect the updated status
+        setShowConfirmationModal(false); // Close the modal after updating the status
+    } catch (err) {
+        console.error("Error updating status:", err);
+    } finally {
+        setProcessing((prev) => ({ ...prev, [selectedRequest]: null }));
+    }
+};
+
+  const handleConfirmationCancel = () => {
+    setShowConfirmationModal(false); // Close the modal
+    setEventName(""); // Reset the event name
+    setAttendeesFile(null); // Reset the attendees file
+};
 
   return (
     <div className="container p-0 mt-3">
@@ -481,6 +516,51 @@ export function Activities() {
             </div>
           </div>
         </div>
+
+        {showConfirmationModal && (
+                <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Confirm Completion</h5>
+                                <button type="button" className="btn-close" onClick={handleConfirmationCancel}></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label htmlFor="eventName" className="form-label">Event Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="eventName"
+                                        value={eventName}
+                                        onChange={(e) => setEventName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="attendeesFile" className="form-label">Upload Attendees</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        id="attendeesFile"
+                                        onChange={(e) => setAttendeesFile(e.target.files[0])}
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={handleConfirmationCancel}>Cancel</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleConfirmationSubmit}
+                                    disabled={processing[selectedRequest] === 'done'}
+                                >
+                                    {processing[selectedRequest] === 'done' ? "Processing..." : "Submit"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         
       </div>
