@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 
 import { Modules } from "../../components/Modules/Modules";
+import { Footer } from "../../components/Footer/Footer";
 
 export function Homepage() {
   
@@ -23,6 +24,8 @@ export function Homepage() {
           </Link>
         </div>
       </div>
+
+      <Footer/>
 
       
     </div>
