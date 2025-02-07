@@ -5,10 +5,10 @@ export function FocalForm() {
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     focal_number: '',
-    lastname: '',
-    firstname: '',
-    middlename: '',
-    email: '',
+    last_name: '',
+    first_name: '',
+    middle_name: '',
+    email_address: '',
     gender: '',
     status: '',
     salutation: '',
@@ -37,13 +37,24 @@ export function FocalForm() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormValues({ ...formValues, [id]: value });
+    setFormValues((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+
+    // Reset province when region changes
+    if (id === "region") {
+      setFormValues((prev) => ({
+        ...prev,
+        province: "", // Clear province selection
+      }));
+    }
   };
 
   const handleNext = () => {
     // Validate form fields before proceeding to the next step
     const requiredFields = step === 1 
-      ? ['focal_number', 'lastname', 'firstname', 'email', 'gender', 'status', 'salutation', 'contact_number']
+      ? ['focal_number', 'last_name', 'first_name', 'middle_name', 'email', 'gender', 'status', 'salutation', 'contact_number']
       : ['region', 'position', 'province', 'focal_status'];
     
     for (let field of requiredFields) {
@@ -83,10 +94,10 @@ export function FocalForm() {
         // Reset form values and step
         setFormValues({
           focal_number: '',
-          lastname: '',
-          firstname: '',
-          middlename: '',
-          email: '',
+          last_name: '',
+          first_name: '',
+          middle_name: '',
+          email_address: '',
           gender: '',
           status: '',
           salutation: '',
@@ -102,10 +113,10 @@ export function FocalForm() {
       // Reset form values and step without confirmation
       setFormValues({
         focal_number: '',
-        lastname: '',
-        firstname: '',
-        middlename: '',
-        email: '',
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        email_address: '',
         gender: '',
         status: '',
         salutation: '',
@@ -131,6 +142,30 @@ export function FocalForm() {
       }
     };
 
+  const regionToProvinces = {
+    "Region I - Ilocos Region": ["Ilocos Norte", "Ilocos Sur", "La Union", "Pangasinan"],
+    "Region II - Cagayan Valley": ["Batanes", "Cagayan", "Isabela", "Nueva Vizcaya", "Quirino"],
+    "Region III - Central Luzon": ["Aurora", "Bataan", "Bulacan", "Nueva Ecija", "Pampanga", "Tarlac", "Zambales"],
+    "Region IV-A - CALABARZON": ["Cavite", "Laguna", "Batangas", "Rizal", "Quezon"],
+    "MIMAROPA Region": ["Occidental Mindoro", "Oriental Mindoro", "Marinduque", "Romblon", "Palawan"],
+    "Region V - Bicol Region": ["Albay", "Camarines Norte", "Camarines Sur", "Catanduanes", "Masbate", "Sorsogon"],
+    "Region VI - Western Visayas": ["Aklan", "Antique", "Capiz", "Guimaras", "Iloilo", "Negros Occidental"],
+    "Region VII - Central Visayas": ["Bohol", "Cebu", "Negros Oriental", "Siquijor"],
+    "Region VIII - Eastern Visayas": ["Biliran", "Eastern Samar", "Leyte", "Northern Samar", "Samar", "Southern Leyte"],
+    "Region IX - Zamboanga Peninsula": ["Zamboanga del Norte", "Zamboanga del Sur", "Zamboanga Sibugay", "City of Isabela"],
+    "Region X - Northern Mindanao": ["Bukidnon", "Camiguin", "Misamis Occidental", "Misamis Oriental"],
+    "Region XI - Davao Region": ["Davao de Oro (Compostela Valley)", "Davao del Norte", "Davao del Sur", "Davao Occidental", "Davao Oriental"],
+    "Region XII - SOCCSKSARGEN": ["Cotabato", "Sarangani", "South Cotabato", "Sultan Kudarat"],
+    "Region XIII - Caraga": ["Agusan del Norte", "Agusan del Sur", "Dinagat Islands", "Surigao del Norte", "Surigao del Sur"],
+    "NCR - National Capital Region": ["Manila", "Quezon City", "Caloocan", "Las Piñas", "Makati", "Malabon", "Mandaluyong", "Marikina", "Muntinlupa", "Navotas", "Parañaque", "Pasay", "Pasig", "San Juan", "Taguig", "Valenzuela"],
+    "CAR - Cordillera Administrative Region": ["Abra", "Apayao", "Benguet", "Ifugao", "Kalinga", "Mountain Province"],
+    "BARMM - Bangsamoro Autonomous Region in Muslim Mindanao": ["Basilan", "Lanao del Sur", "Maguindanao", "Sulu", "Tawi-Tawi"]
+  };
+
+  const filteredProvinces = formValues.region
+    ? regionToProvinces[formValues.region]
+    : [];
+
   return (
     <div className={styleFocalForm.container}>
       <div className={styleFocalForm.header}>CYBERSECURITY FOCAL FORM</div>
@@ -145,16 +180,16 @@ export function FocalForm() {
                   <input type="text" id="focal-number" value={formValues.focal_number} readOnly />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label htmlFor="lastname">Lastname:</label>
-                  <input type="text" id="lastname" value={formValues.lastname} onChange={handleChange} />
+                  <label htmlFor="last_name">Last Name:</label>
+                  <input type="text" id="last_name" value={formValues.last_name} onChange={handleChange} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label htmlFor="firstname">First Name:</label>
-                  <input type="text" id="firstname" value={formValues.firstname} onChange={handleChange} />
+                  <label htmlFor="first_name">First Name:</label>
+                  <input type="text" id="first_name" value={formValues.first_name} onChange={handleChange} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label htmlFor="middlename">Middlename:</label>
-                  <input type="text" id="middlename" value={formValues.middlename} onChange={handleChange} />
+                  <label htmlFor="middle_name">Middle Name:</label>
+                  <input type="text" id="middle_name" value={formValues.middle_name} onChange={handleChange} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="email">Email:</label>
@@ -184,10 +219,12 @@ export function FocalForm() {
                   <label htmlFor="salutation">Salutation:</label>
                   <select id="salutation" value={formValues.salutation} onChange={handleChange}>
                     <option value="">Select Salutation</option>
-                    <option>Mr.</option>
-                    <option>Ms.</option>
-                    <option>Mrs.</option>
-                    <option>Dr.</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Dr.">Dr.</option>
+                    <option value="Engr.">Engr.</option>
+                    <option value="Prof.">Prof.</option>
                   </select>
                 </div>
                 <div className={styleFocalForm.formGroupContact}>
@@ -197,7 +234,6 @@ export function FocalForm() {
                     id="contact_number"
                     value={formValues.contact_number}
                     onChange={handleChange}
-                    pattern="^09\d{9}$"
                     maxLength="11"
                   />
                 </div>
@@ -222,23 +258,11 @@ export function FocalForm() {
               <label htmlFor="region">Region:</label>
               <select id="region" value={formValues.region} onChange={handleChange}>
                 <option value="">Select Region</option>
-                <option value="Region I">Region I</option>
-                <option value="Region II">Region II</option>
-                <option value="Region III">Region III</option>
-                <option value="Region IV-A">Region IV-A</option>
-                <option value="Region IV-B">Region IV-B</option>
-                <option value="Region V">Region V</option>
-                <option value="Region VI">Region VI</option>
-                <option value="Region VII">Region VII</option>
-                <option value="Region VIII">Region VIII</option>
-                <option value="Region IX">Region IX</option>
-                <option value="Region X">Region X</option>
-                <option value="Region XI">Region XI</option>
-                <option value="Region XII">Region XII</option>
-                <option value="NCR">NCR</option>
-                <option value="CAR">CAR</option>
-                <option value="ARMM">ARMM</option>
-                <option value="CARAGA">CARAGA</option>
+                {Object.keys(regionToProvinces).map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={styleFocalForm.formGroup}>
@@ -250,87 +274,11 @@ export function FocalForm() {
                 <label htmlFor="province">Province:</label>
                 <select id="province" value={formValues.province} onChange={handleChange}>
                   <option value="">Select Province</option>
-                  <option value="Abra">Abra</option>
-                  <option value="Agusan del Norte">Agusan del Norte</option>
-                  <option value="Agusan del Sur">Agusan del Sur</option>
-                  <option value="Aklan">Aklan</option>
-                  <option value="Albay">Albay</option>
-                  <option value="Antique">Antique</option>
-                  <option value="Apayao">Apayao</option>
-                  <option value="Aurora">Aurora</option>
-                  <option value="Basilan">Basilan</option>
-                  <option value="Bataan">Bataan</option>
-                  <option value="Batanes">Batanes</option>
-                  <option value="Batangas">Batangas</option>
-                  <option value="Benguet">Benguet</option>
-                  <option value="Biliran">Biliran</option>
-                  <option value="Bohol">Bohol</option>
-                  <option value="Bukidnon">Bukidnon</option>
-                  <option value="Bulacan">Bulacan</option>
-                  <option value="Cagayan">Cagayan</option>
-                  <option value="Camarines Norte">Camarines Norte</option>
-                  <option value="Camarines Sur">Camarines Sur</option>
-                  <option value="Camiguin">Camiguin</option>
-                  <option value="Capiz">Capiz</option>
-                  <option value="Catanduanes">Catanduanes</option>
-                  <option value="Cavite">Cavite</option>
-                  <option value="Cebu">Cebu</option>
-                  <option value="Compostela Valley">Compostela Valley</option>
-                  <option value="Cotabato">Cotabato</option>
-                  <option value="Davao del Norte">Davao del Norte</option>
-                  <option value="Davao del Sur">Davao del Sur</option>
-                  <option value="Davao Occidental">Davao Occidental</option>
-                  <option value="Davao Oriental">Davao Oriental</option>
-                  <option value="Dinagat Islands">Dinagat Islands</option>
-                  <option value="Eastern Samar">Eastern Samar</option>
-                  <option value="Guimaras">Guimaras</option>
-                  <option value="Ifugao">Ifugao</option>
-                  <option value="Ilocos Norte">Ilocos Norte</option>
-                  <option value="Ilocos Sur">Ilocos Sur</option>
-                  <option value="Iloilo">Iloilo</option>
-                  <option value="Isabela">Isabela</option>
-                  <option value="Kalinga">Kalinga</option>
-                  <option value="La Union">La Union</option>
-                  <option value="Laguna">Laguna</option>
-                  <option value="Lanao del Norte">Lanao del Norte</option>
-                  <option value="Lanao del Sur">Lanao del Sur</option>
-                  <option value="Leyte">Leyte</option>
-                  <option value="Maguindanao">Maguindanao</option>
-                  <option value="Marinduque">Marinduque</option>
-                  <option value="Masbate">Masbate</option>
-                  <option value="Misamis Occidental">Misamis Occidental</option>
-                  <option value="Misamis Oriental">Misamis Oriental</option>
-                  <option value="Mountain Province">Mountain Province</option>
-                  <option value="Negros Occidental">Negros Occidental</option>
-                  <option value="Negros Oriental">Negros Oriental</option>
-                  <option value="Northern Samar">Northern Samar</option>
-                  <option value="Nueva Ecija">Nueva Ecija</option>
-                  <option value="Nueva Vizcaya">Nueva Vizcaya</option>
-                  <option value="Occidental Mindoro">Occidental Mindoro</option>
-                  <option value="Oriental Mindoro">Oriental Mindoro</option>
-                  <option value="Palawan">Palawan</option>
-                  <option value="Pampanga">Pampanga</option>
-                  <option value="Pangasinan">Pangasinan</option>
-                  <option value="Quezon">Quezon</option>
-                  <option value="Quirino">Quirino</option>
-                  <option value="Rizal">Rizal</option>
-                  <option value="Romblon">Romblon</option>
-                  <option value="Samar">Samar</option>
-                  <option value="Sarangani">Sarangani</option>
-                  <option value="Siquijor">Siquijor</option>
-                  <option value="Sorsogon">Sorsogon</option>
-                  <option value="South Cotabato">South Cotabato</option>
-                  <option value="Southern Leyte">Southern Leyte</option>
-                  <option value="Sultan Kudarat">Sultan Kudarat</option>
-                  <option value="Sulu">Sulu</option>
-                  <option value="Surigao del Norte">Surigao del Norte</option>
-                  <option value="Surigao del Sur">Surigao del Sur</option>
-                  <option value="Tarlac">Tarlac</option>
-                  <option value="Tawi-Tawi">Tawi-Tawi</option>
-                  <option value="Zambales">Zambales</option>
-                  <option value="Zamboanga del Norte">Zamboanga del Norte</option>
-                  <option value="Zamboanga del Sur">Zamboanga del Sur</option>
-                  <option value="Zamboanga Sibugay">Zamboanga Sibugay</option>
+                  {filteredProvinces.map((province) => (
+                    <option key={province} value={province}>
+                      {province}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className={styleFocalForm.formGroup}>
@@ -449,4 +397,3 @@ export function FocalForm() {
   );
 }
 
-export default FocalForm;
