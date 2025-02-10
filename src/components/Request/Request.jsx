@@ -22,13 +22,6 @@ export function Request() {
   // Filter requests to only include those with "pending" status
   const pendingRequests = requests.filter((request) => request.status === "pending");
 
-  // Function to retrieve the file URL
-  const getFileUrl = (fileName) => {
-    if (!fileName || !files.cybersecurityForms) return null;
-    const file = files.cybersecurityForms.find((file) => file.name === fileName);
-    return file ? `${'http://localhost:5000'}${file.url}` : null;
-  };
-
   // Handle opening the modal and setting the selected request
   const handleView = (index) => {
     const request = pendingRequests[index];
