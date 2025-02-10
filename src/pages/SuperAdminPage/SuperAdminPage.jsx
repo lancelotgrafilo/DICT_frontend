@@ -1,17 +1,17 @@
 import styleSuperAdmin from "./superAdmin.module.css";
 import dict_logo from "../../assets/logo/dict-logo.png";
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { ActiveButtonContext } from '../../utils/context/ActiveButtonContext';
 import { usePath } from '../../utils/context/PathContext';
 import { useState, useContext, useRef } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'remixicon/fonts/remixicon.css';
-import { Header } from '../../components/Header/Header';
+import { AdminHeader } from '../../components/AdminHeader/AdminHeader';
 
 export function SuperAdminPage() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const { updatePath } = usePath();
 
   const sidebarMenuRefs = useRef([]);
@@ -33,6 +33,10 @@ export function SuperAdminPage() {
     updateActiveButton(btnId);
     updatePath(null, null); // Set both paths to null
   };
+
+  const handleConfirmLogout = () => {
+    navigate('/home');
+  }
 
   return (
     <div className={styleSuperAdmin.dashboardContainer}>
@@ -58,7 +62,8 @@ export function SuperAdminPage() {
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
             { to: "modules-lists", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
-            { to: "history", label: "History", icon: "ri-time-line", btnId: "history" },
+            { to: "focal-form", label: "Focal Form", icon: "ri-draft-fill", btnId: "focalForm" },
+            { to: "history", label: "History", icon: "ri-time-fill", btnId: "history" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (
             <li
@@ -79,24 +84,6 @@ export function SuperAdminPage() {
               </Link>
             </li>
           ))}
-
-          {/* Theme Link */}
-          <li
-            className={styleSuperAdmin.sidebarMenuItem}
-            onMouseEnter={() => handleHover(true)}
-            onMouseLeave={() => handleHover(false)}
-            ref={(el) => (sidebarMenuRefs.current[sidebarMenuRefs.current.length] = el)}
-          >
-            <a 
-              href="#"
-              className={`${styleSuperAdmin.sidebarMenuLink} ${styleSuperAdmin.sidebarMenuLink}`}
-              id="theme-button"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <i className="ri-moon-clear-fill" style={{ marginRight: '10px' }} />
-              <span className={styleSuperAdmin.navItem}>Theme</span>
-            </a>
-          </li>
 
           {/* Logout Link */}
           <li
@@ -120,7 +107,7 @@ export function SuperAdminPage() {
       </div>
           
       <div className={styleSuperAdmin.mainContent}>
-        <Header/>
+        <AdminHeader/>
         <Outlet/>
       </div>
       
@@ -128,17 +115,19 @@ export function SuperAdminPage() {
       {isLogoutModalOpen && (
         <div className={styleSuperAdmin.modalOverlay}>
           <div className={styleSuperAdmin.modal}>
-            <h2>Confirm Logout</h2>
-            <h4>Are you sure you want to logout?</h4>
+            <h2 style={{textAlign: "center"}}>Confirm Logout</h2>
+            <h6 style={{fontSize: "14px", textAlign: "center", marginBottom: "20px"}}>Are you sure you want to logout?</h6>
             <div className={styleSuperAdmin.buttonRow}>
-              <button 
-                // onClick={handleConfirmLogout} 
+              <button
+                onClick={handleConfirmLogout} 
                 className={styleSuperAdmin.confirmLogoutBtn}
               >
                 Yes, Logout
               </button>
-              <button 
-                onClick={() => setLogoutModalOpen(false)} 
+              <button
+                onClick={() => {
+                  setLogoutModalOpen(false);
+                }}
                 className={styleSuperAdmin.cancelBtn}
               >
                 Cancel

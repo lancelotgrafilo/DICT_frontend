@@ -59,12 +59,14 @@ export function Activities() {
 
   const handleDone = (index) => {
     const requestId = getCurrentMonthRequests()[index]._id;
-    updateRequestStatus(requestId, "done")
-      .then(() => {
-        console.log("Status updated, refetching...");
-        refetch();
-      })
-      .catch((err) => console.error("Error updating status:", err));
+    setSelectedRequest(requestId);
+    // updateRequestStatus(requestId, "done")
+    //   .then(() => {
+    //     console.log("Status updated, refetching...");
+    //     refetch();
+    //   })
+    //   .catch((err) => console.error("Error updating status:", err));
+    setShowConfirmationModal(true);
   };
 
   const getFileUrl = (fileName) => {
@@ -77,6 +79,16 @@ export function Activities() {
     const request = getCurrentMonthRequests()[index];
     setSelectedRequest(request); // Set the selected request
     setShowModal(true); // Open the modal
+  };
+
+  const handleViewInCalendar = (requestId) => {
+    const request = filteredRequests.find((activity) => activity._id === requestId); // Find the request by _id
+    if (request) {
+      setSelectedRequest(request); // Set the selected request
+      setShowModal(true); // Open the modal
+    } else {
+      console.error("Request not found for ID:", requestId);
+    }
   };
 
   const handleCloseModal = () => {
@@ -136,6 +148,39 @@ export function Activities() {
     }
   };
 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false); 
+  const [eventName, setEventName] = useState("");
+  const [attendeesFile, setAttendeesFile] = useState(null);
+
+  const handleConfirmationSubmit = async () => {
+    if (!selectedRequest) return;
+
+    // Prevent multiple clicks while processing
+    setProcessing((prev) => ({ ...prev, [selectedRequest]: 'done' }));
+
+    try {
+        // Simulate sending the event name and attendees file to the backend
+        console.log("Event Name:", eventName);
+        console.log("Attendees File:", attendeesFile);
+
+        // Update the request status to "done"
+        await updateRequestStatus(selectedRequest, "done");
+        console.log("Status updated, refetching...");
+        refetch(); // Refetch the requests to reflect the updated status
+        setShowConfirmationModal(false); // Close the modal after updating the status
+    } catch (err) {
+        console.error("Error updating status:", err);
+    } finally {
+        setProcessing((prev) => ({ ...prev, [selectedRequest]: null }));
+    }
+};
+
+  const handleConfirmationCancel = () => {
+    setShowConfirmationModal(false); // Close the modal
+    setEventName(""); // Reset the event name
+    setAttendeesFile(null); // Reset the attendees file
+};
+
   return (
     <div className="container p-0 mt-3">
       {showModal && (
@@ -147,8 +192,8 @@ export function Activities() {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
-            zIndex: 1040, // Ensure it appears behind the modal
+            backgroundColor: "rgba(0, 0, 0, 0.5)", 
+            zIndex: 1040, 
           }}
         ></div>
       )}
@@ -198,34 +243,44 @@ export function Activities() {
                     position: "relative",
                   }}
                   onMouseEnter={(e) => {
+                    const dayNumber = e.target.querySelector(".day-number");
+                    const viewText = e.target.querySelector(".view-text");
+                    const checkIcon = e.target.querySelector(".check-icon");
+                  
                     if (isToday) {
                       e.target.style.backgroundColor = "#808080"; // Gray for today on hover
-                      e.target.querySelector(".day-number").style.display = "none"; // Hide number
-                      e.target.querySelector(".view-text").style.display = "block"; // Show "Today"
-                      e.target.querySelector(".view-text").style.color = "white"; // Change "Today" text to white
+                      if (dayNumber) dayNumber.style.display = "none"; // Hide number
+                      if (viewText) {
+                        viewText.style.display = "block"; // Show "Today"
+                        viewText.style.color = "white"; // Change "Today" text to white
+                      }
                     } else if (status === "accepted") {
                       e.target.style.backgroundColor = "#0056b3"; // Darker blue for accepted on hover
-                      e.target.querySelector(".day-number").style.display = "none";
-                      e.target.querySelector(".view-text").style.display = "block";
+                      if (dayNumber) dayNumber.style.display = "none";
+                      if (viewText) viewText.style.display = "block";
                     } else if (status === "done") {
                       e.target.style.backgroundColor = "#218838"; // Darker green for done on hover
-                      e.target.querySelector(".check-icon").style.display = "none";
-                      e.target.querySelector(".view-text").style.display = "block";
+                      if (checkIcon) checkIcon.style.display = "none";
+                      if (viewText) viewText.style.display = "block";
                     }
                   }}
                   onMouseLeave={(e) => {
+                    const viewText = e.target.querySelector(".view-text");
+                    const dayNumber = e.target.querySelector(".day-number");
+                    const checkIcon = e.target.querySelector(".check-icon");
+                  
                     if (isToday) {
                       e.target.style.backgroundColor = "#808080"; // Keep gray color when hovering on today
-                      e.target.querySelector(".view-text").style.display = "none"; // Hide "Today"
-                      e.target.querySelector(".day-number").style.display = "block"; // Show number again
+                      if (viewText) viewText.style.display = "none"; // Hide "Today"
+                      if (dayNumber) dayNumber.style.display = "block"; // Show number again
                     } else if (status === "accepted") {
                       e.target.style.backgroundColor = "#007bff"; // Blue for accepted
-                      e.target.querySelector(".day-number").style.display = "block";
-                      e.target.querySelector(".view-text").style.display = "none";
+                      if (dayNumber) dayNumber.style.display = "block";
+                      if (viewText) viewText.style.display = "none";
                     } else if (status === "done") {
                       e.target.style.backgroundColor = "#28a745"; // Green for done
-                      e.target.querySelector(".check-icon").style.display = "block";
-                      e.target.querySelector(".view-text").style.display = "none";
+                      if (checkIcon) checkIcon.style.display = "block";
+                      if (viewText) viewText.style.display = "none";
                     }
                   }}
                 >
@@ -245,43 +300,55 @@ export function Activities() {
                   {status !== "done" && <span className="day-number">{date ? new Date(date).getDate() : ""}</span>}
 
                   {status === "accepted" && (
-                    <span className="view-text"
+                    <button
+                      className="btn btn-outline-primary btn-sm me-2 view-text"
+                      onClick={() => handleViewInCalendar(activity._id)} 
                       style={{
-                        display: "none",
+                        display: "none", 
                         position: "absolute",
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         color: "white",
                         fontWeight: "bold",
-                      }} >
-                      View
-                    </span>
+                        border: "none",
+                        background: "transparent", 
+                      }}
+                    >
+                      <i className="bi bi-eye"></i> View
+                    </button>
                   )}
-
                   {status === "done" && (
                     <>
-                      <span className="check-icon"
+                      <span
+                        className="check-icon"
                         style={{
                           position: "absolute",
                           top: "50%",
                           left: "50%",
                           transform: "translate(-50%, -50%)",
-                        }} >
-                        <i className="bi bi-check-circle" style={{ fontSize: "1.5em" }}></i>
+                          fontSize: "1.5em", 
+                        }}
+                      >
+                        <i className="bi bi-check-circle"></i>
                       </span>
-                      <span className="view-text"
+                      <button
+                        className="btn btn-outline-success btn-sm me-2 view-text"
+                        onClick={() => handleViewInCalendar(activity._id)} 
                         style={{
-                          display: "none",
+                          display: "none", 
                           position: "absolute",
                           top: "50%",
                           left: "50%",
                           transform: "translate(-50%, -50%)",
                           color: "white",
                           fontWeight: "bold",
-                        }} >
-                        View
-                      </span>
+                          border: "none", 
+                          background: "transparent", 
+                        }}
+                      >
+                        <i className="bi bi-eye"></i> View
+                      </button>
                     </>
                   )}
                 </div>
@@ -480,7 +547,51 @@ export function Activities() {
           </div>
         </div>
 
-
+=======
+        {showConfirmationModal && (
+                <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Confirm Completion</h5>
+                                <button type="button" className="btn-close" onClick={handleConfirmationCancel}></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label htmlFor="eventName" className="form-label">Event Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="eventName"
+                                        value={eventName}
+                                        onChange={(e) => setEventName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="attendeesFile" className="form-label">Upload Attendees</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        id="attendeesFile"
+                                        onChange={(e) => setAttendeesFile(e.target.files[0])}
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={handleConfirmationCancel}>Cancel</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleConfirmationSubmit}
+                                    disabled={processing[selectedRequest] === 'done'}
+                                >
+                                    {processing[selectedRequest] === 'done' ? "Processing..." : "Submit"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
       </div>
     </div >
   );

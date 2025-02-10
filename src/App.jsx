@@ -41,6 +41,7 @@ export default function App() {
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
             <Route path="activities" element={<Activities />} />
+            <Route path="focal-form" element={ <FocalForm/>} />
             <Route path='modules-lists' element={<ModulesList/>} />
             <Route path='history' element={<History/>} />
             <Route path='settings' element={<Settings/>} /> 
@@ -48,8 +49,6 @@ export default function App() {
 
 
           <Route path="training" element={ <TrainingPage /> } />
-          <Route path="focal-form" element={ <FocalForm/>} />
-
           <Route path="login" element={<LoginPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
 

@@ -6,14 +6,10 @@ import { toast } from 'react-toastify';
 import { Header } from "../../components/Header/Header";
 import { useNavigate } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
-
-import useGetAcceptedRequest from "../../utils/Hooks/RequestHooks/useGetAcceptedRequest";
-
 import usePostRequest from "../../utils/Hooks/RequestHooks/usePostRequest";
 import useModules from "../../utils/Hooks/ModulesHooks/useGetModules";
 
 export function RequestForm() {
-  const { requests } = useGetAcceptedRequest();
 
   const { data, loading, error, addRequest } = usePostRequest();
   const [formValues, setFormValues] = useState({
@@ -356,7 +352,7 @@ export function RequestForm() {
 
   const sanitizeInput = (input) => {
     return input.replace(/[^\w\s.-]/g, '').replace(/\s+/g, ' ');
-};
+  };
 
   const sanitizeInputAddress = (input) => {
     // Allow only alphanumeric characters, spaces, and commas
@@ -375,6 +371,7 @@ export function RequestForm() {
     // Replace any special characters except for "@" with an empty string
     return input.replace(/[^a-zA-Z0-9@.]/g, '');
   };
+  
   const validateEmail = (email) => {
     // Simple regex for basic email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

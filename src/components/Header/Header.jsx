@@ -58,14 +58,14 @@ export function Header() {
           </div>
           {/* Logo Container */}
           <div className={styleHeader.logoContainer}>
-            <a href="https://dict.gov.ph/transparency-seal" target='blank' className={styleHeader.logoLink}>
+            <a href="https://dict.gov.ph/transparency-seal" className={styleHeader.logoLink}>
               <img
                 src={transparencySeal}
                 alt="Transparency Seal"
                 className={styleHeader.logoImage}
               />
             </a>
-            <a href="https://dict.gov.ph/foi" target='blank' className={styleHeader.logoLink}>
+            <a href="https://dict.gov.ph/foi" className={styleHeader.logoLink}>
               <img src={foi} alt="FOI" className={styleHeader.logoImage} />
             </a>
             <img
@@ -83,13 +83,13 @@ export function Header() {
             <Link to="/home" className={styleHeader.navLink}>HOME</Link>
           </li>
           <li className={styleHeader.navItem}>
-            <a href="https://dict.gov.ph/pnpki" target='blank' className={styleHeader.navLink}>DCD</a>
+            <a href="https://dict.gov.ph/pnpki" className={styleHeader.navLink}>DCD</a>
           </li>
           <li className={styleHeader.navItem}>
-            <a href="https://dict.gov.ph/cybersecurity" target='blank' className={styleHeader.navLink}>CIE-CSSD</a>
+            <Link to="/home" className={styleHeader.navLink}>CIECSD</Link>
           </li>
           <li className={styleHeader.navItem}>
-            <a href="https://www.ncert.gov.ph/" target='blank' className={styleHeader.navLink}>NCERT</a>
+            <a href="https://www.ncert.gov.ph/" className={styleHeader.navLink}>NCERT</a>
           </li>
           <li className={styleHeader.navItem}>
             <Link to="/request-form" className={styleHeader.navLink}>REQUEST SPEAKER</Link>
