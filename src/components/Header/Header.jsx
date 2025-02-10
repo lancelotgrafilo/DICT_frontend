@@ -86,7 +86,7 @@ export function Header() {
             <a href="https://dict.gov.ph/pnpki" className={styleHeader.navLink}>DCD</a>
           </li>
           <li className={styleHeader.navItem}>
-            <Link to="/home" className={styleHeader.navLink}>CIE-CSSD</Link>
+            <Link to="/home" className={styleHeader.navLink}>CIECSD</Link>
           </li>
           <li className={styleHeader.navItem}>
             <a href="https://www.ncert.gov.ph/" className={styleHeader.navLink}>NCERT</a>
