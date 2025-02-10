@@ -1,13 +1,28 @@
-.mainContent{
-  height:80vh;
+.mainContent {
+  height: 80vh;
 }
 
 .card {
-    border-radius: 8px;
-  }
-  
-  textarea {
-    resize: none;
-    height: 100px;
-  }
-  
+  border-radius: 8px;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+.btn {
+  background-color: transparent;
+  border: 2px solid #6c757d; 
+  color: #6c757d;  
+  border-radius: 5px;
+  padding: 5px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-inline-start: 5px;
+}
+
+.btn:hover {
+  background-color: #6c757d;  
+  color: white;  
+}

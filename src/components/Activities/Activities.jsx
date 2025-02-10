@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import styleActivities from "./activities.module.css";
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
 import { FaRegCalendarAlt, FaRegListAlt } from 'react-icons/fa';
 import { useGetFiles } from '../../utils/Hooks/FIleHooks/useGetFiles'
+import { Button, Table, Badge } from "react-bootstrap";
+import { FaFilter, FaFileExport, FaPlus } from "react-icons/fa";
+
 
 export function Activities() {
-    const { files, loading: fileLoading, errorFile } = useGetFiles();
-    const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
+  const { files, loading: fileLoading, errorFile } = useGetFiles();
+  const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [processing, setProcessing] = useState({});
@@ -79,13 +83,13 @@ export function Activities() {
     setShowModal(false); // Close the modal
     setSelectedRequest(null); // Reset the selected request
   };
-  
+
   const handleDoneInModal = async (requestId) => {
     if (!requestId) return;
-  
+
     // Prevent multiple clicks while processing
     setProcessing((prev) => ({ ...prev, [requestId]: 'done' }));
-  
+
     try {
       await updateRequestStatus(requestId, "done");
       console.log("Status updated, refetching...");
@@ -104,14 +108,14 @@ export function Activities() {
     // Prevent multiple clicks while processing
     setProcessing((prev) => ({ ...prev, [requestId]: 'cancel' }));
     try {
-        await updateRequestStatus(requestId, "canceled");
-        console.log("Request canceled, refetching...");
-        refetch(); // Refetch the requests to reflect the updated status
-        handleCloseModal(); // Close the modal after canceling the request
+      await updateRequestStatus(requestId, "canceled");
+      console.log("Request canceled, refetching...");
+      refetch(); // Refetch the requests to reflect the updated status
+      handleCloseModal(); // Close the modal after canceling the request
     } catch (err) {
-        console.error("Error canceling request:", err);
+      console.error("Error canceling request:", err);
     } finally {
-        setProcessing((prev) => ({ ...prev, [requestId]: null }));
+      setProcessing((prev) => ({ ...prev, [requestId]: null }));
     }
   };
 
@@ -121,14 +125,14 @@ export function Activities() {
     // Prevent multiple clicks while processing
     setProcessing((prev) => ({ ...prev, [requestId]: 'cancel' }));
     try {
-        await updateRequestStatus(requestId, "canceled");
-        console.log("Request canceled, refetching...");
-        refetch(); // Refetch the requests to reflect the updated status
-        handleCloseModal(); // Close the modal after canceling the request
+      await updateRequestStatus(requestId, "canceled");
+      console.log("Request canceled, refetching...");
+      refetch(); // Refetch the requests to reflect the updated status
+      handleCloseModal(); // Close the modal after canceling the request
     } catch (err) {
-        console.error("Error canceling request:", err);
+      console.error("Error canceling request:", err);
     } finally {
-        setProcessing((prev) => ({ ...prev, [requestId]: null }));
+      setProcessing((prev) => ({ ...prev, [requestId]: null }));
     }
   };
 
@@ -286,6 +290,35 @@ export function Activities() {
           </div>
         ) : (
           <div className="table-responsive">
+
+            <div className="d-flex justify-content-between align-items-center mt-3">
+              {/* Top-right buttons */}
+              <div className="d-flex justify-content-end w-100 mb-3">
+                {/* Show Export & Filter only in Table View */}
+                {viewMode === "table" && (
+                  <>
+                    <Button className={styleActivities.btn}><FaFilter /> Filter</Button>
+                    <Button className={styleActivities.btn}><FaFileExport /> Export</Button>
+                  </>
+                )}
+
+                {/* Calendar View toggle button (Always visible) */}
+                <Button
+                  className={styleActivities.btn}
+                  onClick={() => setViewMode(viewMode === "calendar" ? "table" : "calendar")}
+                >
+                  {viewMode === "calendar" ? (
+                    <>
+                      <FaRegListAlt className="me-2" /> Table View
+                    </>
+                  ) : (
+                    <>
+                      <FaRegCalendarAlt className="me-2" /> Calendar View
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
             <table className="table table-bordered text-center bg-white">
               <thead>
                 <tr style={{ backgroundColor: "#003366", color: "white" }}>
@@ -331,7 +364,7 @@ export function Activities() {
                         ))}
                       </td>
                       <td style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>
-                        <button 
+                        <button
                           className="btn btn-outline-primary btn-sm me-2"
                           onClick={() => handleView(index)}
                         >
@@ -339,24 +372,24 @@ export function Activities() {
                         </button>
                         {/* Conditionally render Done button based on activity status */}
                         {activity.status === "done" ? (
-                            <span className="text-success" style={{ fontWeight: "bold" }}>Completed</span>
+                          <span className="text-success" style={{ fontWeight: "bold" }}>Completed</span>
                         ) : activity.status === "canceled" ? (
-                            <span className="text-danger" style={{ fontWeight: "bold" }}>Canceled</span>
+                          <span className="text-danger" style={{ fontWeight: "bold" }}>Canceled</span>
                         ) : (
-                            <>
-                                <button
-                                    className="btn btn-outline-success btn-sm me-2"
-                                    onClick={() => handleDone(index)} // Pass the index of the current activity
-                                >
-                                    <i className="bi bi-check-circle"></i> Done
-                                </button>
-                                <button
-                                    className="btn btn-outline-danger btn-sm"
-                                    onClick={() => handleCancel(activity._id)}
-                                >
-                                    <i className="bi bi-x-circle"></i> Cancel
-                                </button>
-                            </>
+                          <>
+                            <button
+                              className="btn btn-outline-success btn-sm me-2"
+                              onClick={() => handleDone(index)} // Pass the index of the current activity
+                            >
+                              <i className="bi bi-check-circle"></i> Done
+                            </button>
+                            <button
+                              className="btn btn-outline-danger btn-sm"
+                              onClick={() => handleCancel(activity._id)}
+                            >
+                              <i className="bi bi-x-circle"></i> Cancel
+                            </button>
+                          </>
                         )}
                       </td>
                     </tr>
@@ -368,19 +401,16 @@ export function Activities() {
           </div>
         )}
 
+
+
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-outline-primary" onClick={() => changeMonth(-1)}>◀ Prev</button>
-          <button className="btn btn-outline-secondary d-flex align-items-center" onClick={() => setViewMode(viewMode === "calendar" ? "table" : "calendar")}>
-            {viewMode === "calendar" ? (
-              <>
-                <FaRegListAlt className="me-2" /> Table View
-              </>
-            ) : (
-              <>
-                <FaRegCalendarAlt className="me-2" /> Calendar View
-              </>
-            )}
-          </button>
+
+          {viewMode === "calendar" && (
+            <button className="btn btn-outline-secondary d-flex align-items-center" onClick={() => setViewMode("table")}>
+              <FaRegListAlt className="me-2" /> Table View
+            </button>
+          )}
 
           <button className="btn btn-outline-primary" onClick={() => changeMonth(1)}>Next ▶</button>
         </div>
@@ -450,8 +480,8 @@ export function Activities() {
           </div>
         </div>
 
-        
+
       </div>
-    </div>
+    </div >
   );
 }

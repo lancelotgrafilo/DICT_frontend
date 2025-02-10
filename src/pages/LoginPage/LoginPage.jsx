@@ -12,7 +12,7 @@ export function LoginPage() {
     <>
     <div className={`container d-flex justify-content-center align-items-center ${styleLogin.loginContainer}`}>
       {/* Login Container */}
-      <div className="row border rounded-4 p-3 bg-blue shadow box-area">
+      <div className={`row border rounded-4 p-3 bg-blue shadow box-area ${styleLogin.card}`}>
         
         {/* Left Box */}
         <div className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style={{ background: '#103cbe' }}>
