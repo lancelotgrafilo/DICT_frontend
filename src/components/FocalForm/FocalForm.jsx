@@ -1,7 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import styleFocalForm from './focalForm.module.css';
+import { toast } from 'react-toastify';
+import usePostFocal from '../../utils/Hooks/FocalHooks/usePostFocal';
 
 export function FocalForm() {
+
+  const { data, loading, error, addFocal } = usePostFocal();
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     focal_number: '',
@@ -18,64 +22,16 @@ export function FocalForm() {
     province: '',
     focal_status: '',
   });
-  const formRef = useRef(null);
-
-  useEffect(() => {
-    // Generate a unique focal number
-    const generateFocalNumber = () => {
-      const prefix = 'FN';
-      const randomNumber = Math.floor(1000 + Math.random() * 9000);
-      const date = new Date().getFullYear().toString().slice(-2);
-      return `${prefix}-${randomNumber}-${date}`;
-    };
-
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      focal_number: generateFocalNumber(),
-    }));
-  }, []);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormValues((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-
-    // Reset province when region changes
-    if (id === "region") {
-      setFormValues((prev) => ({
-        ...prev,
-        province: "", // Clear province selection
-      }));
-    }
-  };
 
   const handleNext = () => {
     // Validate form fields before proceeding to the next step
     const requiredFields = step === 1 
-      ? ['focal_number', 'last_name', 'first_name', 'middle_name', 'email', 'gender', 'status', 'salutation', 'contact_number']
+      ? ['focal_number', 'last_name', 'first_name', 'middle_name', 'email_address', 'gender', 'status', 'salutation', 'contact_number']
       : ['region', 'position', 'province', 'focal_status'];
     
     for (let field of requiredFields) {
       if (!formValues[field]) {
         alert(`Please fill out the ${field.replace('_', ' ')} field.`);
-        return;
-      }
-    }
-
-    // Validate email format
-    if (step === 1) {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(formValues.email)) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-
-      // Validate contact number format (example: 11 digits starting with 09)
-      const contactNumberPattern = /^09\d{9}$/;
-      if (!contactNumberPattern.test(formValues.contact_number)) {
-        alert('Please enter a valid contact number.');
         return;
       }
     }
@@ -129,18 +85,25 @@ export function FocalForm() {
       setStep(1);
     }
   };
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      console.log('Form Values:', formValues);  // Log all the formValues before submitting
-      try {
-        const response = await addRequest(formValues);
-        console.log('Request submitted successfully:', response);
-        toast.success('Request submitted successfully:', response);
-        navigate('/home');
-      } catch (err) {
-        console.error('Error submitting request:', err);
-      }
-    };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Show loading state
+      console.log('Submitting form...');
+      const response = await addFocal(formValues);
+
+      // Success notification
+      toast.success('Focal Form submitted successfully!');
+      console.log('Focal Form submitted successfully:', response);
+
+    } catch (err) {
+      // Error notification
+      console.error('Error submitting focal form:', err);
+      toast.error('An error occurred while submitting the focal form. Please try again.');
+    }
+  };
 
   const regionToProvinces = {
     "Region I - Ilocos Region": ["Ilocos Norte", "Ilocos Sur", "La Union", "Pangasinan"],
@@ -166,10 +129,27 @@ export function FocalForm() {
     ? regionToProvinces[formValues.region]
     : [];
 
+  const sanitizeInput = (input) => {
+    return input.replace(/[^\w\s.-]/g, '').replace(/\s+/g, ' ');
+  };
+
+  const sanitizeEmailInput = (input) => {
+    // Replace any special characters except for "@" with an empty string
+    return input.replace(/[^a-zA-Z0-9@.]/g, '');
+  };
+
+  const handleContactNumberChange = (e) => {
+    const input = e.target.value;
+    // Allow only numbers and ensure the length is exactly 11 digits
+    if (/^\d{0,11}$/.test(input)) {
+      setFormValues({ ...formValues, contact_number: input });
+    }
+  };
+
   return (
     <div className={styleFocalForm.container}>
       <div className={styleFocalForm.header}>CYBERSECURITY FOCAL FORM</div>
-      <form ref={formRef}>
+      <form onSubmit={handleSubmit}>
         {step === 1 && (
           <div>
             <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATION</div>
@@ -177,29 +157,71 @@ export function FocalForm() {
               <div className={styleFocalForm.formLeft}>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="focal-number">Focal Number:</label>
-                  <input type="text" id="focal-number" value={formValues.focal_number} readOnly />
+                  <input 
+                    type="text" 
+                    value={formValues.focal_number} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, focal_number: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  />
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="last_name">Last Name:</label>
-                  <input type="text" id="last_name" value={formValues.last_name} onChange={handleChange} />
+                  <input 
+                    type="text" 
+                    value={formValues.last_name} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, last_name: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  />
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="first_name">First Name:</label>
-                  <input type="text" id="first_name" value={formValues.first_name} onChange={handleChange} />
+                  <input 
+                    type="text" 
+                    value={formValues.first_name} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, first_name: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  />
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="middle_name">Middle Name:</label>
-                  <input type="text" id="middle_name" value={formValues.middle_name} onChange={handleChange} />
+                  <input 
+                    type="text" 
+                    value={formValues.middle_name} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, middle_name: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label htmlFor="email">Email:</label>
-                  <input type="email" id="email" value={formValues.email} onChange={handleChange} />
+                  <label htmlFor="email_address">Email Address:</label>
+                  <input 
+                    type="email"
+                    value={formValues.email_address} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, email_address: sanitizeEmailInput(e.target.value) })
+                    }
+                    required
+                  />
                 </div>
               </div>
               <div className={styleFocalForm.formRight}>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="gender">Gender:</label>
-                  <select id="gender" value={formValues.gender} onChange={handleChange}>
+                  <select 
+                    id="gender" 
+                    value={formValues.gender} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  >
                     <option value="">Select Gender</option>
                     <option>Male</option>
                     <option>Female</option>
@@ -208,7 +230,14 @@ export function FocalForm() {
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="status">Status:</label>
-                  <select id="status" value={formValues.status} onChange={handleChange}>
+                  <select 
+                    id="status" 
+                    value={formValues.status} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, status: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  >
                     <option value="">Select Status</option>
                     <option>Plantilla</option>
                     <option>Job Order</option>
@@ -217,7 +246,14 @@ export function FocalForm() {
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label htmlFor="salutation">Salutation:</label>
-                  <select id="salutation" value={formValues.salutation} onChange={handleChange}>
+                  <select 
+                    id="salutation" 
+                    value={formValues.salutation} 
+                    onChange={(e) =>
+                      setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
+                    }
+                    required
+                  >
                     <option value="">Select Salutation</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Ms.">Ms.</option>
@@ -233,8 +269,9 @@ export function FocalForm() {
                     type="tel"
                     id="contact_number"
                     value={formValues.contact_number}
-                    onChange={handleChange}
+                    onChange={handleContactNumberChange}
                     maxLength="11"
+                    required
                   />
                 </div>
               </div>
@@ -256,7 +293,14 @@ export function FocalForm() {
             <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATION</div>
             <div className={styleFocalForm.formGroup}>
               <label htmlFor="region">Region:</label>
-              <select id="region" value={formValues.region} onChange={handleChange}>
+              <select 
+                id="region" 
+                value={formValues.region} 
+                onChange={(e) =>
+                  setFormValues({ ...formValues, region: sanitizeInput(e.target.value) })
+                }
+                required
+              >
                 <option value="">Select Region</option>
                 {Object.keys(regionToProvinces).map((region) => (
                   <option key={region} value={region}>
@@ -267,12 +311,25 @@ export function FocalForm() {
             </div>
             <div className={styleFocalForm.formGroup}>
               <label htmlFor="position">Position:</label>
-              <input type="text" id="position" value={formValues.position} onChange={handleChange} />
+              <input 
+                type="text" 
+                value={formValues.position} 
+                onChange={(e) =>
+                  setFormValues({ ...formValues, position: sanitizeInput(e.target.value) })
+                } 
+                required
+              />
             </div>
             <div className={styleFocalForm.formGroupContainer}>
               <div className={styleFocalForm.formGroup}>
                 <label htmlFor="province">Province:</label>
-                <select id="province" value={formValues.province} onChange={handleChange}>
+                <select 
+                  value={formValues.province} 
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, province: sanitizeInput(e.target.value) })
+                  }
+                  required
+                >
                   <option value="">Select Province</option>
                   {filteredProvinces.map((province) => (
                     <option key={province} value={province}>
@@ -283,7 +340,13 @@ export function FocalForm() {
               </div>
               <div className={styleFocalForm.formGroup}>
                 <label htmlFor="focal_status">Focal Status:</label>
-                <select id="focal_status" value={formValues.focal_status} onChange={handleChange}>
+                <select 
+                  value={formValues.focal_status} 
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, focal_status: sanitizeInput(e.target.value) })
+                  }
+                  required
+                >
                   <option value="">Select Focal Status</option>
                   <option>PRIMARY</option>
                   <option>SECONDARY</option>
@@ -311,7 +374,7 @@ export function FocalForm() {
 
         {step === 3 && (
           <div>
-            <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATIONS</div>
+            <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATION</div>
             <div className={styleFocalForm.formContainer}>
               <div className={styleFocalForm.formLeft}>
                 <div className={styleFocalForm.formGroup}>
@@ -319,20 +382,20 @@ export function FocalForm() {
                   <input type="text" value={formValues.focal_number} readOnly className={styleFocalForm.readOnlyInput} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label>Lastname:</label>
-                  <input type="text" value={formValues.lastname} readOnly className={styleFocalForm.readOnlyInput} />
+                  <label>Last Name:</label>
+                  <input type="text" value={formValues.last_name} readOnly className={styleFocalForm.readOnlyInput} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
                   <label>First Name:</label>
-                  <input type="text" value={formValues.firstname} readOnly className={styleFocalForm.readOnlyInput} />
+                  <input type="text" value={formValues.first_name} readOnly className={styleFocalForm.readOnlyInput} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label>Middlename:</label>
-                  <input type="text" value={formValues.middlename} readOnly className={styleFocalForm.readOnlyInput} />
+                  <label>Middle Name:</label>
+                  <input type="text" value={formValues.middle_name} readOnly className={styleFocalForm.readOnlyInput} />
                 </div>
                 <div className={styleFocalForm.formGroup}>
-                  <label>Email:</label>
-                  <input type="text" value={formValues.email} readOnly className={styleFocalForm.readOnlyInput} />
+                  <label>Email Address:</label>
+                  <input type="text" id='email_address' value={formValues.email_address} readOnly className={styleFocalForm.readOnlyInput} />
                 </div>
               </div>
               <div className={styleFocalForm.formRight}>
@@ -386,8 +449,14 @@ export function FocalForm() {
               <button type="button" className={styleFocalForm.btn_secondary} onClick={handlePrevious}>
                 <i className="bi bi-pencil-square"></i> Edit
               </button>
-              <button type="submit" className={styleFocalForm.btn_primary}>
-                <i className="bi bi-check-circle"></i> Confirm and Save
+              <button
+                type="submit"
+                className={styleFocalForm.btn_primary}
+                onClick={handleSubmit}
+                disabled={loading} // Disable the button while loading
+              >
+                <i className="bi bi-check-circle" style={{marginRight: "8px"}}></i> 
+                {loading ? 'Submitting...' : 'Confirm and Save'}
               </button>
             </div>
           </div>
