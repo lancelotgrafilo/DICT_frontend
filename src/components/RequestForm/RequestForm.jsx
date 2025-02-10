@@ -921,49 +921,49 @@ export function RequestForm() {
                   <div style={{ padding: "8px", backgroundColor: "white" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
                       <div>
-                        <label><strong>Salutation<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Salutation<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.salutation}</p>
                       </div>
                       <div>
-                        <label><strong>Last Name<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Last Name<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.last_name}</p>
                       </div>
                       <div>
-                        <label><strong>First Name<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>First Name<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.first_name}</p>
                       </div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
                       <div>
-                        <label><strong>Middle Name<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Middle Name<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.middle_name}</p>
                       </div>
                       <div>
-                        <label><strong>Extension Name:<span style={{ color: "red" }}>*</span></strong></label>
+                        <label><strong>Extension Name:<span style={{ color: "red" }}></span></strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.extension_name || "N/A"}</p>
                       </div>
                       <div>
-                        <label><strong>Gender<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Gender<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.gender}</p>
                       </div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
                       <div>
-                        <label><strong>Position<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Position<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.position}</p>
                       </div>
                       <div>
-                        <label><strong>Contact No.<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Contact No.<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.contact_number}</p>
                       </div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
                       <div>
-                        <label><strong>Email Address<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Email Address<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.email_address}</p>
                       </div>
                       <div>
-                        <label><strong>Address<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Address<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.address}</p>
                       </div>
                     </div>
@@ -978,16 +978,16 @@ export function RequestForm() {
                   <div style={{ padding: "8px", backgroundColor: "white" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
                       <div>
-                        <label><strong>Organization Name<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Organization Name<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.organization_name}</p>
                       </div>
                       <div>
-                        <label><strong>Department<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Department<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.department}</p>
                       </div>
                     </div>
                     <div>
-                        <label><strong>Region<span style={{ color: "red" }}>*</span>:</strong></label>
+                        <label><strong>Region<span style={{ color: "red" }}></span>:</strong></label>
                         <p style={{margin: "3px 0",padding: "4px",backgroundColor: "#eaf4ff", border: "1px solid black",borderRadius: "5px",width: "calc(50% - 7.5px)",}}>{formValues.region}</p>
                       </div>
                   </div>

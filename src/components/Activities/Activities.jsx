@@ -547,7 +547,6 @@ export function Activities() {
           </div>
         </div>
 
-=======
         {showConfirmationModal && (
                 <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <div className="modal-dialog">
