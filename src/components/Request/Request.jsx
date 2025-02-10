@@ -6,59 +6,66 @@ import { useState } from "react";
 import { useGetFiles } from "../../utils/Hooks/FileHooks/useGetFiles";
 
 export function Request() {
+  // Fetch requests using the custom hook
   const { requests = [], getLoading, error, refetch } = useGetRequest();
+  // Custom hook for updating request status
   const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
+  // Custom hook for fetching files
   const { files, loading: fileLoading, errorFile } = useGetFiles();
-  // Track processing state for accept and reject buttons
+
+  // State to track processing state for accept/reject buttons
   const [processing, setProcessing] = useState({});
   // State to manage modal visibility and selected request
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+
   // Filter requests to only include those with "pending" status
-  const pendingRequests = requests.filter(request => request.status === "pending");
+  const pendingRequests = requests.filter((request) => request.status === "pending");
+
   // Function to retrieve the file URL
   const getFileUrl = (fileName) => {
     if (!fileName || !files.cybersecurityForms) return null;
-    const file = files.cybersecurityForms.find(file => file.name === fileName);
+    const file = files.cybersecurityForms.find((file) => file.name === fileName);
     return file ? `${'http://localhost:5000'}${file.url}` : null;
   };
-  
+
+  // Handle opening the modal and setting the selected request
   const handleView = (index) => {
     const request = pendingRequests[index];
     setSelectedRequest(request); // Set the selected request
     console.log("Selected PDF File:", request.pdfFile); // Log the selected request's pdfFile
     setShowModal(true); // Open the modal
   };
+
+  // Handle closing the modal
   const handleCloseModal = () => {
     setShowModal(false); // Close the modal
     setSelectedRequest(null); // Reset the selected request
   };
+
+  // Handle accepting a request
   const handleAccept = async (requestId) => {
     if (!requestId) return;
-
     setProcessing((prev) => ({ ...prev, [requestId]: 'accept' }));
     await updateRequestStatus(requestId, "accept");
-    refetch();
+    refetch(); // Refetch requests after updating
     setProcessing((prev) => ({ ...prev, [requestId]: null }));
-
-    // Close the modal only if it's active
-    if (showModal) handleCloseModal();
+    if (showModal) handleCloseModal(); // Close the modal if open
   };
 
+  // Handle rejecting a request
   const handleReject = async (requestId) => {
     if (!requestId) return;
-
     setProcessing((prev) => ({ ...prev, [requestId]: 'reject' }));
     await updateRequestStatus(requestId, "reject");
-    refetch();
+    refetch(); // Refetch requests after updating
     setProcessing((prev) => ({ ...prev, [requestId]: null }));
-
-    if (showModal) handleCloseModal();
+    if (showModal) handleCloseModal(); // Close the modal if open
   };
 
   return (
     <div className="container-fluid d-flex justify-content-center p-0 align-items-center mt-3">
-      {/* Add a backdrop div when the modal is open */}
+      {/* Backdrop div when the modal is open */}
       {showModal && (
         <div
           className="modal-backdrop show"
@@ -80,7 +87,17 @@ export function Request() {
         <h3 className="text-center mb-3">List of Requests</h3>
         <div className="table-responsive">
           <table className="table table-bordered text-center bg-white">
-            {/* Table headers omitted for brevity */}
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Date Created</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Total Hours</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
             <tbody>
               {pendingRequests.length > 0 ? (
                 pendingRequests.map((request, reqIndex) =>
@@ -140,6 +157,7 @@ export function Request() {
             </tbody>
           </table>
         </div>
+
         {/* Modal for displaying PDF */}
         <div
           className={`modal fade ${showModal ? 'show' : ''}`}
@@ -158,9 +176,12 @@ export function Request() {
               <div className="modal-body">
                 {selectedRequest && (
                   <>
-                    {getFileUrl(selectedRequest.pdfFile) ? (
+                    {selectedRequest.pdfFile && selectedRequest.pdfFile.data ? (
+                      // Convert binary data to Blob URL and display in iframe
                       <iframe
-                        src={getFileUrl(selectedRequest.pdfFile)}
+                        src={URL.createObjectURL(
+                          new Blob([new Uint8Array(selectedRequest.pdfFile.data)], { type: 'application/pdf' })
+                        )}
                         title="Request PDF"
                         width="100%"
                         height="500px"
@@ -194,6 +215,7 @@ export function Request() {
             </div>
           </div>
         </div>
+
         {/* Error and success messages */}
         {updateError && <div className="alert alert-danger mt-3">{updateError}</div>}
         {response && !updateError && <div className="alert alert-success mt-3">Request status updated successfully!</div>}
