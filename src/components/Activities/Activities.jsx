@@ -469,7 +469,6 @@ export function Activities() {
         )}
 
 
-
         <div className="d-flex justify-content-between align-items-center mt-3">
           <button className="btn btn-outline-primary" onClick={() => changeMonth(-1)}>◀ Prev</button>
 
