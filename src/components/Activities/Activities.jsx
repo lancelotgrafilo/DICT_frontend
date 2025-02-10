@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import styleActivities from "./activities.module.css";
@@ -67,12 +67,6 @@ export function Activities() {
     //   })
     //   .catch((err) => console.error("Error updating status:", err));
     setShowConfirmationModal(true);
-  };
-
-  const getFileUrl = (fileName) => {
-    if (!fileName || !files.cybersecurityForms) return null;
-    const file = files.cybersecurityForms.find(file => file.name === fileName);
-    return file ? `${'http://localhost:5000'}${file.url}` : null;
   };
 
   const handleView = (index) => {
@@ -179,7 +173,31 @@ export function Activities() {
     setShowConfirmationModal(false); // Close the modal
     setEventName(""); // Reset the event name
     setAttendeesFile(null); // Reset the attendees file
-};
+  };
+
+  useEffect(() => {
+    let pdfUrl;
+    if (selectedRequest?.pdfFile?.data) {
+      pdfUrl = URL.createObjectURL(
+        new Blob([new Uint8Array(selectedRequest.pdfFile.data)], { type: 'application/pdf' })
+      );
+    }
+    return () => {
+      if (pdfUrl) URL.revokeObjectURL(pdfUrl); // Cleanup on unmount
+    };
+  }, [selectedRequest]);
+
+  // Helper function to validate if the binary data is a valid PDF
+  const isValidPdf = (pdfFile) => {
+    if (!pdfFile || !pdfFile.data || !Array.isArray(pdfFile.data) || pdfFile.data.length === 0) {
+      return false; // No data or invalid structure
+    }
+
+    // Convert the first few bytes to a string and check for the PDF header
+    const firstBytes = new Uint8Array(pdfFile.data.slice(0, 4)); // Extract the first 4 bytes
+    const header = String.fromCharCode(...firstBytes); // Convert bytes to string
+    return header === "%PDF"; // Check if the header matches the PDF signature
+  };
 
   return (
     <div className="container p-0 mt-3">
@@ -499,9 +517,11 @@ export function Activities() {
               <div className="modal-body">
                 {selectedRequest && (
                   <>
-                    {getFileUrl(selectedRequest.pdfFile) ? (
+                    {selectedRequest.pdfFile && isValidPdf(selectedRequest.pdfFile) ? (
                       <iframe
-                        src={getFileUrl(selectedRequest.pdfFile)}
+                        src={URL.createObjectURL(
+                          new Blob([new Uint8Array(selectedRequest.pdfFile.data)], { type: 'application/pdf' })
+                        )}
                         title="Request PDF"
                         width="100%"
                         height="500px"
@@ -548,49 +568,49 @@ export function Activities() {
         </div>
 
         {showConfirmationModal && (
-                <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Confirm Completion</h5>
-                                <button type="button" className="btn-close" onClick={handleConfirmationCancel}></button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="mb-3">
-                                    <label htmlFor="eventName" className="form-label">Event Name</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="eventName"
-                                        value={eventName}
-                                        onChange={(e) => setEventName(e.target.value)}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="attendeesFile" className="form-label">Upload Attendees</label>
-                                    <input
-                                        type="file"
-                                        className="form-control"
-                                        id="attendeesFile"
-                                        onChange={(e) => setAttendeesFile(e.target.files[0])}
-                                    />
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleConfirmationCancel}>Cancel</button>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={handleConfirmationSubmit}
-                                    disabled={processing[selectedRequest] === 'done'}
-                                >
-                                    {processing[selectedRequest] === 'done' ? "Processing..." : "Submit"}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+          <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+              <div className="modal-dialog">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <h5 className="modal-title">Confirm Completion</h5>
+                          <button type="button" className="btn-close" onClick={handleConfirmationCancel}></button>
+                      </div>
+                      <div className="modal-body">
+                          <div className="mb-3">
+                              <label htmlFor="eventName" className="form-label">Event Name</label>
+                              <input
+                                  type="text"
+                                  className="form-control"
+                                  id="eventName"
+                                  value={eventName}
+                                  onChange={(e) => setEventName(e.target.value)}
+                              />
+                          </div>
+                          <div className="mb-3">
+                              <label htmlFor="attendeesFile" className="form-label">Upload Attendees</label>
+                              <input
+                                  type="file"
+                                  className="form-control"
+                                  id="attendeesFile"
+                                  onChange={(e) => setAttendeesFile(e.target.files[0])}
+                              />
+                          </div>
+                      </div>
+                      <div className="modal-footer">
+                          <button type="button" className="btn btn-secondary" onClick={handleConfirmationCancel}>Cancel</button>
+                          <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={handleConfirmationSubmit}
+                              disabled={processing[selectedRequest] === 'done'}
+                          >
+                              {processing[selectedRequest] === 'done' ? "Processing..." : "Submit"}
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        )}
       </div>
     </div >
   );
