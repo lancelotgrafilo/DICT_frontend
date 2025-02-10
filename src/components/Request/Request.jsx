@@ -83,7 +83,7 @@ export function Request() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Date Created</th>
+                <th>Date Submitted</th>
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
