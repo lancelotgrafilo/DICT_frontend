@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styleFocalForm from './focalForm.module.css';
 import { toast } from 'react-toastify';
 import usePostFocal from '../../utils/Hooks/FocalHooks/usePostFocal';
+import html2pdf from 'html2pdf.js';
 
 export function FocalForm() {
 
-  const { data, loading, error, addFocal } = usePostFocal();
+  const { loading, addFocal } = usePostFocal();
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
     focal_number: '',
@@ -31,7 +32,7 @@ export function FocalForm() {
     
     for (let field of requiredFields) {
       if (!formValues[field]) {
-        alert(`Please fill out the ${field.replace('_', ' ')} field.`);
+        toast.info(`Please fill out the ${field.replace('_', ' ')} field.`);
         return;
       }
     }
@@ -85,14 +86,62 @@ export function FocalForm() {
       setStep(1);
     }
   };
-
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const element = document.getElementById('step-3-content'); // The content to convert
+    const pdfOptions = {
+      margin: 5,
+      filename: `Focal Form ${formValues.region} - ${formValues.province}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 3, scrollY: 0, windowWidth: 800 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+    };
+
     try {
+
+      // Generate the PDF and get it as a Blob
+      const pdfBlob = await new Promise((resolve, reject) => {
+        html2pdf()
+          .set(pdfOptions)
+          .from(element)
+          .outputPdf('blob') // Get the PDF as a Blob
+          .then(resolve)
+          .catch(reject);
+      });
+  
+      if (!pdfBlob) {
+        throw new Error("Failed to generate PDF");
+      }
+  
+      // Step 2: Create FormData and include all formValues
+      const formData = new FormData();
+      Object.entries(formValues).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          // Convert arrays (e.g., date_and_time, modules_selected) to JSON strings
+          formData.append(key, JSON.stringify(value));
+        } else if (typeof value === 'object' && value !== null) {
+          // Handle objects (if any) by converting them to JSON strings
+          formData.append(key, JSON.stringify(value));
+        } else {
+          // Append other fields as-is
+          formData.append(key, value);
+        }
+      });
+  
+      // Step 3: Append the generated PDF file to FormData
+      formData.append('pdfFile', pdfBlob, pdfOptions.filename);
+  
+      // Log FormData contents for debugging
+      console.log('FormData Contents:');
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
       // Show loading state
       console.log('Submitting form...');
-      const response = await addFocal(formValues);
+      const response = await addFocal(formData);
 
       // Success notification
       toast.success('Focal Form submitted successfully!');
@@ -277,10 +326,7 @@ export function FocalForm() {
               </div>
             </div>
 
-            <div className={styleFocalForm.btnContainer} style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button type="button" className={styleFocalForm.btn_secondary} onClick={handleCancel}>
-                <i className="bi bi-x-circle"></i> Cancel
-              </button>
+            <div className={styleFocalForm.btnContainer} style={{ display: 'flex', justifyContent: 'end' }}>
               <button type="button" className={styleFocalForm.btn_primary} onClick={handleNext}>
                 <i className="bi bi-arrow-right-circle"></i> Next
               </button>
@@ -374,91 +420,93 @@ export function FocalForm() {
 
         {step === 3 && (
           <div>
-            <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATION</div>
-            <div className={styleFocalForm.formContainer}>
-              <div className={styleFocalForm.formLeft}>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Focal Number:</label>
-                  <input type="text" value={formValues.focal_number} readOnly className={styleFocalForm.readOnlyInput} />
+            <div id='step-3-content'>
+              <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATION</div>
+              <div className={styleFocalForm.formContainer}>
+                <div className={styleFocalForm.formLeft}>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Focal Number:</label>
+                    <input type="text" value={formValues.focal_number} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Last Name:</label>
+                    <input type="text" value={formValues.last_name} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>First Name:</label>
+                    <input type="text" value={formValues.first_name} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Middle Name:</label>
+                    <input type="text" value={formValues.middle_name} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Email Address:</label>
+                    <input type="text" id='email_address' value={formValues.email_address} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
                 </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Last Name:</label>
-                  <input type="text" value={formValues.last_name} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>First Name:</label>
-                  <input type="text" value={formValues.first_name} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Middle Name:</label>
-                  <input type="text" value={formValues.middle_name} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Email Address:</label>
-                  <input type="text" id='email_address' value={formValues.email_address} readOnly className={styleFocalForm.readOnlyInput} />
+                <div className={styleFocalForm.formRight}>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Gender:</label>
+                    <input type="text" value={formValues.gender} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Status:</label>
+                    <input type="text" value={formValues.status} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroup}>
+                    <label>Salutation:</label>
+                    <input type="text" value={formValues.salutation} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
+                  <div className={styleFocalForm.formGroupContact}>
+                    <label>Contact Number:</label>
+                    <input type="text" value={formValues.contact_number} readOnly className={styleFocalForm.readOnlyInput} />
+                  </div>
                 </div>
               </div>
-              <div className={styleFocalForm.formRight}>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Gender:</label>
-                  <input type="text" value={formValues.gender} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Status:</label>
-                  <input type="text" value={formValues.status} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroup}>
-                  <label>Salutation:</label>
-                  <input type="text" value={formValues.salutation} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-                <div className={styleFocalForm.formGroupContact}>
-                  <label>Contact Number:</label>
-                  <input type="text" value={formValues.contact_number} readOnly className={styleFocalForm.readOnlyInput} />
-                </div>
-              </div>
-            </div>
 
-            <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATION</div>
-            <div className={styleFocalForm.formGroup}>
-              <label>Region:</label>
-              <input type="text" value={formValues.region} readOnly className={styleFocalForm.readOnlyInput} />
-            </div>
-            <div className={styleFocalForm.formGroup}>
-              <label>Position:</label>
-              <input type="text" value={formValues.position} readOnly className={styleFocalForm.readOnlyInput} />
-            </div>
-            <div className={styleFocalForm.formGroupContainer}>
+              <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATION</div>
               <div className={styleFocalForm.formGroup}>
-                <label>Province:</label>
-                <input type="text" value={formValues.province} readOnly className={styleFocalForm.readOnlyInput} />
+                <label>Region:</label>
+                <input type="text" value={formValues.region} readOnly className={styleFocalForm.readOnlyInput} />
               </div>
               <div className={styleFocalForm.formGroup}>
-                <label>Focal Status:</label>
-                <input type="text" value={formValues.focal_status} readOnly className={styleFocalForm.readOnlyInput} />
+                <label>Position:</label>
+                <input type="text" value={formValues.position} readOnly className={styleFocalForm.readOnlyInput} />
               </div>
-            </div>
+              <div className={styleFocalForm.formGroupContainer}>
+                <div className={styleFocalForm.formGroup}>
+                  <label>Province:</label>
+                  <input type="text" value={formValues.province} readOnly className={styleFocalForm.readOnlyInput} />
+                </div>
+                <div className={styleFocalForm.formGroup}>
+                  <label>Focal Status:</label>
+                  <input type="text" value={formValues.focal_status} readOnly className={styleFocalForm.readOnlyInput} />
+                </div>
+              </div>
 
-            <div className={styleFocalForm.focalStatus}>
-              <strong>FOCAL STATUS:</strong><br />
-              PRIMARY<br />
-              SECONDARY<br />
-              THIRD<br />
+              <div className={styleFocalForm.focalStatus}>
+                <strong>FOCAL STATUS:</strong><br />
+                PRIMARY<br />
+                SECONDARY<br />
+                THIRD<br />
+              </div>
             </div>
 
             <div className="d-flex justify-content-between mt-4">
-              <button type="button" className={styleFocalForm.btn_secondary} onClick={handlePrevious}>
-                <i className="bi bi-pencil-square"></i> Edit
-              </button>
-              <button
-                type="submit"
-                className={styleFocalForm.btn_primary}
-                onClick={handleSubmit}
-                disabled={loading} // Disable the button while loading
-              >
-                <i className="bi bi-check-circle" style={{marginRight: "8px"}}></i> 
-                {loading ? 'Submitting...' : 'Confirm and Save'}
-              </button>
-            </div>
+                <button type="button" className={styleFocalForm.btn_secondary} onClick={handlePrevious}>
+                  <i className="bi bi-pencil-square"></i> Edit
+                </button>
+                <button
+                  type="submit"
+                  className={styleFocalForm.btn_primary}
+                  onClick={handleSubmit}
+                  disabled={loading} // Disable the button while loading
+                >
+                  <i className="bi bi-check-circle" style={{marginRight: "8px"}}></i> 
+                  {loading ? 'Submitting...' : 'Confirm and Save'}
+                </button>
+              </div>
           </div>
         )}
       </form>

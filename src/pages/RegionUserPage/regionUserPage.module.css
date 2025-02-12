@@ -111,6 +111,11 @@ body.dark-theme {
   padding: 0.5rem;
   cursor: pointer;
   transition: background-color .3s, color .3s;
+  display: block;
+  -webkit-transition: background-color .3s, color .3s;
+  -moz-transition: background-color .3s, color .3s;
+  -ms-transition: background-color .3s, color .3s;
+  -o-transition: background-color .3s, color .3s;
 }
 
 .sidebarMenuItem .sidebarMenuLink.active {
