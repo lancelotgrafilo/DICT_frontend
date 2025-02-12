@@ -44,7 +44,7 @@ export function FocalForm() {
     setStep(step - 1);
   };
 
-  const handleCancel = () => {
+  const handleClear = () => {
     const hasInput = Object.values(formValues).some(value => value !== '');
     if (hasInput) {
       if (window.confirm('Are you sure you want to cancel? All data will be lost.')) {
@@ -89,7 +89,6 @@ export function FocalForm() {
     
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const element = document.getElementById('step-3-content'); // The content to convert
     const pdfOptions = {
       margin: 5,
@@ -98,31 +97,26 @@ export function FocalForm() {
       html2canvas: { scale: 3, scrollY: 0, windowWidth: 800 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
     };
-
+  
     try {
-
       // Generate the PDF and get it as a Blob
-      const pdfBlob = await new Promise((resolve, reject) => {
-        html2pdf()
-          .set(pdfOptions)
-          .from(element)
-          .outputPdf('blob') // Get the PDF as a Blob
-          .then(resolve)
-          .catch(reject);
-      });
+      const pdfBlob = await html2pdf()
+        .set(pdfOptions)
+        .from(element)
+        .outputPdf('blob');
   
       if (!pdfBlob) {
         throw new Error("Failed to generate PDF");
       }
   
-      // Step 2: Create FormData and include all formValues
+      // Create FormData and include all formValues
       const formData = new FormData();
       Object.entries(formValues).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-          // Convert arrays (e.g., date_and_time, modules_selected) to JSON strings
+          // Convert arrays to JSON strings
           formData.append(key, JSON.stringify(value));
         } else if (typeof value === 'object' && value !== null) {
-          // Handle objects (if any) by converting them to JSON strings
+          // Handle objects by converting them to JSON strings
           formData.append(key, JSON.stringify(value));
         } else {
           // Append other fields as-is
@@ -130,7 +124,7 @@ export function FocalForm() {
         }
       });
   
-      // Step 3: Append the generated PDF file to FormData
+      // Append the generated PDF file to FormData
       formData.append('pdfFile', pdfBlob, pdfOptions.filename);
   
       // Log FormData contents for debugging
@@ -138,15 +132,14 @@ export function FocalForm() {
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
+  
       // Show loading state
       console.log('Submitting form...');
       const response = await addFocal(formData);
-
+  
       // Success notification
       toast.success('Focal Form submitted successfully!');
       console.log('Focal Form submitted successfully:', response);
-
     } catch (err) {
       // Error notification
       console.error('Error submitting focal form:', err);
@@ -326,7 +319,10 @@ export function FocalForm() {
               </div>
             </div>
 
-            <div className={styleFocalForm.btnContainer} style={{ display: 'flex', justifyContent: 'end' }}>
+            <div className={styleFocalForm.btnContainer} style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <button type="button" className={styleFocalForm.btn_secondary} onClick={handleClear}>
+                <i className="bi bi-x-circle"></i> Cancel
+              </button>
               <button type="button" className={styleFocalForm.btn_primary} onClick={handleNext}>
                 <i className="bi bi-arrow-right-circle"></i> Next
               </button>
