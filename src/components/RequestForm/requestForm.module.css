@@ -195,23 +195,39 @@ h4 {
 }
 
 /* Date input field */
-input[type="date"] {
-  background-color: #ffffff;
-  color: #333;
+
+select[name="modules"],
+select[name="category"]{
+  background-color: #cbf0f7;
+  border: 1px solid black;
+  color: black;
   border-radius: 4px;
-  padding: 8px;
+  padding: 9px;
 }
+
+select[name="extension_name"],
+select[name="gender"],
+select[name=region],
+select[name="salutation"],
+select[name="start_time"],
+select[name="end_time"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+input[type="text"],
+input[type="date"] {
+  background-color: #cbf0f7;
+  border: 1px solid black;
+  color: black;
+  border-radius: 4px;
+  padding: 7px;
+}
+
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.5);
 }
 
-/* Time input field */
-input[type="time"] {
-  background-color: #ffffff;
-  border-radius: 4px;
-  padding: 8px;
-}
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(0.5);
@@ -284,6 +300,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* Highlighted Checkbox */
 input[type="checkbox"] {
   margin-right: 8px;
+  background-color: #cbf0f7;
+  border: 1px solid black;
 }
 
 input[type="checkbox"]:checked + label {

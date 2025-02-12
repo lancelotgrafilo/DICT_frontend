@@ -258,7 +258,7 @@ export function RequestForm() {
   const validateStep = (step) => {
     switch (step) {
       case 1:
-        return formValues.salutation && formValues.first_name && formValues.last_name && formValues.middle_name && formValues.gender && formValues.position && formValues.contact_number && formValues.email_address && formValues.address;
+        return formValues.salutation && formValues.first_name && formValues.last_name && formValues.middle_name && formValues.extension_name && formValues.gender && formValues.position && formValues.contact_number && formValues.email_address && formValues.address;
       case 2:
         return formValues.organization_name && formValues.department && formValues.region;
       case 3:
@@ -365,11 +365,21 @@ export function RequestForm() {
 
   const handleContactNumberChange = (e) => {
     const input = e.target.value;
-    // Allow only numbers and ensure the length is exactly 11 digits
+  
+    // Allow only numbers and ensure the length does not exceed 11 digits
     if (/^\d{0,11}$/.test(input)) {
+      // Update the form value
       setFormValues({ ...formValues, contact_number: input });
     }
+  
+    // Optionally, provide feedback if the input doesn't start with '09' or isn't 11 digits long
+    if (input && !/^09/.test(input)) {
+      console.warn("Contact number must start with '09'.");
+    } else if (input.length === 11 && !/^09\d{9}$/.test(input)) {
+      console.warn("Contact number must be exactly 11 digits long and start with '09'.");
+    }
   };
+  
   
   const sanitizeEmailInput = (input) => {
     // Replace any special characters except for "@" with an empty string
@@ -380,6 +390,7 @@ export function RequestForm() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
+  
 
   return (
     <div className={styleRequestForm.mainContent} style={{borderColor:"black"}}>
@@ -508,17 +519,20 @@ export function RequestForm() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Contact No.</label>
-                    <span style={{ color: 'red' }}>*</span>
+                    <label className="form-label">Contact No.
+                      <span style={{ color: 'red' }}>*</span>
+                    </label>
                     <input
                       type="tel"
+                      id="contactNo"
                       name="contactNo"
                       value={formValues.contact_number}
                       onChange={handleContactNumberChange}
                       className="form-control"
                       required
                       maxLength="11" // Restricts input to 11 characters in the UI
-                      
+                      pattern="^09\d{9}$"
+                      title="Contact number must start with '09' and be 11 digits long"
                     />
                   </div>
                   <div className="col-md-6">
@@ -556,28 +570,78 @@ export function RequestForm() {
                   <button
                     type="button"
                     className={styleRequestForm.btn_cancel}
-                    onClick={() => navigate("/home")}
+                    onClick={() => {
+                      const confirmCancel = window.confirm("Are you sure you want to cancel?");
+                      if (confirmCancel) {
+                        navigate("/home");
+                      }}}
                   >
                     <i className="bi bi-x-circle"></i> Cancel
                   </button>
                   <button
-                    type="button"
-                    className={styleRequestForm.btn_primary}
-                    onClick={() => {
-                      const sanitizedEmail = sanitizeEmailInput(formValues.email_address);
+                  type="button"
+                  className={styleRequestForm.btn_primary}
+                  onClick={() => {
+                    // Mapping of field identifiers to their display names
+                    const fieldDisplayNames = {
+                      salutation: "Salutation",
+                      first_name: "First Name",
+                      last_name: "Last Name",
+                      middle_name: "Middle Name",
+                      extension_name: "Extension Name",
+                      gender: "Gender",
+                      position: "Position",
+                      contact_number: "Contact Number",
+                      email_address: "Email Address",
+                      address: "Address",
+                    };
 
-                      // Validate the email format
-                      if (!validateEmail(sanitizedEmail)) {
-                        toast.warn("Please input a valid email");
-                        return; // Prevent proceeding if the email is invalid
+                    // List of required fields
+                    const requiredFields = [
+                      "salutation",
+                      "first_name",
+                      "last_name",
+                      "middle_name",
+                      "gender",
+                      "position",
+                      "contact_number",
+                      "email_address",
+                      "address",
+                    ];
+
+                    // Validate required fields
+                    for (const field of requiredFields) {
+                      if (!formValues[field] || formValues[field].trim() === "") {
+                        toast.warn(`Please fill in the ${fieldDisplayNames[field]}`);
+                        document.getElementById(field)?.focus(); // Set focus to the first invalid field
+                        return; // Stop further execution
                       }
+                    }
 
-                      // Proceed with the next action
-                      handleNext();
-                    }}
-                  >
-                    <i className="bi bi-arrow-right-circle"></i> Next
-                  </button>
+                    // Validate contact number format
+                    const contactNumberPattern = /^09\d{9}$/;
+                    if (!contactNumberPattern.test(formValues.contact_number)) {
+                      toast.warn(
+                        `Please input a valid ${fieldDisplayNames["contact_number"]}`
+                      );
+                      document.getElementById("contact_number")?.focus();
+                      return;
+                    }
+
+                    // Sanitize and validate email format
+                    const sanitizedEmail = sanitizeEmailInput(formValues.email_address);
+                    if (!validateEmail(sanitizedEmail)) {
+                      toast.warn(`Please input a valid ${fieldDisplayNames["email_address"]}`);
+                      document.getElementById("email_address")?.focus();
+                      return;
+                    }
+
+                    // If everything is valid, proceed to the next step
+                    handleNext();
+                  }}
+                >
+                  <i className="bi bi-arrow-right-circle"></i> Next
+                </button>
 
                 </div>
               </div>
@@ -710,6 +774,7 @@ export function RequestForm() {
                           </td>
                           <td>
                             <select
+                              type="start_time"
                               name="start_time"
                               value={dateInfo.start_time}
                               onChange={(e) => handleChange(e, "date_and_time", index)}
@@ -727,7 +792,7 @@ export function RequestForm() {
                             </select>
                           </td>
                           <td>
-                            <select
+                            <select 
                               name="end_time"
                               value={dateInfo.end_time}
                               onChange={(e) => {
@@ -830,7 +895,7 @@ export function RequestForm() {
                       <tr key={index}>
                         <td>
                           <select
-                            className="form-select"
+                            name="category"
                             value={row.category}
                             onChange={(e) => handleCategoryChange(index, e.target.value)}
                           >
@@ -842,7 +907,7 @@ export function RequestForm() {
                         </td>
                         <td>
                           <select
-                            className="form-select"
+                            name="modules"
                             value={row.subcategory.module_name}
                             onChange={(e) => handleSubcategoryChange(index, e.target.value)}
                             disabled={!row.category}

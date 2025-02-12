@@ -118,26 +118,38 @@ export function FocalForm() {
       setStep(1);
     }
   };
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      console.log('Form Values:', formValues);  // Log all the formValues before submitting
-      try {
-        const response = await addRequest(formValues);
-        console.log('Request submitted successfully:', response);
-        toast.success('Request submitted successfully:', response);
-        navigate('/home');
-      } catch (err) {
-        console.error('Error submitting request:', err);
-      }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+  
+    // lance make the database na for this, i would like to send formValues to it na.
+
+    // Reset form values
+    setFormValues({
+      focal_number: '',
+      lastname: '',
+      firstname: '',
+      middlename: '',
+      email: '',
+      gender: '',
+      status: '',
+      salutation: '',
+      contact_number: '',
+      region: '',
+      position: '',
+      province: '',
+      focal_status: '',
+    });
+    alert('Form saved successfully!'); // Display success message
+
+  };
 
   return (
     <div className={styleFocalForm.container}>
       <div className={styleFocalForm.header}>CYBERSECURITY FOCAL FORM</div>
-      <form ref={formRef}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         {step === 1 && (
           <div>
-            <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATION</div>
+            <div className={styleFocalForm.sectionHeader}>PERSONAL INFORMATIONS</div>
             <div className={styleFocalForm.formContainer}>
               <div className={styleFocalForm.formLeft}>
                 <div className={styleFocalForm.formGroup}>
@@ -205,7 +217,7 @@ export function FocalForm() {
             </div>
 
             <div className={styleFocalForm.btnContainer} style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button type="button" className={styleFocalForm.btn_secondary} onClick={handleCancel}>
+              <button type="button" className={styleFocalForm.btn_cancel} onClick={handleCancel}>
                 <i className="bi bi-x-circle"></i> Cancel
               </button>
               <button type="button" className={styleFocalForm.btn_primary} onClick={handleNext}>
@@ -217,7 +229,7 @@ export function FocalForm() {
 
         {step === 2 && (
           <div>
-            <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATION</div>
+            <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATIONS</div>
             <div className={styleFocalForm.formGroup}>
               <label htmlFor="region">Region:</label>
               <select id="region" value={formValues.region} onChange={handleChange}>
@@ -407,7 +419,7 @@ export function FocalForm() {
               </div>
             </div>
 
-            <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATION</div>
+            <div className={styleFocalForm.sectionHeader}>DICT ORGANIZATION INFORMATIONS</div>
             <div className={styleFocalForm.formGroup}>
               <label>Region:</label>
               <input type="text" value={formValues.region} readOnly className={styleFocalForm.readOnlyInput} />

@@ -51,6 +51,7 @@ export default function App() {
           <Route path="training" element={ <TrainingPage /> } />
           <Route path="login" element={<LoginPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
+          <Route path="focal-form" element={ <FocalForm/>} />
 
           
         </Routes>
