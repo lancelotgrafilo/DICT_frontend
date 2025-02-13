@@ -219,7 +219,7 @@ export function Activities() {
       <div className="card shadow-lg p-4" style={{ minHeight: "80vh", borderRadius: "12px" }}>
 
         {/* Title */}
-        <h4 className="text-center mb-3">
+        <h4 className="text-center mb-1">
           {viewMode === "calendar"
             ? currentDate.toLocaleString("default", { month: "long", year: "numeric" })
             : `List of Activities (${currentDate.toLocaleString("default", { month: "long", year: "numeric" })})`}
@@ -383,7 +383,6 @@ export function Activities() {
                 {viewMode === "table" && (
                   <>
                     <Button className={styleActivities.btn}><FaFilter /> Filter</Button>
-                    <Button className={styleActivities.btn}><FaFileExport /> Export</Button>
                   </>
                 )}
 
