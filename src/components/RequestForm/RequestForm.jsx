@@ -371,6 +371,13 @@ export function RequestForm() {
     // Replace any special characters except for "@" with an empty string
     return input.replace(/[^a-zA-Z0-9@.]/g, '');
   };
+  
+  // Function to validate phone number format (must start with "09" and be exactly 11 digits)
+const validatePhoneNumber = (phoneNumber) => {
+  const phonePattern = /^09\d{9}$/; // Ensures the phone number starts with "09" and has exactly 11 digits
+  return phonePattern.test(phoneNumber);
+};
+
 
   const validateEmail = (email) => {
     // Simple regex for basic email validation
@@ -556,11 +563,18 @@ export function RequestForm() {
                   </div>
                 </div>
                 <div className="d-flex justify-content-between mt-4">
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_cancel}
-                    onClick={() => navigate("/home")}
-                  >
+                <button
+                  type="button"
+                  className={styleRequestForm.btn_cancel}
+                  onClick={() => {
+                    // Display the confirmation prompt
+                    const isConfirmed = window.confirm("Are you sure you want to cancel? data will be lost");
+                    if (isConfirmed) {
+                      // Navigate to the home page if the user confirms
+                      navigate("/home");
+                    }
+                  }}
+                >
                     <i className="bi bi-x-circle"></i> Cancel
                   </button>
                   <button
@@ -574,6 +588,13 @@ export function RequestForm() {
                         toast.warn("Please input a valid email");
                         return; // Prevent proceeding if the email is invalid
                       }
+                      // Validate the contact number input (starts with "09" and is exactly 11 digits)
+                      const sanitizedContactNumber = formValues.contact_number;
+                      if (!validatePhoneNumber(sanitizedContactNumber)) {
+                        toast.warn("Please input a valid contact number starting with '09' and exactly 11 digits");
+                        return; // Prevent proceeding if the contact number is invalid
+                      }
+
 
                       // Proceed with the next action
                       handleNext();
@@ -835,6 +856,7 @@ export function RequestForm() {
                       <tr key={index}>
                         <td>
                           <select
+                            type="category"
                             className="form-select"
                             value={row.category}
                             onChange={(e) => handleCategoryChange(index, e.target.value)}
@@ -847,6 +869,7 @@ export function RequestForm() {
                         </td>
                         <td>
                           <select
+                            type="modules"
                             className="form-select"
                             value={row.subcategory.module_name}
                             onChange={(e) => handleSubcategoryChange(index, e.target.value)}

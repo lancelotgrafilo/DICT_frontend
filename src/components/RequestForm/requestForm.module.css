@@ -193,13 +193,28 @@ h4 {
     max-width: 100%;
   }
 }
+select[type="modules"],
+select[type="category"],
+input[type="number"],
+select[name="end_time"],
+select[name="start_time"],
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select[name="region"],
+select[name="salutation"],
+select[name="extension_name"],
+select[name="gender"]
+{
+  background-color: #eaf4ff;
+}
 
 /* Date input field */
 input[type="date"] {
-  background-color: #ffffff;
+  background-color: #eaf4ff;
   color: #333;
   border-radius: 4px;
-  padding: 8px;
+  padding: 6px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
