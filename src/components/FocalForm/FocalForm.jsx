@@ -100,10 +100,14 @@ export function FocalForm() {
   
     try {
       // Generate the PDF and get it as a Blob
-      const pdfBlob = await html2pdf()
-        .set(pdfOptions)
-        .from(element)
-        .outputPdf('blob');
+      const pdfBlob = await new Promise((resolve, reject) => {
+        html2pdf()
+          .set(pdfOptions)
+          .from(element)
+          .outputPdf('blob') // Get the PDF as a Blob
+          .then(resolve)
+          .catch(reject);
+      });
   
       if (!pdfBlob) {
         throw new Error("Failed to generate PDF");
@@ -140,10 +144,41 @@ export function FocalForm() {
       // Success notification
       toast.success('Focal Form submitted successfully!');
       console.log('Focal Form submitted successfully:', response);
+  
+      // Reset form values and step to Step 1
+      setFormValues({
+        focal_number: '',
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        email_address: '',
+        gender: '',
+        status: '',
+        salutation: '',
+        contact_number: '',
+        region: '',
+        position: '',
+        province: '',
+        focal_status: '',
+      });
+      setStep(1); // Reset to Step 1
     } catch (err) {
-      // Error notification
-      console.error('Error submitting focal form:', err);
-      toast.error('An error occurred while submitting the focal form. Please try again.');
+      // Extract and display detailed error message
+      let errorMessage = 'An unknown error occurred. Please try again.';
+      if (err.response) {
+        // Server responded with a status code outside the 2xx range
+        errorMessage = err.response.data?.message || `Error ${err.response.status}: ${err.response.statusText}`;
+      } else if (err.request) {
+        // Request was made but no response was received
+        errorMessage = 'No response received from the server. Please check your connection.';
+      } else {
+        // Something happened in setting up the request
+        errorMessage = err.message;
+      }
+  
+      // Display the error message in the toast notification
+      console.error('Error submitting focal form:', errorMessage);
+      toast.error(errorMessage);
     }
   };
 
