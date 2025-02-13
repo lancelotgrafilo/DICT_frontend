@@ -38,25 +38,25 @@ export function RequestForm() {
 
   const handleDownload = () => {
     const element = document.getElementById('step-5-content'); // The content to convert
-  
+
     // Options for capturing all content in one page
     const options = {
       margin: 5, // Minimal margin
       filename: `Cybersecurity Awareness Request Form ${formValues.region}.pdf`,
       image: { type: 'jpeg', quality: 1 },
-      html2canvas: { 
+      html2canvas: {
         scale: 3, // Scale down content to fit
         scrollY: 0, // Ensure no scrolling issues
         windowWidth: 800 // Match the max-width of the content
       },
-      jsPDF: { 
-        unit: 'mm', 
+      jsPDF: {
+        unit: 'mm',
         format: 'a4', // Use A4 format
         orientation: 'portrait',
         compress: true // Compress the PDF for smaller file size
       }
     };
-  
+
     // Generate the PDF
     html2pdf().set(options).from(element).save();
   };
@@ -65,7 +65,7 @@ export function RequestForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Step 1: Generate the PDF as a Blob
     const element = document.getElementById('step-5-content'); // The content to convert
     const pdfOptions = {
@@ -75,7 +75,7 @@ export function RequestForm() {
       html2canvas: { scale: 3, scrollY: 0, windowWidth: 800 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
     };
-  
+
     try {
       // Generate the PDF and get it as a Blob
       const pdfBlob = await new Promise((resolve, reject) => {
@@ -86,11 +86,11 @@ export function RequestForm() {
           .then(resolve)
           .catch(reject);
       });
-  
+
       if (!pdfBlob) {
         throw new Error("Failed to generate PDF");
       }
-  
+
       // Step 2: Create FormData and include all formValues
       const formData = new FormData();
       Object.entries(formValues).forEach(([key, value]) => {
@@ -105,16 +105,16 @@ export function RequestForm() {
           formData.append(key, value);
         }
       });
-  
+
       // Step 3: Append the generated PDF file to FormData
       formData.append('pdfFile', pdfBlob, pdfOptions.filename);
-  
+
       // Log FormData contents for debugging
       console.log('FormData Contents:');
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-  
+
       // Step 4: Send the FormData to the backend
       const response = await addRequest(formData); // Assuming addRequest accepts FormData
       console.log('Request submitted successfully:', response);
@@ -250,7 +250,7 @@ export function RequestForm() {
       }
     }
   };
-  
+
   const validateStep = (step) => {
     switch (step) {
       case 1:
@@ -366,12 +366,12 @@ export function RequestForm() {
       setFormValues({ ...formValues, contact_number: input });
     }
   };
-  
+
   const sanitizeEmailInput = (input) => {
     // Replace any special characters except for "@" with an empty string
     return input.replace(/[^a-zA-Z0-9@.]/g, '');
   };
-  
+
   const validateEmail = (email) => {
     // Simple regex for basic email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -379,13 +379,13 @@ export function RequestForm() {
   };
 
   return (
-    <div className={styleRequestForm.mainContent} style={{borderColor:"black"}}>
+    <div className={styleRequestForm.mainContent} style={{ borderColor: "black" }}>
       <Header />
-      <div className="container my-5" style={{ borderRadius: "12px", marginBottom: "24px",}}>
+      <div className="container my-5" style={{ borderRadius: "12px", marginBottom: "24px", }}>
         <div className="card shadow p-4" style={{ borderRadius: "12px", marginTop: "-24px" }}>
-          <h2 style={{backgroundColor: "#003366", textAlign: "center", color: 'white', padding:" 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
+          <h2 style={{ backgroundColor: "#003366", textAlign: "center", color: 'white', padding: " 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
           <form onSubmit={handleSubmit}>
-          
+
             {step === 1 && (
               <div >
                 <h4 className="mb-3">Personal Information</h4>
@@ -423,6 +423,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, last_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }} // Apply text-transform to the input
                       required
                     />
                   </div>
@@ -437,6 +438,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, first_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     />
                   </div>
@@ -451,6 +453,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, middle_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                     />
                   </div>
                   <div className="col-md-4">
@@ -462,6 +465,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
                       }
                       className="form-select"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     >
                       <option value="">Select</option>
@@ -501,6 +505,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, position: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     />
                   </div>
@@ -515,7 +520,7 @@ export function RequestForm() {
                       className="form-control"
                       required
                       maxLength="11" // Restricts input to 11 characters in the UI
-                      
+
                     />
                   </div>
                   <div className="col-md-6">
@@ -527,7 +532,7 @@ export function RequestForm() {
                       value={formValues.email_address}
                       onChange={(e) => {
                         const sanitizedValue = sanitizeEmailInput(e.target.value);
-                        
+
                         setFormValues({ ...formValues, email_address: sanitizedValue });
                       }}
                       className="form-control"
@@ -545,6 +550,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, address: sanitizeInputAddress(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     />
                   </div>
@@ -596,13 +602,14 @@ export function RequestForm() {
                         setFormValues({ ...formValues, organization_name: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Department</label>
                     <span style={{ color: 'red' }}>*</span>
-                    <input  
+                    <input
                       type="text"
                       name="department"
                       value={formValues.department}
@@ -610,6 +617,7 @@ export function RequestForm() {
                         setFormValues({ ...formValues, department: sanitizeInput(e.target.value) })
                       }
                       className="form-control"
+                      style={{ textTransform: 'capitalize' }}
                       required
                     />
                   </div>
@@ -670,16 +678,16 @@ export function RequestForm() {
                 <div>
                   <table className="table">
                     <thead className="table-light">
-                     
-                        <th scope="col">Preferred Date</th>
-                        <th scope="col">Start Time</th>
-                        <th scope="col">End Time</th>
-                        <th scope="col">Total Hours</th>
-                     
+
+                      <th scope="col">Preferred Date</th>
+                      <th scope="col">Start Time</th>
+                      <th scope="col">End Time</th>
+                      <th scope="col">Total Hours</th>
+
                     </thead>
                     <tbody>
                       {formValues.date_and_time.map((dateInfo, index) => (
-                        <tr key={index} style={{borderColor:"white"}}>
+                        <tr key={index} style={{ borderColor: "white" }}>
                           <td>
                             <input
                               type="date"
@@ -701,8 +709,8 @@ export function RequestForm() {
                               }}
                               className="form-control"
                               required
-                              min={getOneWeekAfterDate()} 
-                              
+                              min={getOneWeekAfterDate()}
+
                             />
                           </td>
                           <td>
@@ -912,159 +920,159 @@ export function RequestForm() {
 
             {step === 5 && (
               <>
-              <div className="p-3" id="step-5-content" style={{ maxWidth: "100%", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
-                {/* Personal Information Section */}
-                <div style={{ border: "2px solid white", borderColor:"lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                    PERSONAL INFORMATION
-                  </h5>
-                  <div style={{ padding: "8px", backgroundColor: "white" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                      <div>
-                        <label><strong>Salutation<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.salutation}</p>
+                <div className="p-3" id="step-5-content" style={{ maxWidth: "100%", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
+                  {/* Personal Information Section */}
+                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                      PERSONAL INFORMATION
+                    </h5>
+                    <div style={{ padding: "8px", backgroundColor: "white" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                        <div>
+                          <label><strong>Salutation<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.salutation}</p>
+                        </div>
+                        <div>
+                          <label><strong>Last Name<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.last_name}</p>
+                        </div>
+                        <div>
+                          <label><strong>First Name<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.first_name}</p>
+                        </div>
                       </div>
-                      <div>
-                        <label><strong>Last Name<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.last_name}</p>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                        <div>
+                          <label><strong>Middle Name<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.middle_name}</p>
+                        </div>
+                        <div>
+                          <label><strong>Extension Name:<span style={{ color: "red" }}></span></strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.extension_name || "N/A"}</p>
+                        </div>
+                        <div>
+                          <label><strong>Gender<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.gender}</p>
+                        </div>
                       </div>
-                      <div>
-                        <label><strong>First Name<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.first_name}</p>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                        <div>
+                          <label><strong>Position<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.position}</p>
+                        </div>
+                        <div>
+                          <label><strong>Contact No.<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.contact_number}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                      <div>
-                        <label><strong>Middle Name<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.middle_name}</p>
-                      </div>
-                      <div>
-                        <label><strong>Extension Name:<span style={{ color: "red" }}></span></strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.extension_name || "N/A"}</p>
-                      </div>
-                      <div>
-                        <label><strong>Gender<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.gender}</p>
-                      </div>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                      <div>
-                        <label><strong>Position<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.position}</p>
-                      </div>
-                      <div>
-                        <label><strong>Contact No.<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.contact_number}</p>
-                      </div>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                      <div>
-                        <label><strong>Email Address<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.email_address}</p>
-                      </div>
-                      <div>
-                        <label><strong>Address<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.address}</p>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                        <div>
+                          <label><strong>Email Address<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.email_address}</p>
+                        </div>
+                        <div>
+                          <label><strong>Address<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.address}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Organization Information Section */}
-                <div style={{ border: "2px solid white", borderColor:"lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "8px", margin: 0, textAlign: "center" }}>
-                    ORGANIZATION INFORMATION
-                  </h5>
-                  <div style={{ padding: "8px", backgroundColor: "white" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                      <div>
-                        <label><strong>Organization Name<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.organization_name}</p>
+                  {/* Organization Information Section */}
+                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "8px", margin: 0, textAlign: "center" }}>
+                      ORGANIZATION INFORMATION
+                    </h5>
+                    <div style={{ padding: "8px", backgroundColor: "white" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                        <div>
+                          <label><strong>Organization Name<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.organization_name}</p>
+                        </div>
+                        <div>
+                          <label><strong>Department<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.department}</p>
+                        </div>
                       </div>
                       <div>
-                        <label><strong>Department<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.department}</p>
-                      </div>
-                    </div>
-                    <div>
                         <label><strong>Region<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{margin: "3px 0",padding: "4px",backgroundColor: "#eaf4ff", border: "1px solid black",borderRadius: "5px",width: "calc(50% - 7.5px)",}}>{formValues.region}</p>
+                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", width: "calc(50% - 7.5px)", }}>{formValues.region}</p>
                       </div>
+                    </div>
                   </div>
+
+                  {/* Preferred Dates Section */}
+                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                      PREFERRED DATE AND TIME OF THE EVENT
+                    </h5>
+                    <div style={{ padding: "8px", backgroundColor: "white" }}>
+                      {formValues.date_and_time.length > 0 ? (
+                        formValues.date_and_time.map((date, index) => (
+                          <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                            <div>
+                              <label><strong>Date:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.date || "Not Set"}</p>
+                            </div>
+                            <div>
+                              <label><strong>Start Time:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.start_time || "Not Set"}</p>
+                            </div>
+                            <div>
+                              <label><strong>End Time:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.end_time || "Not Set"}</p>
+                            </div>
+                            <div>
+                              <label><strong>Total Hours:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.total_hours || 0}</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p style={{ textAlign: "center" }}>No dates provided.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Modules Section */}
+                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial,sans-serif" }}>
+                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                      SELECTED MODULES
+                    </h5>
+                    <div style={{ padding: "8px", backgroundColor: "white" }}>
+                      {rows.length > 0 ? (
+                        rows.map((row, index) => (
+                          <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                            <div>
+                              <label><strong>Category:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.category || "Not Selected"}</p>
+                            </div>
+                            <div>
+                              <label><strong>Module:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_name || "Not Selected"}</p>
+                            </div>
+                            <div>
+                              <label><strong>Description:</strong></label>
+                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_description || "Not Selected"}</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No modules selected.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Navigation Buttons */}
+
+
                 </div>
 
-                {/* Preferred Dates Section */}
-                <div style={{ border: "2px solid white", borderColor:"lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                    PREFERRED DATE AND TIME OF THE EVENT
-                  </h5>
-                  <div style={{ padding: "8px", backgroundColor: "white" }}>
-                    {formValues.date_and_time.length > 0 ? (
-                      formValues.date_and_time.map((date, index) => (
-                        <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                          <div>
-                            <label><strong>Date:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.date || "Not Set"}</p>
-                          </div>
-                          <div>
-                            <label><strong>Start Time:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.start_time || "Not Set"}</p>
-                          </div>
-                          <div>
-                            <label><strong>End Time:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.end_time || "Not Set"}</p>
-                          </div>
-                          <div>
-                            <label><strong>Total Hours:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.total_hours || 0}</p>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <p style={{ textAlign: "center" }}>No dates provided.</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Modules Section */}
-                <div style={{ border: "2px solid white", borderColor:"lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial,sans-serif" }}>
-                  <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                    SELECTED MODULES
-                  </h5>
-                  <div style={{ padding: "8px", backgroundColor: "white" }}>
-                    {rows.length > 0 ? (
-                      rows.map((row, index) => (
-                        <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                          <div>
-                            <label><strong>Category:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.category || "Not Selected"}</p>
-                          </div>
-                          <div>
-                            <label><strong>Module:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_name || "Not Selected"}</p>
-                          </div>
-                          <div>
-                            <label><strong>Description:</strong></label>
-                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_description || "Not Selected"}</p>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No modules selected.</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Navigation Buttons */}
-                
-
-              </div>
-
-              <div className="d-flex justify-content-between" style={{marginTop: "8px"}}>
+                <div className="d-flex justify-content-between" style={{ marginTop: "8px" }}>
                   <button
                     type="button"
                     style={{
-                      marginTop:"0 auto",
+                      marginTop: "0 auto",
                       backgroundColor: " transparent",
                       border: "2px solid #6c757d",
                       color: "#6c757d",
