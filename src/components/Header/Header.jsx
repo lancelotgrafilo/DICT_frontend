@@ -1,5 +1,5 @@
 import styleHeader from './header.module.css';
-import dict from '../../assets/logo/dict-home.png';
+import dict from '../../assets/logo/dict-cyber.png';
 import transparencySeal from '../../assets/logo/transparency-seal1.png';
 import foi from '../../assets/logo/foi.png';
 import bagongPilipinas from '../../assets/logo/bagong-pilipinas-dark.png';
