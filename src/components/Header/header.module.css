@@ -28,14 +28,20 @@
 .mainContent {
   padding: 0;
   width: 100%;
-  top: 0px;
-  z-index: 9999;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
+  transition: opacity 0.3s ease-in-out; /* Smooth transition for hiding */
+}
+
+/* Class to hide mainContent */
+.mainContent.hidden {
+  opacity: 0; /* Hide the content */
+  pointer-events: none; /* Disable interactions */
+  height: 0; /* Collapse the height */
 }
 
 /* Horizontal Menu */
@@ -53,9 +59,9 @@
   width: 100%;
   height: 100px;
   overflow: hidden;
-  border-top-left-radius: 12px; 
-  border-top-right-radius: 12px; 
-  border-bottom-left-radius: 0; 
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
@@ -65,6 +71,7 @@
   height: 15%;
 }
 
+/* Navigation Container */
 .navContainer {
   display: flex;
   justify-content: flex-start;
@@ -78,6 +85,12 @@
   border-top-right-radius: 0;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+
+  /* Sticky Behavior */
+  position: sticky; /* Makes the element sticky */
+  top: 0; /* Ensures it sticks to the top of the viewport */
+  z-index: 1000; /* Ensures it stays above other content */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
 }
 
 /* Navigation List */
@@ -169,7 +182,6 @@
 }
 
 /* Responsive Styles */
-
 @media (max-width: 1024px) {
   .horizontalMenu {
     padding-left: 2rem;
@@ -230,4 +242,39 @@
   .contactText {
     font-size: 0.65rem;
   }
+}
+
+.cardViewContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.card {
+  width: 30%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.cardIcon {
+  font-size: 2rem;
+  color: #007bff; /* Blue color for icons */
+  margin-bottom: 10px;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cardParagraph {
+  font-size: 1rem;
+  color: #666;
 }
