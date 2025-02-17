@@ -1,0 +1,49 @@
+/* Main container */
+.mainContent {
+  margin-top: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title */
+.mainContent > div:first-child {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Card container */
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px; /* Space between cards */
+  width: 100%;
+  max-width: 800px; /* Limit the width for better responsiveness */
+}
+
+/* Individual card */
+.card {
+  width: 100%; /* Full width of the grid cell */
+  height: 200px; /* Fixed height for portrait orientation */
+  background-color: #ffffff;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06); /* Soft shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for cards */
+.card:hover {
+  transform: translateY(-5px); /* Slight upward movement */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
