@@ -6,34 +6,6 @@
   padding: 0;
 }
 
-.newsSection {
-  width: 80%;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scroll-left 8s linear infinite;
-  -webkit-animation: scroll-left 8s linear infinite;
-}
-
-.marquee h1 {
-  display: inline-block;
-  margin: 0;
-  font-size: 2rem;
-}
-
-@keyframes scroll-left {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
 /* Banner Carousel */
 .banner {
   width: 100%;
@@ -177,7 +149,7 @@
 
 .singleCard {
   display: flex;
-  align-items: center;
+  align-items: stretch; /* Ensure all topics have equal height */
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
@@ -212,6 +184,7 @@
 .topicParagraph {
   font-size: 1rem;
   color: #666;
+  flex-grow: 1; /* Allow the paragraph to take up remaining space */
 }
 
 .verticalLine {
@@ -225,11 +198,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top: 20px;
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
+  margin-top: auto; /* Push footer to the bottom */
+  padding: 10px 0;
 }
 
 .date {
