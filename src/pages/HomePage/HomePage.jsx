@@ -3,14 +3,26 @@ import styleHomePage from "./homePage.module.css";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { Carousel } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import img1 from "../../assets/img/img1.png";
 import img2 from "../../assets/img/img2.png";
 import img3 from "../../assets/img/img3.png";
 import missionImage from "../../assets/img/mission.png"; // Add an image for Mission and Vision
 import mandateImage from "../../assets/img/mandate.png"; // Add an image for Mandate, Powers, and Functions
 import divisionsImage from "../../assets/img/divisions.png"; // Add an image for Divisions
+import ciccLogo from "../../assets/logo/cicc.png";
+import npcLogo from "../../assets/logo/npc.png";
+import ntcLogo from "../../assets/logo/ntc.png";
 
 export function Homepage() {
+
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleDivisionClick = () => {
+    navigate("/divisions"); // Redirect to the division page
+  };
+
   return (
     <div className={styleHomePage.mainContent}>
       <Header />
@@ -95,7 +107,7 @@ export function Homepage() {
           </div>
         </div>
         {/* Divisions Card */}
-        <div className={styleHomePage.flipCard}>
+        <div className={styleHomePage.flipCard} onClick={handleDivisionClick}>
           <div className={styleHomePage.flipCardInner}>
             <div className={styleHomePage.flipCardFront}>
               <img
@@ -122,12 +134,42 @@ export function Homepage() {
       {/* Report a Scam Section */}
       <div className={styleHomePage.reportSection}>
         <h1>Report a Scam</h1>
-        <img
-          src="/assets/img/cicc.png" // Use public directory for static assets
-          alt="CICC"
-          className={styleHomePage.reportImage}
-        />
-        <p>etc.</p>
+        <div className={styleHomePage.logosContainer}>
+          <a
+            href="https://privacy.gov.ph/"
+            target="_blank"
+            rel="noopener noreferrer">
+            <img
+              src={npcLogo}
+              alt="National Privacy Commission (NPC)"
+              className={`${styleHomePage.logoImage} ${styleHomePage.npcLogo}`}
+            />
+          </a>
+          <a
+            href="https://ntc.gov.ph/?appgw_azwaf_jsc=cEJ4I0O-yNfIGERGaduRfptdlfZhAHcG_F1Rx8ywEKA"
+            target="_blank"
+            rel="noopener noreferrer">
+            <img
+              src={ntcLogo}
+              alt="National Telecommunications Commission (NTC)"
+              className={styleHomePage.logoImage}
+            />
+          </a>
+          <a
+            href="https://cicc.gov.ph/mandate-powers-and-functions/"
+            rel="noopener noreferrer">
+            <img
+              src={ciccLogo}
+              alt="Cyber Incident Coordination Center (CICC)"
+              className={styleHomePage.logoImage}
+            />
+          </a>
+        </div>
+        <p>
+          Report scams to the relevant authorities by contacting the National Privacy
+          Commission (NPC), National Telecommunications Commission (NTC), or Cyber
+          Incident Coordination Center (CICC).
+        </p>
       </div>
       <Footer />
     </div>
