@@ -17,6 +17,15 @@ export function Homepage() {
 
       <div>
         <h1>Mission, Vision and Etc.</h1>
+        <div>
+          <h1>Mission</h1>
+        </div>
+        <div>
+          <h1>Vision</h1>
+        </div>
+        <div>
+          <h1>Divisions</h1>
+        </div>
       </div>
 
       <div>
