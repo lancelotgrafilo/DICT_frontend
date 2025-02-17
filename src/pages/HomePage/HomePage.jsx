@@ -129,8 +129,11 @@ export function Homepage() {
       </div>
 
       <div className={styleHomePage.newsSection}>
-        <h1>News, Alerts, and Advertisements</h1>
+        <div className={styleHomePage.marquee}>
+          <h1>News, Alerts, and Advertisements</h1>
+        </div>
       </div>
+
       {/* Report a Scam Section */}
       <div className={styleHomePage.reportSection}>
         <h1>Report a Scam</h1>
