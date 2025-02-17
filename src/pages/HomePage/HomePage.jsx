@@ -142,12 +142,6 @@ export function Homepage() {
               <p className={styleHomePage.topicParagraph}>
                 Stay updated with the latest news and announcements from DICT.
               </p>
-              <div className={styleHomePage.topicFooter}>
-                <span className={styleHomePage.date}>Oct 15, 2023</span>
-                <button className={styleHomePage.circleButton}>
-                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
-                </button>
-              </div>
             </div>
 
             {/* Vertical Line */}
@@ -162,12 +156,6 @@ export function Homepage() {
               <p className={styleHomePage.topicParagraph}>
                 Important alerts and notifications regarding cybersecurity and digital services.
               </p>
-              <div className={styleHomePage.topicFooter}>
-                <span className={styleHomePage.date}>Oct 14, 2023</span>
-                <button className={styleHomePage.circleButton}>
-                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
-                </button>
-              </div>
             </div>
 
             {/* Vertical Line */}
@@ -182,16 +170,8 @@ export function Homepage() {
               <p className={styleHomePage.topicParagraph}>
                 Discover upcoming events, campaigns, and promotional activities.
               </p>
-              <div className={styleHomePage.topicFooter}>
-                <span className={styleHomePage.date}>Oct 13, 2023</span>
-                <button className={styleHomePage.circleButton}>
-                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
-                </button>
-              </div>
             </div>
           </div>
-        <div className={styleHomePage.marquee}>
-          <h1>News, Alerts, and Advertisements</h1>
         </div>
       </div>
 
