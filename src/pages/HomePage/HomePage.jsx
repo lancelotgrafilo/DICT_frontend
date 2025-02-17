@@ -190,6 +190,8 @@ export function Homepage() {
               </div>
             </div>
           </div>
+        <div className={styleHomePage.marquee}>
+          <h1>News, Alerts, and Advertisements</h1>
         </div>
       </div>
 
