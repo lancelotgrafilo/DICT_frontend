@@ -1,32 +1,129 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import styleHomePage from "./homePage.module.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { Header } from "../../components/Header/Header";
-import { Link } from "react-router-dom";
 import { Footer } from "../../components/Footer/Footer";
+import { Carousel } from "react-bootstrap";
+import img1 from "../../assets/img/img1.png";
+import img2 from "../../assets/img/img2.png";
+import img3 from "../../assets/img/img3.png";
+import missionImage from "../../assets/img/mission.png"; // Add an image for Mission and Vision
+import mandateImage from "../../assets/img/mandate.png"; // Add an image for Mandate, Powers, and Functions
+import divisionsImage from "../../assets/img/divisions.png"; // Add an image for Divisions
 
 export function Homepage() {
-  
   return (
     <div className={styleHomePage.mainContent}>
       <Header />
-
-      <div>
-        <h1>Banner</h1>
+      {/* Banner Carousel */}
+      <div className={styleHomePage.banner}>
+        <Carousel
+          indicators // Enables dot navigation
+          controls={false} // Disables arrow navigation
+          interval={5000} // Automatically advances every 5 seconds (5000ms)
+        >
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={img1}
+              alt="First slide"
+              style={{ height: "400px", objectFit: "cover" }}
+            />
+            <Carousel.Caption></Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={img2}
+              alt="Second slide"
+              style={{ height: "400px", objectFit: "cover" }}
+            />
+            <Carousel.Caption></Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={img3}
+              alt="Third slide"
+              style={{ height: "400px", objectFit: "cover" }}
+            />
+            <Carousel.Caption></Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
       </div>
-
-      <div>
-        <h1>Mission, Vision and Etc.</h1>
-        <div>
-          <h1>Mission</h1>
+      {/* Mission, Vision, Divisions Cards */}
+      <div className={styleHomePage.cardContainer}>
+        {/* Mission and Vision Card */}
+        <div className={styleHomePage.flipCard}>
+          <div className={styleHomePage.flipCardInner}>
+            <div className={styleHomePage.flipCardFront}>
+              <img
+                src={missionImage}
+                alt="Mission and Vision"
+                className={styleHomePage.cardImage}
+              />
+              <h2>Mission and Vision</h2>
+              <p>
+                DICT aspires for the Philippines to develop and flourish through
+                innovation and constant development of ICT in the pursuit of a
+                progressive, safe, secured, contented, and happy Filipino nation.
+              </p>
+            </div>
+            <div className={styleHomePage.flipCardBack}>
+              <h2>View Details</h2>
+            </div>
+          </div>
         </div>
-        <div>
-          <h1>Vision</h1>
+        {/* Mandate, Powers, and Functions Card */}
+        <div className={styleHomePage.flipCard}>
+          <div className={styleHomePage.flipCardInner}>
+            <div className={styleHomePage.flipCardFront}>
+              <img
+                src={mandateImage}
+                alt="Mandate, Powers, and Functions"
+                className={styleHomePage.cardImage}
+              />
+              <h2>Mandate, Powers, and Functions</h2>
+              <p>
+                The Department of Information and Communications Technology
+                (DICT) is the primary ICT agency of the Philippine government
+                created through Republic Act No. 10844.
+              </p>
+            </div>
+            <div className={styleHomePage.flipCardBack}>
+              <h2>View Details</h2>
+            </div>
+          </div>
         </div>
-        <div>
-          <h1>Divisions</h1>
+        {/* Divisions Card */}
+        <div className={styleHomePage.flipCard}>
+          <div className={styleHomePage.flipCardInner}>
+            <div className={styleHomePage.flipCardFront}>
+              <img
+                src={divisionsImage}
+                alt="Divisions"
+                className={styleHomePage.cardImage}
+              />
+              <h2>Divisions</h2>
+              <p>
+                The DICT is organized into various divisions to effectively carry
+                out its mandate.
+              </p>
+            </div>
+            <div className={styleHomePage.flipCardBack}>
+              <h2>View</h2>
+            </div>
+          </div>
         </div>
       </div>
+      {/* Report a Scam Section */}
+      <div className={styleHomePage.reportSection}>
+        <h1>Report a Scam</h1>
+        <img
+          src="/assets/img/cicc.png" // Use public directory for static assets
+          alt="CICC"
+          className={styleHomePage.reportImage}
+        />
+        <p>etc.</p>
 
       <div>
         NEWS and Alerts
@@ -37,10 +134,7 @@ export function Homepage() {
         <img src="" alt="CICC" />
         etc.
       </div>
-
-      <Footer/>
-
-      
+      <Footer />
     </div>
   );
-};
+}

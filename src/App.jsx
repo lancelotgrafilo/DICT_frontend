@@ -15,6 +15,7 @@ import { SuperAdminPage } from './pages/SuperAdminPage/SuperAdminPage.jsx';
 import { FocalForm } from './components/FocalForm/FocalForm.jsx';
 import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
 import { SignUpPage } from './pages/SignUpPage/SignUpPage.jsx';
+import { FocalList } from './components/FocalList/FocalList.jsx';
 import { Divisions } from './components/Divisions/Divisions.jsx';
 import { Cie } from './components/CIE/Cie.jsx';
 
@@ -48,10 +49,11 @@ export default function App() {
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
             <Route path="activities" element={<Activities />} />
-            <Route path="focal-form" element={ <FocalForm/>} />
             <Route path='modules-lists' element={<ModulesList/>} />
             <Route path='history' element={<History/>} />
-            <Route path='settings' element={<Settings/>} /> 
+            <Route path='settings' element={<Settings/>} />
+            <Route path='focal-list' element={<FocalList/>} />
+            <Route path="focal-form" element={ <FocalForm/>} />
           </Route>
 
 

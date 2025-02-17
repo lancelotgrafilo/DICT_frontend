@@ -62,7 +62,7 @@ export function SuperAdminPage() {
             { to: "request", label: "Requests", icon: "ri-edit-box-fill", btnId: "request" },
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
             { to: "modules-lists", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
-            { to: "focal-form", label: "Focal Form", icon: "ri-draft-fill", btnId: "focalForm" },
+            { to: "focal-list", label: "Focal Form", icon: "ri-draft-fill", btnId: "focalList" },
             { to: "history", label: "History", icon: "ri-time-fill", btnId: "history" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (

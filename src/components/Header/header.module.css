@@ -36,11 +36,6 @@
   flex-direction: column;
   align-items: center;
   font-family: 'Gilroy', Arial, Helvetica, sans-serif !important;
-  border-radius: 12px;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  -ms-border-radius: 12px;
-  -o-border-radius: 12px;
 }
 
 /* Horizontal Menu */
@@ -66,8 +61,8 @@
 
 /* DICT Styling */
 .dict {
-  width: 350px;
-  height: auto;
+  width: 30%;
+  height: 15%;
 }
 
 .navContainer {
