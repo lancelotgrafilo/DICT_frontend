@@ -102,12 +102,27 @@
   margin: 40px 0;
 }
 
-.reportImage {
-  margin-top: 20px;
-  width: 150px;
-  height: auto;
+.logosContainer {
+  display: flex;
+  justify-content: center; /* Centers the logos horizontally */
+  gap: 20px; /* Adds spacing between the logos */
+  margin-top: 20px; /* Adds space above the logos */
 }
 
-.textContainer {
-  margin: 20px;
+.logoImage {
+  width: 100px; /* Fixed width for the logos */
+  aspect-ratio: 1 / 1; /* Ensures the logos are square (1:1 aspect ratio) */
+  object-fit: cover; /* Ensures the image scales properly within the container */
+  border-radius: 8px; /* Optional: Adds rounded corners */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.logoImage:hover {
+  transform: scale(1.1); /* Slightly enlarges the logo on hover */
+}
+
+/* Specific Style for NPC Logo */
+.npcLogo {
+  width: 170px; /* Custom width for NPC logo */
+  aspect-ratio: 0;
 }
