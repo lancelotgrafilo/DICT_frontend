@@ -124,6 +124,15 @@ export function Homepage() {
           className={styleHomePage.reportImage}
         />
         <p>etc.</p>
+
+      <div>
+        NEWS and Alerts
+      </div>
+
+      <div>
+        <h1>Report a scam</h1>
+        <img src="" alt="CICC" />
+        etc.
       </div>
       <Footer />
     </div>

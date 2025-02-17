@@ -1,0 +1,48 @@
+.mainContent {
+  height: 100dvh;
+}
+
+.division{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+}
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row; 
+  gap: 20px; /* Space between cards */
+  align-items: center; /* Center cards horizontally */
+}
+
+.card {
+  width: 300px; /* Fixed width for portrait shape */
+  height: 400px; /* Height greater than width for portrait orientation */
+  background-color: #ffffff;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06); /* Soft shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight upward movement on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+
+.card a {
+  text-decoration: none;
+  color: #007bff; /* Blue link color */
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
