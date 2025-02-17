@@ -14,7 +14,7 @@ export function ModulesList() {
   const { updateModule, loading: updateLoading, error: updateError, success: updateSuccess } = useUpdateModule();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [currentModule, setCurrentModule] = useState(null);
@@ -22,12 +22,12 @@ export function ModulesList() {
 
   const sortedModules = [...modules]
     .sort((a, b) => {
-      const order = { Beginner: 1, Intermediate: 2, Technical: 3 };
-      return order[a.difficulty] - order[b.difficulty];
+      const order = { Basic: 1, Intermediate: 2, Technical: 3 };
+      return order[a.level] - order[b.level];
     })
     .filter((module) =>
       module.module_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedDifficulty ? module.difficulty === selectedDifficulty : true)
+      (selectedLevel ? module.level === selectedLevel : true)
     );
 
   useEffect(() => {
@@ -97,8 +97,9 @@ export function ModulesList() {
     const formData = new FormData(e.target);
     const moduleData = {
       module_name: formData.get("module_name"),
+      duration: formData.get("duration"),
       module_description: formData.get("module_description"),
-      difficulty: formData.get("difficulty"),
+      level: formData.get("level"),
     };
 
     if (currentModule) {
@@ -109,12 +110,12 @@ export function ModulesList() {
     setShowModal(false);
   };
 
-  const handleView = (moduleId) => {
-    const module = modules.find((module) => module._id === moduleId);
-    if (module) {
-      toast.info(`Viewing Module: ${module.module_name}`);
-    }
-  };
+  // const handleView = (moduleId) => {
+  //   const module = modules.find((module) => module._id === moduleId);
+  //   if (module) {
+  //     toast.info(`Viewing Module: ${module.module_name}`);
+  //   }
+  // };
 
   return (
     <div className={styleModulesList.mainContent}>
@@ -133,13 +134,13 @@ export function ModulesList() {
             }}
           />
           <select
-            value={selectedDifficulty}
+            value={selectedLevel}
             style={{ width: "30%" }}
-            onChange={(e) => setSelectedDifficulty(e.target.value)}
+            onChange={(e) => setSelectedLevel(e.target.value)}
             className="form-select"
           >
-            <option value="">Category Levels</option>
-            <option value="Beginner">Beginner</option>
+            <option value="">Levels</option>
+            <option value="Basic">Basic</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Technical">Technical</option>
           </select>
@@ -154,8 +155,9 @@ export function ModulesList() {
             <thead>
               <tr>
                 <th style={{ width: "20%", textAlign: "center", verticalAlign: "middle" }}>Module Name</th>
+                <th style={{ width: "15%", textAlign: "center", verticalAlign: "middle" }}>Duration</th>
                 <th style={{ width: "40%", textAlign: "center", verticalAlign: "middle" }}>Description</th>
-                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Difficulty</th>
+                <th style={{ width: "10%", textAlign: "center", verticalAlign: "middle" }}>Level</th>
                 <th style={{ width: "15%", textAlign: "center", verticalAlign: "middle" }}>Actions</th>
               </tr>
             </thead>
@@ -164,8 +166,9 @@ export function ModulesList() {
                 sortedModules.map((module) => (
                   <tr key={module._id}>
                     <td>{module.module_name}</td>
+                    <td>{module.duration}</td>
                     <td>{module.module_description}</td>
-                    <td style={{ textAlign: "center", verticalAlign: "middle" }}>{module.difficulty}</td>
+                    <td style={{ textAlign: "center", verticalAlign: "middle" }}>{module.level}</td>
                     <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                       <button className={styleModulesList.btn_submit} onClick={() => handleEdit(module._id)}>
                         <FaEdit /> Edit
@@ -203,6 +206,14 @@ export function ModulesList() {
                 required
               />
 
+              <input
+                type="text"
+                name="duration"
+                placeholder="Duration"
+                defaultValue={currentModule?.duration || ""}
+                required
+              />
+
               <textarea
                 name="module_description"
                 placeholder="Module Description"
@@ -210,14 +221,13 @@ export function ModulesList() {
                 required
               />
 
-              <select name="difficulty" defaultValue={currentModule?.difficulty || ""} required>
+              <select name="level" defaultValue={currentModule?.level || ""}>
                 <option value="">Category Levels</option>
-                <option value="Beginner">Beginner</option>
+                <option value="Basic">Basic</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Technical">Technical</option>
               </select>
 
-              <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
 
               <div className={styleModulesList.buttonContainer}>
                 {/* Cancel Button First */}
