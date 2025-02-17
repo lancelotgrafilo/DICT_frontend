@@ -1,145 +1,160 @@
- body {
-   font-family: Arial, sans-serif;
-   margin: 0;
-   padding: 0;
-   background-color: #f5f5f5;
- }
- .container {
-   width: 100%;
-   max-width: 76%;
-   margin: auto;
-   padding: 20px;
-   background-color: white;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-   border-radius: 5px;
-   border: 2px solid black;
- }
- .header {
-   border-radius: 3px;
-   font-size:x-large;
-   text-align: center;
-   background-color: #003366;
-   color: white;
-   padding: 20px;
-   margin-bottom: 20px;
- }
- .sectionHeader {
-   text-align: center;
-   border-radius: 3px;
-   background-color: #003366;
-   color: white;
-   padding: 5px 10px;
-   margin-top: 20px;
- }
- .formGroup {
-   display: flex;
-   align-items: center;
-   margin-bottom: 15px;
- }
- .formGroup label {
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.container {
+  width: 100%;
+  max-width: 76%;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.header {
+  border-radius: 3px;
+  font-size: x-large;
+  text-align: center;
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.sectionHeader {
+  text-align: center;
+  border-radius: 3px;
+  background-color: #003366;
+  color: white;
+  padding: 5px 10px;
+  margin-top: 20px;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.formGroup label {
   color: black;
-   width: 115px;
-   margin-right: 5px;
- }
-    
- .formGroup input{
-   flex: 1;
-   padding: 8px;
-   box-sizing: border-box;
-   background-color: #cbf0f7;
-   border: 1px solid black;
-   margin-top: 6px;
- }
- .formGroup select {
-   flex: 1;
-   padding: 10px;
-   box-sizing: border-box;
-   background-color: #cbf0f7;
-   border: 1px solid black;
-   margin-top: 6px;
- }
- .formGroupContainer {
-   display: flex;
-   justify-content: space-between;
-   align-items: flex-start;
-   flex-wrap: wrap;
- }
- .formRight{
-   margin-top: 40px;
- }
- .formGroupContainer .formGroup {
-   width: 48%;
- }
- .formContainer {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
- }
- .formLeft, .formRight {
-   width: 100%;
- }
- @media (min-width: 768px) {
-   .formLeft, .formRight {
-     width: 48%;
-   }
- }
- .buttons {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-   margin-top: 20px;
- }
- .buttons button {
-   flex: 1 1 auto;
-   min-width: 100px;
-   padding: 10px;
-   background-color: #003366;
-   color: white;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
-   margin: 5px;
- }
- .buttons button:hover {
-   background-color: #00509e;
- }
- .submitBtn {
-   display: block;
-   margin: 20px auto;
-   background-color: #003366;
-   color: white;
-   border: none;
-   padding: 10px 20px;
-   border-radius: 4px;
-   cursor: pointer;
-   font-size: 16px;
- }
- .submitBtn:hover {
-   background-color: #00509e;
- }
- .focalStatus {
-   margin-top: 20px;
-   border: 1px dashed #003366;
-   padding: 10px;
- }
- .formGroupContact {
-   margin-bottom: 15px;
- }
- .formGroupContact label {
+  width: 115px;
+  margin-right: 5px;
+}
+
+.formGroup input,
+.formGroup select {
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #cbf0f7;
+  border: 1px solid black;
+  margin-top: 6px;
+}
+
+.formGroupContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.formRight {
+  margin-top: 40px;
+}
+
+.formGroupContainer .formGroup {
+  width: 48%;
+}
+
+.formContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.formLeft,
+.formRight {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .formLeft,
+  .formRight {
+    width: 48%;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttons button {
+  flex: 1 1 auto;
+  min-width: 100px;
+  padding: 10px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.buttons button:hover {
+  background-color: #00509e;
+}
+
+.submitBtn {
+  display: block;
+  margin: 20px auto;
+  background-color: #003366;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitBtn:hover {
+  background-color: #00509e;
+}
+
+.focalStatus {
+  margin-top: 20px;
+  border: 1px dashed #003366;
+  padding: 10px;
+}
+
+.formGroupContact {
+  margin-bottom: 15px;
+}
+
+.formGroupContact label {
   color: black;
-   display: block;
-   margin-bottom: 5px;
- }
- .formGroupContact input {
-   width: 100%;
-   padding: 8px;
-   box-sizing: border-box;
-   background-color: #cbf0f7; 
-   border: 1px solid black;
-   ;
- }
- 
- .btn_primary {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formGroupContact input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #cbf0f7;
+  border: 1px solid black;
+}
+
+.btn_primary {
   background-color: #007bff;
   color: white;
   border: none;
@@ -147,7 +162,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  }
+}
 
 .btn_primary:hover {
   background-color: #0056b3;
@@ -184,3 +199,57 @@
   box-shadow: 0 0 5px red !important;
 }
 
+/* Table for Focal Users */
+.focalTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.focalTable th,
+.focalTable td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.focalTable th {
+  background-color: #003366;
+  color: white;
+  font-weight: bold;
+}
+
+.focalTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.focalTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Redirect Button */
+.redirectButton {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.redirectButton:hover {
+  background-color: #218838;
+}

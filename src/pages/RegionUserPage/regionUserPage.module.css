@@ -346,3 +346,23 @@ body.dark-theme {
     margin-left: 0;
   }
 }
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar.collapsed .logoContainer h2,
+.sidebar.collapsed .usernameContainer p,
+.sidebar.collapsed .manageTxt,
+.sidebar.collapsed .navItem {
+  display: none;
+}
+
+.sidebar.collapsed .sidebarIcons {
+  margin: 0 auto;
+}

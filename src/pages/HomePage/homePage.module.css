@@ -1,226 +1,113 @@
-/* General Styles */
+/* Main Content */
 .mainContent {
-  height: 100vh;
-}
-
-/* General Container */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.card {
-  border-radius: 10px;
-  border: none;
-}
-
-.card h2 {
-  color: #00796b; /* Primary color */
-  font-weight: bold;
-}
-
-.form-label {
-  font-weight: 600;
-  color: #4a4a4a; /* Neutral text color */
-}
-
-.form-control,
-.form-select {
-  border-radius: 5px;
-  border: 1px solid #ced4da;
-  transition: all 0.3s ease-in-out;
-}
-
-.form-control:focus,
-.form-select:focus {
-  border-color: #00796b; /* Primary color */
-  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5);
-}
-
-.btn {
-  border-radius: 5px;
-  font-weight: 600;
-}
-
-/* Button Styles */
-.btn-primary {
-  background-color: #103cbe;
-  border-color: #103cbe;
-}
-
-.btn-primary:hover {
-  background-color: #082b94;
-  border-color: #082b94;
-}
-
-.btn-success {
-  background-color: #103cbe;
-  border-color: #103cbe;
-}
-
-.btn-success:hover {
-  background-color: #082b94;
-  border-color: #082b94;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #5a6268;
-}
-
-/* Row and Column Spacing */
-.row.g-3 .col-md-4,
-.row.g-3 .col-md-6 {
-  margin-bottom: 1rem;
-}
-
-/* Adjusted Columns for One Row */
-.row.g-3 .col-md-2 select[name="salutation"],
-.row.g-3 .col-md-1 input[name="extensionName"] {
-  width: 100%;
-  max-width: 80px; /* Smaller width for Salutation and Extension */
-}
-
-.row.g-3 .col-md-3 input[name="firstName"],
-.row.g-3 .col-md-3 input[name="middleName"],
-.row.g-3 .col-md-3 input[name="lastName"] {
-  width: 100%; /* Full width for First, Middle, and Last Name */
-}
-
-/* Section Title */
-h4 {
-  color: #4a4a4a;
-  font-weight: 700;
-  border-bottom: 2px solid #4a4a4a;
-  padding-bottom: 5px;
-}
-
-/* Button Alignment */
-.d-flex {
-  gap: 10px;
-}
-
-/* Adjust Spacing for Next/Previous Buttons */
-.mt-4 {
-  margin-top: 2rem !important;
-}
-
-/* Mobile Responsive Design */
-@media (max-width: 576px) {
-  .form-label {
-    font-size: 0.9rem;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-  }
-
-  /* Stack inputs on smaller screens */
-  .row.g-3 > div {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
-
-/* Date input field */
-input[type="date"] {
-  background-color: #ffffff;
-  color: #333;
-  border-radius: 4px;
-  padding: 8px;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
-}
-
-/* Time input field */
-input[type="time"] {
-  background-color: #ffffff;
-  border-radius: 4px;
-  padding: 8px;
-}
-
-input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
-}
-
-/* Parent container for the delete button */
-.col-md-1.d-flex {
   display: flex;
-  justify-content: center; /* Horizontal center alignment */
-  align-items: center; /* Vertical center alignment */
-}
-
-/* Delete button styles */
-.delete-btn {
-  background-color: #00796b;
-  border-color: #00796b;
-  color: #ffffff;
-  border-radius: 4px;
-  padding: 6px 10px;
-  height: 38px;
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 0.875rem;
-  gap: 5px;
+  padding: 0;
 }
 
-/* Hover state for delete button */
-.delete-btn:hover {
-  background-color: #005a4e;
-  border-color: #005a4e;
+/* Banner Carousel */
+.banner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  position: relative; /* Required for absolute positioning of the dots container */
 }
 
-/* Categories Section */
-.categories-section {
-  margin-top: 20px;
-  border: 1px solid #ddd;
-  padding: 20px;
+/* Card Container */
+.cardContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 40px 0;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Flip Card Styles */
+.flipCard {
+  background-color: transparent;
+  width: 100%;
+  height: 480px; /* Adjust height as needed */
+  perspective: 1000px; /* Creates a 3D space for the flip effect */
+}
+
+.flipCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d; /* Ensures the flip happens in 3D space */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  background-color: #f9f9f9;
 }
 
-.categories-section h4 {
-  font-weight: bold;
-  margin-bottom: 15px;
+.flipCard:hover .flipCardInner {
+  transform: rotateY(180deg); /* Flips the card on hover */
 }
 
-/* Category Checkbox Styles */
-.category {
-  margin-bottom: 15px;
+.flipCardFront,
+.flipCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the back side of the card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 }
 
-.category label {
-  font-weight: 600;
-  font-size: 1rem;
+.flipCardFront {
+  background-color: #f8f9fa;
+  color: #5a6268;
 }
 
-.options {
-  margin-left: 20px;
-  margin-top: 10px;
+.flipCardBack {
+  background-color: #5a6268;
+  color: #fff;
+  transform: rotateY(180deg); /* Rotates the back side to face the opposite direction */
 }
 
-.options label {
-  display: block;
-  font-weight: 400;
-  font-size: 0.9rem;
-  margin-bottom: 5px;
+/* Card Image */
+.cardImage {
+  width: 100%; /* Make the image span the full width of the card */
+  height: 250px; /* Set a fixed height for the image */
+  object-fit: cover; /* Ensures the image scales properly */
+  border-radius: 8px 8px 0 0; /* Rounded corners for the top part */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
 }
 
-/* Highlighted Checkbox */
-input[type="checkbox"] {
-  margin-right: 8px;
+/* Card Header */
+.flipCardFront h2 {
+  margin: 20px 0; /* Add some spacing between the image and header */
+  font-size: 1.5rem;
 }
 
-input[type="checkbox"]:checked + label {
-  font-weight: bold;
-  color: #00796b; /* Primary green */
+/* Card Description */
+.flipCardFront p {
+  text-align: justify; /* Justify the description text */
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 20px 10px; /* Add some spacing around the text */
+  flex-grow: 1; /* Allow the description to take up remaining space */
+}
+
+/* Report a Scam Section */
+.reportSection {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.reportImage {
+  margin-top: 20px;
+  width: 150px;
+  height: auto;
+}
+
+.textContainer {
+  margin: 20px;
 }
