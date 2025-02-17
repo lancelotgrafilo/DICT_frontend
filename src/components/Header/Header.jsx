@@ -83,13 +83,7 @@ export function Header() {
             <Link to="/home" className={styleHeader.navLink}>HOME</Link>
           </li>
           <li className={styleHeader.navItem}>
-            <a href="https://dict.gov.ph/pnpki" className={styleHeader.navLink}>DCD</a>
-          </li>
-          <li className={styleHeader.navItem}>
-            <Link to="/home" className={styleHeader.navLink}>CIECSD</Link>
-          </li>
-          <li className={styleHeader.navItem}>
-            <a href="https://www.ncert.gov.ph/" className={styleHeader.navLink}>NCERT</a>
+            <Link to="/divisions" className={styleHeader.navLink}>DIVISIONS</Link>
           </li>
           <li className={styleHeader.navItem}>
             <Link to="/request-form" className={styleHeader.navLink}>REQUEST SPEAKER</Link>

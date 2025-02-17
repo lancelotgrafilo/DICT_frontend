@@ -29,7 +29,7 @@
   padding: 0;
   width: 100%;
   top: 0px;
-  z-index: 1000;
+  z-index: 9999;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
