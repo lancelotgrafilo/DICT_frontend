@@ -2,13 +2,19 @@
   height: 100dvh;
 }
 
+.division{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+}
 .cardContainer {
   display: flex;
   justify-content: center;
   flex-direction: row; 
   gap: 20px; /* Space between cards */
   align-items: center; /* Center cards horizontally */
-  margin-top: 20px;
 }
 
 .card {
