@@ -4,7 +4,6 @@ import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { Carousel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
 import img1 from "../../assets/img/img1.png";
 import img2 from "../../assets/img/img2.png";
 import img3 from "../../assets/img/img3.png";
@@ -16,7 +15,6 @@ import npcLogo from "../../assets/logo/npc.png";
 import ntcLogo from "../../assets/logo/ntc.png";
 
 export function Homepage() {
-
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleDivisionClick = () => {
@@ -62,6 +60,7 @@ export function Homepage() {
           </Carousel.Item>
         </Carousel>
       </div>
+
       {/* Mission, Vision, Divisions Cards */}
       <div className={styleHomePage.cardContainer}>
         {/* Mission and Vision Card */}
@@ -128,9 +127,72 @@ export function Homepage() {
         </div>
       </div>
 
+      {/* News, Alerts, and Advertisements Section */}
       <div className={styleHomePage.newsSection}>
-        <h1>News, Alerts, and Advertisements</h1>
+        <h1 className={styleHomePage.centeredTitle}>News, Alerts, and Advertisements</h1>
+        <div className={styleHomePage.cardViewContainer}>
+          {/* Single Card View with Vertical Lines */}
+          <div className={styleHomePage.singleCard}>
+            {/* News Section */}
+            <div className={styleHomePage.topic}>
+              <div className={styleHomePage.topicIcon}>
+                <i className="bi bi-newspaper"></i> {/* Bootstrap Icon for News */}
+              </div>
+              <h3 className={styleHomePage.topicTitle}>News</h3>
+              <p className={styleHomePage.topicParagraph}>
+                Stay updated with the latest news and announcements from DICT.
+              </p>
+              <div className={styleHomePage.topicFooter}>
+                <span className={styleHomePage.date}>Oct 15, 2023</span>
+                <button className={styleHomePage.circleButton}>
+                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
+                </button>
+              </div>
+            </div>
+
+            {/* Vertical Line */}
+            <div className={styleHomePage.verticalLine}></div>
+
+            {/* Alert Section */}
+            <div className={styleHomePage.topic}>
+              <div className={styleHomePage.topicIcon}>
+                <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Alert */}
+              </div>
+              <h3 className={styleHomePage.topicTitle}>Alert</h3>
+              <p className={styleHomePage.topicParagraph}>
+                Important alerts and notifications regarding cybersecurity and digital services.
+              </p>
+              <div className={styleHomePage.topicFooter}>
+                <span className={styleHomePage.date}>Oct 14, 2023</span>
+                <button className={styleHomePage.circleButton}>
+                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
+                </button>
+              </div>
+            </div>
+
+            {/* Vertical Line */}
+            <div className={styleHomePage.verticalLine}></div>
+
+            {/* Advertisement Section */}
+            <div className={styleHomePage.topic}>
+              <div className={styleHomePage.topicIcon}>
+                <i className="bi bi-megaphone"></i> {/* Bootstrap Icon for Advertisement */}
+              </div>
+              <h3 className={styleHomePage.topicTitle}>Advertisement</h3>
+              <p className={styleHomePage.topicParagraph}>
+                Discover upcoming events, campaigns, and promotional activities.
+              </p>
+              <div className={styleHomePage.topicFooter}>
+                <span className={styleHomePage.date}>Oct 13, 2023</span>
+                <button className={styleHomePage.circleButton}>
+                  <i className="bi bi-arrow-right"></i> {/* Apple-like next icon */}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       {/* Report a Scam Section */}
       <div className={styleHomePage.reportSection}>
         <h1>Report a Scam</h1>
