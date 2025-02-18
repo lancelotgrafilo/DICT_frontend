@@ -47,3 +47,8 @@
   transform: translateY(-5px); /* Slight upward movement */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
 }
+
+.institutionalContainer{
+  margin-top: 20px;
+  width: 800px;
+}
