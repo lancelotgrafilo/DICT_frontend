@@ -195,7 +195,7 @@
 
 .topicFooter {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Push date to the left and button to the right */
   align-items: center;
   width: 100%;
   margin-top: auto; /* Push footer to the bottom */
@@ -213,7 +213,7 @@
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; /* Circular shape */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,6 +221,7 @@
   transition: background-color 0.3s ease;
 }
 
-.circleButton:hover {
-  background-color: #0056b3;
+/* Icon Styling */
+.circleButton i {
+  font-size: 1.2rem; /* Adjust icon size */
 }
