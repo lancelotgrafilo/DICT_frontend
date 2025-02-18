@@ -18,6 +18,10 @@ import { SignUpPage } from './pages/SignUpPage/SignUpPage.jsx';
 import { FocalList } from './components/FocalList/FocalList.jsx';
 import { Divisions } from './components/Divisions/Divisions.jsx';
 import { Cie } from './components/CIE/Cie.jsx';
+import { Cpcb } from './components/CIE-Division/CPCB/Cpcb.jsx';
+import { Ecm } from './components/CIE-Division/ECM/Ecm.jsx';
+import { Pprd } from './components/CIE-Division/PPRD/Pprd.jsx';
+import { Tec } from './components/CIE-Division/TEC/Tec.jsx';
 
 export default function App() {
   return (
@@ -28,10 +32,13 @@ export default function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="home" element={ <Homepage/> }></Route>
           <Route path="request-form" element={ <RequestForm/> }> </Route>
-          <Route path="divisions" element={ <Divisions/> }> 
-            
-          </Route>
+          <Route path="divisions" element={ <Divisions/> } /> 
+          
           <Route path="divisions/cie" element={ <Cie/> }/>
+          <Route path="divisions/cie/cpcb" element={ <Cpcb/> }/>
+          <Route path="divisions/cie/ecm" element={ <Ecm/> }/>
+          <Route path="divisions/cie/pprd" element={ <Pprd/> }/>
+          <Route path="divisions/cie/tec" element={ <Tec/> }/>
           
           
           <Route path="admin" element={<RegionUserPage />}>
