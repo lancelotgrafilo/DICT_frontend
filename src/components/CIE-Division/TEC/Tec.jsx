@@ -1,5 +1,6 @@
 import styleTec from './tec.module.css';
 import { Header } from '../../Header/Header';
+import { Footer } from '../../Footer/Footer';
 
 export function Tec () {
   return(
@@ -18,10 +19,11 @@ export function Tec () {
           <div>RCAP Submission</div>
           <div>White Paper</div>
           <div>Capacity Building</div>
-          <div>Project ...</div>
+          <div>Project Research</div>
         </div>
       </div>
     
+      <Footer/>
     </>
   )
 }

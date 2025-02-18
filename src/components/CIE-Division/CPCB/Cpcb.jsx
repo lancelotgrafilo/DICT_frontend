@@ -1,6 +1,6 @@
 import styleCpcb from './cpcb.module.css';
 import {Header} from '../../Header/Header';
-
+import { Footer } from '../../Footer/Footer';
 export function Cpcb () {
   return (
     <>
@@ -50,6 +50,8 @@ export function Cpcb () {
           </div>
         </div>
       </div>
+
+      <Footer/>
     </>
   )
 }

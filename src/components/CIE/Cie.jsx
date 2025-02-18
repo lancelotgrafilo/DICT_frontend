@@ -1,6 +1,7 @@
 import styleCie from "./cie.module.css";
 import { Header } from "../Header/Header";
 import {Link} from 'react-router-dom';
+import { Footer } from "../Footer/Footer";
 
 export function Cie() {
   return (
@@ -24,7 +25,7 @@ export function Cie() {
             <Link to='/divisions/cie/tec'>TEC</Link>
           </div>
           <div className={styleCie.card}>
-            <Link to='/divisions/cie/ecm'>ECM</Link>
+            <Link to='/divisions/cie/ecm'>CCM</Link>
           </div>
           <div className={styleCie.card}>
             <Link to='/divisions/cie/cpcb'>CPCB</Link>
@@ -34,6 +35,7 @@ export function Cie() {
           <div className={styleCie.card}>INSTITUTIONAL</div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
