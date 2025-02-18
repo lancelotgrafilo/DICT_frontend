@@ -126,3 +126,101 @@
   width: 170px; /* Custom width for NPC logo */
   aspect-ratio: 0;
 }
+
+/* News, Alerts, and Advertisements Section */
+.newsSection {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.centeredTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.cardViewContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.singleCard {
+  display: flex;
+  align-items: stretch; /* Ensure all topics have equal height */
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.topic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  position: relative; /* Required for footer elements */
+}
+
+.topicIcon {
+  font-size: 2rem;
+  color: gray; /* Gray color for icons */
+  margin-bottom: 10px;
+}
+
+.topicTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.topicParagraph {
+  font-size: 1rem;
+  color: #666;
+  flex-grow: 1; /* Allow the paragraph to take up remaining space */
+}
+
+.verticalLine {
+  width: 1px;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.topicFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: auto; /* Push footer to the bottom */
+  padding: 10px 0;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.circleButton {
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.circleButton:hover {
+  background-color: #0056b3;
+}

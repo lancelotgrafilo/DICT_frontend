@@ -76,6 +76,7 @@ export function Header() {
           </div>
         </div>
       </div>
+      
       {/* Navigation Container */}
       <div className={styleHeader.navContainer}>
         <ul className={styleHeader.navList}>
