@@ -202,7 +202,7 @@ h1 {
 
 .topicFooter {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Push date to the left and button to the right */
   align-items: center;
   width: 100%;
   margin-top: auto; /* Push footer to the bottom */
@@ -220,7 +220,7 @@ h1 {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; /* Circular shape */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,25 +228,7 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-.circleButton:hover {
-  background-color: #0056b3;
-}
-.facebookContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.facebookLink {
-  text-decoration: none;
-}
-
-.facebookLogo {
-  width: 50px; /* Adjust size */
-  height: auto;
-  transition: transform 0.3s ease-in-out;
-}
-
-.facebookLogo:hover {
-  transform: scale(1.2);
+/* Icon Styling */
+.circleButton i {
+  font-size: 1.2rem; /* Adjust icon size */
 }

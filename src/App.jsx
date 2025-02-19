@@ -19,9 +19,10 @@ import { FocalList } from './components/FocalList/FocalList.jsx';
 import { Divisions } from './components/Divisions/Divisions.jsx';
 import { Cie } from './components/CIE/Cie.jsx';
 import { Cpcb } from './components/CIE-Division/CPCB/Cpcb.jsx';
-import { Ecm } from './components/CIE-Division/ECM/Ecm.jsx';
+import { Ccm } from './components/CIE-Division/CCM/Ccm.jsx';
 import { Pprd } from './components/CIE-Division/PPRD/Pprd.jsx';
 import { Tec } from './components/CIE-Division/TEC/Tec.jsx';
+import { Institutional } from './components/CIE-Division/Institutional/Institutional.jsx';
 
 export default function App() {
   return (
@@ -36,9 +37,10 @@ export default function App() {
           
           <Route path="divisions/cie" element={ <Cie/> }/>
           <Route path="divisions/cie/cpcb" element={ <Cpcb/> }/>
-          <Route path="divisions/cie/ecm" element={ <Ecm/> }/>
+          <Route path="divisions/cie/ecm" element={ <Ccm/> }/>
           <Route path="divisions/cie/pprd" element={ <Pprd/> }/>
           <Route path="divisions/cie/tec" element={ <Tec/> }/>
+          <Route path="divisions/cie/institutional" element={ <Institutional/> }/>
           
           
           <Route path="admin" element={<RegionUserPage />}>

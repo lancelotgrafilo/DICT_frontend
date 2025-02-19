@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import img1 from "../../assets/img/cyberLarge.png";
 import img2 from "../../assets/img/img2.png";
 import img3 from "../../assets/img/img3.png";
-import img4 from "../../assets/img/img1.png";
 import missionImage from "../../assets/img/mission.png"; // Add an image for Mission and Vision
 import mandateImage from "../../assets/img/mandate.png"; // Add an image for Mandate, Powers, and Functions
 import divisionsImage from "../../assets/img/divisions.png"; // Add an image for Divisions
@@ -55,15 +54,6 @@ export function Homepage() {
               className="d-block w-100"
               src={img3}
               alt="Third slide"
-              style={{ height: "400px", objectFit: "cover" }}
-            />
-            <Carousel.Caption></Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={img4}
-              alt="Fourth slide"
               style={{ height: "400px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>

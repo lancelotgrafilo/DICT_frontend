@@ -1,55 +1,57 @@
 import styleCpcb from './cpcb.module.css';
-import {Header} from '../../Header/Header';
+import { Header } from '../../Header/Header';
+import { Footer } from '../../Footer/Footer';
+import { useState } from 'react';
 
-export function Cpcb () {
+export function Cpcb() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <Header/>
-      
+      <Header />
       <div className={styleCpcb.mainContent}>
-
         <div className={styleCpcb.headerContainer}>
-          <div>
-            CPCB
-          </div>
+          <div>CPCB</div>
         </div>
-
         <div className={styleCpcb.cpcbContainer}>
-
           <div className={styleCpcb.firstColumnCpcb}>
             <div className={styleCpcb.cardContainer}>
-              <div className={styleCpcb.card}>NCAP</div>
+              <div className={styleCpcb.card} onClick={openModal}>
+                NCAP
+              </div>
               <div className={styleCpcb.card}>Request for Awareness</div>
               <div className={styleCpcb.card}>Request for Speaker</div>
             </div>
           </div>
 
-          <div className={styleCpcb.secondColumnCpcb}>
-            <div className={styleCpcb.cardContainer}>
-              <div className={styleCpcb.card}>CAR</div>
-              <div className={styleCpcb.card}>R1</div>
-              <div className={styleCpcb.card}>R2</div>
-              <div className={styleCpcb.card}>RBC</div>
+          {/* Modal */}
+          {isModalOpen && (
+            <div className={styleCpcb.modal}>
+              <div className={styleCpcb.modalContent}>
+                <h3>NCAP Details</h3>
+                <div className={styleCpcb.modalCardContainer}>
+                  <div className={styleCpcb.modalCard}>CAR</div>
+                  <div className={styleCpcb.modalCard}>R1</div>
+                  <div className={styleCpcb.modalCard}>R2</div>
+                  <div className={styleCpcb.modalCard}>RBC</div>
+                </div>
+                <button onClick={closeModal} style={{ marginTop: '20px' }}>
+                  Close
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div className={styleCpcb.institutionalContainer}>
-          <div className={styleCpcb.firstColumnInstitutional}>
-            <div className={styleCpcb.cardContainer}>
-              <div className={styleCpcb.card}>BEDS</div>
-              <div className={styleCpcb.card}>RI Plan</div>
-            </div>
-          </div>
-
-          <div className={styleCpcb.secondColumnInstitutional}>
-            <div className={styleCpcb.cardContainer}>
-              <div className={styleCpcb.card}>Procurement</div>
-              <div className={styleCpcb.card}>MPAX</div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
+      <Footer />
     </>
-  )
+  );
 }
