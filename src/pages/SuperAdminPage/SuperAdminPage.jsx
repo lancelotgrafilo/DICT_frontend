@@ -13,7 +13,6 @@ export function SuperAdminPage() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
   const navigate = useNavigate();
   const { updatePath } = usePath();
-
   const sidebarMenuRefs = useRef([]);
   
   const { activeButton, updateActiveButton } = useContext(ActiveButtonContext);
@@ -51,11 +50,9 @@ export function SuperAdminPage() {
             <p>Super Admin</p>
           </div>
         </div>
-
         <div className={styleSuperAdmin.manageTxt}>
           <p>MANAGE</p>
         </div>
-
         <ul className={styleSuperAdmin.sidebarMenu}>
           {[ 
             { to: "dashboard", label: "Dashboard", icon: "ri-pie-chart-2-fill", btnId: "dashboard" },
@@ -63,6 +60,8 @@ export function SuperAdminPage() {
             { to: "activities", label: "Activities", icon: "ri-calendar-fill", btnId: "activities" },
             { to: "modules-lists", label: "Modules", icon: "ri-book-fill", btnId: "modules" },
             { to: "focal-list", label: "Focal Form", icon: "ri-draft-fill", btnId: "focalList" },
+            { to: "monthly-reports", label: "Monthly Reports", icon: "ri-bar-chart-fill", btnId: "monthlyReports" }, 
+            { to: "news-tips-advisories", label: "News, Tips & Advisories", icon: "ri-newspaper-fill", btnId: "newsTipsAdvisories" },
             { to: "history", label: "History", icon: "ri-time-fill", btnId: "history" },
             { to: "settings", label: "Settings", icon: "ri-settings-3-fill", btnId: "settings" },
           ].map(({ to, label, icon, btnId, disabled }, index) => (
@@ -84,7 +83,6 @@ export function SuperAdminPage() {
               </Link>
             </li>
           ))}
-
           {/* Logout Link */}
           <li
             className={styleSuperAdmin.sidebarMenuItem}
@@ -102,7 +100,6 @@ export function SuperAdminPage() {
               <span className={styleSuperAdmin.navItem}>Logout</span>
             </a>
           </li>
-
         </ul>
       </div>
           
@@ -111,7 +108,6 @@ export function SuperAdminPage() {
         <Outlet/>
       </div>
       
-
       {isLogoutModalOpen && (
         <div className={styleSuperAdmin.modalOverlay}>
           <div className={styleSuperAdmin.modal}>
