@@ -252,19 +252,12 @@ h1 {
   width: 97%; 
 }
 
-
-.socialMediaContainer {
-  display: flex;
-  align-items: center;
-}
-
 .socialText {
   color: white;
   font-size: 16px;
   margin-right: 5px;
   justify-content: center;
 }
-
 
 .socialHighlight {
   color: white;
@@ -274,7 +267,7 @@ h1 {
 
 .socialIcons {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   margin-left: 15px;
 }
 

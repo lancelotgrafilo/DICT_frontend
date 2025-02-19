@@ -9,6 +9,10 @@ import img2 from "../../assets/img/img2.png";
 import img3 from "../../assets/img/img3.png";
 import missionImage from "../../assets/img/mission.png"; // Add an image for Mission and Vision
 import mandateImage from "../../assets/img/mandate.png"; // Add an image for Mandate, Powers, and Functions
+import facebookIcon from "../../assets/img/facebook.png";
+import instagramIcon from "../../assets/img/instagram.png";
+import twitterIcon from "../../assets/img/twitter.png";
+import youtubeIcon from "../../assets/img/youtube.png";
 import divisionsImage from "../../assets/img/divisions.png"; // Add an image for Divisions
 import ciccLogo from "../../assets/logo/cicc.png";
 import npcLogo from "../../assets/logo/npc.png";
@@ -131,6 +135,26 @@ export function Homepage() {
       {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
         <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
+        <div className={styleHomePage.socialMediaSection}>
+      <div className={styleHomePage.socialMediaContainer}>
+        <span className={styleHomePage.socialText}>Get Our</span>
+        <strong className={styleHomePage.socialHighlight}>Latest Updates</strong>
+      </div>
+      <div className={styleHomePage.socialIcons}>
+        <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={styleHomePage.socialIcon}>
+          <img src={twitterIcon} alt="Twitter" />
+        </a>
+        <a href="https://www.facebook.com/CYBERSECgovph" className={styleHomePage.socialIcon}>
+          <img src={facebookIcon} alt="Facebook" />
+        </a>
+        <a href="https://www.youtube.com/DICTCybersecurity" className={styleHomePage.socialIcon}>
+          <img src={youtubeIcon} alt="YouTube" />
+        </a>
+        <a href="https://www.instagram.com/dictcsb/" className={styleHomePage.socialIcon}>
+          <img src={instagramIcon} alt="Instagram" />
+        </a>
+      </div>
+    </div>
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
