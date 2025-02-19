@@ -29,14 +29,14 @@ export function Homepage() {
         <Carousel
           indicators // Enables dot navigation
           controls={false} // Disables arrow navigation
-          interval={5000} // Automatically advances every 5 seconds (5000ms)
+          interval={3000} // Automatically advances every 5 seconds (5000ms)
         >
           <Carousel.Item>
             <img
               className="d-block w-100"
               src={img1}
               alt="First slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
@@ -45,7 +45,7 @@ export function Homepage() {
               className="d-block w-100"
               src={img2}
               alt="Second slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
@@ -54,7 +54,7 @@ export function Homepage() {
               className="d-block w-100"
               src={img3}
               alt="Third slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>

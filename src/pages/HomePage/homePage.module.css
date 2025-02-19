@@ -14,6 +14,12 @@
   position: relative; /* Required for absolute positioning of the dots container */
 }
 
+.banner img {
+  width: 100%;
+  height: 8%; /* Match the height of the banner */
+  object-fit: cover; /* Ensures the image covers the entire banner without distortion */
+}
+
 /* Card Container */
 .cardContainer {
   display: flex;
