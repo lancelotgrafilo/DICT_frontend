@@ -2,18 +2,14 @@ import styleTec from './tec.module.css';
 import { Header } from '../../Header/Header';
 import { Footer } from '../../Footer/Footer';
 
-export function Tec () {
-  return(
+export function Tec() {
+  return (
     <>
-      <Header/>
-
+      <Header />
       <div className={styleTec.mainContent}>
         <div className={styleTec.headerContainer}>
-          <div>
-            TECS
-          </div>
+          <div>TECS</div>
         </div>
-
         <div className={styleTec.tecContainer}>
           <div>Risk Management</div>
           <div>RCAP Submission</div>
@@ -22,8 +18,7 @@ export function Tec () {
           <div>Project Research</div>
         </div>
       </div>
-    
-      <Footer/>
+      <Footer />
     </>
-  )
+  );
 }

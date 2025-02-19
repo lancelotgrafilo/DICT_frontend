@@ -1,18 +1,15 @@
 import stylePprd from './pprd.module.css';
 import { Header } from '../../Header/Header';
 import { Footer } from '../../Footer/Footer';
-export function Pprd () {
+
+export function Pprd() {
   return (
     <>
-      <Header/>
+      <Header />
       <div className={stylePprd.mainContent}>
-
         <div className={stylePprd.headerContainer}>
-          <div>
-            PPRD
-          </div>
+          <div>PPRD</div>
         </div>
-
         <div className={stylePprd.firstRow}>
           <div className={stylePprd.cardContainer}>
             <div className={stylePprd.card}>DC</div>
@@ -20,7 +17,6 @@ export function Pprd () {
             <div className={stylePprd.card}>LEGISLATION</div>
           </div>
         </div>
-
         <div className={stylePprd.secondRow}>
           <div className={stylePprd.cardContainer}>
             <div className={stylePprd.card}>Draft Policies</div>
@@ -28,11 +24,8 @@ export function Pprd () {
             <div className={stylePprd.card}>Others</div>
           </div>
         </div>
-
       </div>
-      
-      <Footer/>
-      
+      <Footer />
     </>
-  )
+  );
 }

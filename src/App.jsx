@@ -22,6 +22,7 @@ import { Cpcb } from './components/CIE-Division/CPCB/Cpcb.jsx';
 import { Ccm } from './components/CIE-Division/CCM/Ccm.jsx';
 import { Pprd } from './components/CIE-Division/PPRD/Pprd.jsx';
 import { Tec } from './components/CIE-Division/TEC/Tec.jsx';
+import { Institutional } from './components/CIE-Division/Institutional/Institutional.jsx';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="divisions/cie/ecm" element={ <Ccm/> }/>
           <Route path="divisions/cie/pprd" element={ <Pprd/> }/>
           <Route path="divisions/cie/tec" element={ <Tec/> }/>
+          <Route path="divisions/cie/institutional" element={ <Institutional/> }/>
           
           
           <Route path="admin" element={<RegionUserPage />}>
