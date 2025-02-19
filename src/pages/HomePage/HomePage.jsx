@@ -131,29 +131,6 @@ export function Homepage() {
       {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
         <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
-<<<<<<< HEAD
-        <div className={styleHomePage.socialMediaSection}>
-        <div className={styleHomePage.socialMediaContainer}>
-          <span className={styleHomePage.socialText}>Get Our</span>
-          <strong className={styleHomePage.socialHighlight}>Latest Updates:</strong>
-        </div>
-        <div className={styleHomePage.socialIcons}>
-          <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={`${styleHomePage.socialIcon} ${styleHomePage.x}`}>
-            <i className="bi bi-twitter-x"></i>
-          </a>
-          <a href="https://www.facebook.com/CYBERSECgovph/" className={`${styleHomePage.socialIcon} ${styleHomePage.facebook}`}>
-            <i className="bi bi-facebook"></i>
-          </a>
-          <a href="https://www.youtube.com/DICTCybersecurity" className={`${styleHomePage.socialIcon} ${styleHomePage.youtube}`}>
-            <i className="bi bi-youtube"></i>
-          </a>
-          <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={`${styleHomePage.socialIcon} ${styleHomePage.instagram}`}>
-            <i className="bi bi-instagram"></i>
-          </a>
-        </div>
-      </div>
-=======
->>>>>>> origin/master
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
@@ -169,17 +146,6 @@ export function Homepage() {
             </div>
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
-<<<<<<< HEAD
-
-            {/* Tips Section */}
-            <div className={styleHomePage.topic}>
-              <div className={styleHomePage.topicIcon}>
-              <i className="bi bi-lightbulb-fill text-warning"></i> {/* Bootstrap Icon for Tips */}
-              </div>
-              <h3 className={styleHomePage.topicTitle}>Tips</h3>
-              <p className={styleHomePage.topicParagraph}>
-                Important Tips and notifications regarding cybersecurity and Digital services.
-=======
             {/* Tips Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
@@ -188,23 +154,14 @@ export function Homepage() {
               <h3 className={styleHomePage.topicTitle}>Tips</h3>
               <p className={styleHomePage.topicParagraph}>
                 Learn useful tips to enhance your digital safety and productivity.
->>>>>>> origin/master
               </p>
             </div>
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
-<<<<<<< HEAD
-
-            {/* Advisories Section */}
-            <div className={styleHomePage.topic}>
-              <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-megaphone-fill text-danger fs-4 me-2"></i> {/* Bootstrap Icon for Advisories */}
-=======
             {/* Advisories Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
                 <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Advisories */}
->>>>>>> origin/master
               </div>
               <h3 className={styleHomePage.topicTitle}>Advisories</h3>
               <p className={styleHomePage.topicParagraph}>

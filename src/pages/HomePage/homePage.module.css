@@ -13,7 +13,6 @@
   margin: 0;
   position: relative; /* Required for absolute positioning of the dots container */
 }
-<<<<<<< HEAD
 h1 {
   font-family: 'Arial', sans-serif; /* You can replace with the desired font */
   font-weight: 700; /* Bold text */
@@ -22,7 +21,6 @@ h1 {
   text-align: center;
   position: relative;
 }
-=======
 
 .banner img {
   width: 100%;
@@ -30,7 +28,6 @@ h1 {
   object-fit: cover; /* Ensures the image covers the entire banner without distortion */
 }
 
->>>>>>> origin/master
 /* Card Container */
 .cardContainer {
   display: flex;
