@@ -32,7 +32,9 @@ export function Cie() {
           </div>
         </div>
         <div className={styleCie.institutionalContainer}>
-          <div className={styleCie.card}>INSTITUTIONAL</div>
+          <div className={styleCie.card}>
+            <Link to='/divisions/cie/institutional'>INSTITUTIONAL</Link>
+          </div>
         </div>
       </div>
       <Footer/>

@@ -1,0 +1,48 @@
+/* General Styles */
+.mainContent {
+  padding: 20px;
+  height: 80vh;
+}
+
+.headerContainer {
+  text-align: center; /* Center-align the header text */
+  margin-bottom: 20px; /* Space between header and content */
+}
+
+.headerContainer div {
+  font-size: 28px; /* Larger font size for emphasis */
+  font-weight: bold; /* Bold text */
+  color: #333333; /* Dark gray color for contrast */
+  text-transform: uppercase; /* Uppercase text for a formal look */
+  letter-spacing: 2px; /* Add spacing between letters */
+}
+
+.firstRow,
+.secondRow {
+  display: flex;
+  justify-content: center; /* Center the card containers horizontally */
+  margin-bottom: 20px; /* Space between rows */
+}
+
+.cardContainer {
+  display: flex;
+  gap: 15px; /* Space between cards */
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  padding: 15px;
+  width: 150px; /* Fixed width for each card */
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
