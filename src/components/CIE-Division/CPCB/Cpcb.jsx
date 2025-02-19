@@ -2,6 +2,7 @@ import styleCpcb from './cpcb.module.css';
 import { Header } from '../../Header/Header';
 import { Footer } from '../../Footer/Footer';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function Cpcb() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +29,9 @@ export function Cpcb() {
                 NCAP
               </div>
               <div className={styleCpcb.card}>Request for Awareness</div>
-              <div className={styleCpcb.card}>Request for Speaker</div>
+              <div className={styleCpcb.card}>
+                <Link to="/request-form">Request for Speaker</Link>
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 import styleDivisions from "./divisions.module.css";
 import { Header } from "../Header/Header";
 import { Link } from "react-router-dom";
+import { Footer } from "../Footer/Footer";
 
 export function Divisions() {
 
@@ -31,6 +32,8 @@ export function Divisions() {
         </div>
 
       </div>
+
+      <Footer/>
     </>
   );
 }

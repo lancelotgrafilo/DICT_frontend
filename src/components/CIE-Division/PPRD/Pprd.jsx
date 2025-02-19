@@ -12,7 +12,9 @@ export function Pprd() {
         </div>
         <div className={stylePprd.firstRow}>
           <div className={stylePprd.cardContainer}>
-            <div className={stylePprd.card}>DC</div>
+            <div className={stylePprd.card}>
+              <a href="https://dict.gov.ph/department-circulars">DC</a>
+            </div>
             <div className={stylePprd.card}>MC</div>
             <div className={stylePprd.card}>LEGISLATION</div>
           </div>

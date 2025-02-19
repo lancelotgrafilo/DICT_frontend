@@ -43,7 +43,7 @@ export default function App() {
           <Route path="divisions/cie/institutional" element={ <Institutional/> }/>
           
           
-          <Route path="admin" element={<RegionUserPage />}>
+          <Route path="cpcb-admin" element={<RegionUserPage />}>
             <Route index element={<FocalDashboard />} /> {/* Default route */}
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
@@ -53,7 +53,7 @@ export default function App() {
             <Route path='settings' element={<Settings/>} /> 
           </Route>
 
-          <Route path="super-admin" element={<SuperAdminPage/>}>
+          <Route path="cpcb-super-admin" element={<SuperAdminPage/>}>
             <Route index element={<FocalDashboard />} /> {/* Default route */}
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
