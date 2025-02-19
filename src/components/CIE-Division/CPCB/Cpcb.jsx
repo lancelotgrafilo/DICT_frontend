@@ -20,7 +20,7 @@ export function Cpcb() {
       <Header />
       <div className={styleCpcb.mainContent}>
         <div className={styleCpcb.headerContainer}>
-          <div>CPCB</div>
+          <div>Cybersecurity Programs and Capacity Building</div>
         </div>
         <div className={styleCpcb.cpcbContainer}>
           <div className={styleCpcb.firstColumnCpcb}>

@@ -32,7 +32,7 @@ export function Divisions() {
           </Link>
 
           {/* Card 2 */}
-          <a href="https://dict.gov.ph/pnpki" className={styleDivisions.cardLink}>
+          <a href="https://sites.google.com/dict.gov.ph/pnpki/ors" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
               <img
                 src={dcdImg} // Replace with actual image URL
