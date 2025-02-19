@@ -131,6 +131,26 @@ export function Homepage() {
       {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
         <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
+        <div className={styleHomePage.socialMediaSection}>
+        <div className={styleHomePage.socialMediaContainer}>
+          <span className={styleHomePage.socialText}>Get Our</span>
+          <strong className={styleHomePage.socialHighlight}>Latest Updates:</strong>
+        </div>
+        <div className={styleHomePage.socialIcons}>
+          <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={`${styleHomePage.socialIcon} ${styleHomePage.x}`}>
+            <i className="bi bi-twitter-x"></i>
+          </a>
+          <a href="https://www.facebook.com/CYBERSECgovph/" className={`${styleHomePage.socialIcon} ${styleHomePage.facebook}`}>
+            <i className="bi bi-facebook"></i>
+          </a>
+          <a href="https://www.youtube.com/DICTCybersecurity" className={`${styleHomePage.socialIcon} ${styleHomePage.youtube}`}>
+            <i className="bi bi-youtube"></i>
+          </a>
+          <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={`${styleHomePage.socialIcon} ${styleHomePage.instagram}`}>
+            <i className="bi bi-instagram"></i>
+          </a>
+        </div>
+      </div>
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>

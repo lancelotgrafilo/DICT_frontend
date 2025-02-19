@@ -232,3 +232,69 @@ h1 {
 .circleButton i {
   font-size: 1.2rem; /* Adjust icon size */
 }
+.socialMediaSection {
+  background-color: orange; 
+  border-radius: 10px; /* Adds rounded corners */
+  padding: 10px 20px; /* Adds spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between text and icons */
+  width: fit-content; /* Shrinks to fit content */
+  margin: 0 auto; /* Centers the section */
+  width: 97%; 
+}
+
+
+.socialMediaContainer {
+  display: flex;
+  align-items: center;
+}
+
+.socialText {
+  color: white;
+  font-size: 16px;
+  margin-right: 5px;
+  justify-content: center;
+}
+
+
+.socialHighlight {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 15px;
+  margin-left: 15px;
+}
+
+.socialIcon {
+  color: white; /* Ensures icons are visible */
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+/* Background Colors for Each Social Icon */
+.socialIcon.x { background-color: black; }
+.socialIcon.facebook { background-color: #1877f2; }
+.socialIcon.youtube { background-color: #ff0000; }
+.socialIcon.instagram {
+  background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+}
+
+/* Icon Styling */
+.socialIcon i {
+  color: white;
+  font-size: 18px;
+}
+
