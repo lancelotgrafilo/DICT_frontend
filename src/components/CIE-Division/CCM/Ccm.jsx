@@ -32,12 +32,12 @@ export function Ccm() {
       <Header />
       <div className={styleCcm.mainContent}>
         <div className={styleCcm.headerContainer}>
-          <div>CCM</div>
+          <div>Cybersecurity Compliance and Monitoring</div>
         </div>
         <div className={styleCcm.ccmContainer}>
           <div onClick={handleCiiClick}>CII</div>
           <div>Request for CB</div>
-          <div>Submit CERT</div>
+          <div>Submit CERT Form Modal and Attach File</div>
         </div>
       </div>
 

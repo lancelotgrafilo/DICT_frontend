@@ -127,9 +127,9 @@ export function Homepage() {
         </div>
       </div>
 
-      {/* News, Alerts, and Advertisements Section */}
+      {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
-        <h1 className={styleHomePage.centeredTitle}>News, Alerts, and Advertisements</h1>
+        <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
@@ -143,32 +143,28 @@ export function Homepage() {
                 Stay updated with the latest news and announcements from DICT.
               </p>
             </div>
-
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
-
-            {/* Alert Section */}
+            {/* Tips Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Alert */}
+                <i className="bi bi-lightbulb"></i> {/* Bootstrap Icon for Tips */}
               </div>
-              <h3 className={styleHomePage.topicTitle}>Alert</h3>
+              <h3 className={styleHomePage.topicTitle}>Tips</h3>
               <p className={styleHomePage.topicParagraph}>
-                Important alerts and notifications regarding cybersecurity and digital services.
+                Learn useful tips to enhance your digital safety and productivity.
               </p>
             </div>
-
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
-
-            {/* Advertisement Section */}
+            {/* Advisories Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-megaphone"></i> {/* Bootstrap Icon for Advertisement */}
+                <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Advisories */}
               </div>
-              <h3 className={styleHomePage.topicTitle}>Advertisement</h3>
+              <h3 className={styleHomePage.topicTitle}>Advisories</h3>
               <p className={styleHomePage.topicParagraph}>
-                Discover upcoming events, campaigns, and promotional activities.
+                Get important advisories on cybersecurity and digital services.
               </p>
             </div>
           </div>
@@ -211,8 +207,8 @@ export function Homepage() {
         </div>
         <p>
           Report scams to the relevant authorities by contacting the National Privacy
-          Commission (NPC), National Telecommunications Commission (NTC), or Cyber
-          Incident Coordination Center (CICC).
+          Commission (NPC), National Telecommunications Commission (NTC), or Cybercrime
+          Invistigation Coordinating Center (CICC).
         </p>
       </div>
       <Footer />
