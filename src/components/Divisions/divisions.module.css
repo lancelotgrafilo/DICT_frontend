@@ -7,8 +7,8 @@ body {
 }
 
 .mainContent {
-  height: 100dvh;
-  background-color: #f9f9f9; /* Light background */
+  height: 80vh;
+  background-color: #f9f9f9;
   padding: 20px;
 }
 
