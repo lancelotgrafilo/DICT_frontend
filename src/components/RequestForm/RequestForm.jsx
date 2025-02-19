@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import usePostRequest from "../../utils/Hooks/RequestHooks/usePostRequest";
 import useModules from "../../utils/Hooks/ModulesHooks/useGetModules";
+import { Footer } from "../Footer/Footer";
 
 export function RequestForm() {
 
@@ -386,756 +387,762 @@ const validatePhoneNumber = (phoneNumber) => {
   };
 
   return (
-    <div className={styleRequestForm.mainContent} style={{ borderColor: "black" }}>
+    <>
       <Header />
-      <div className="container my-5" style={{ borderRadius: "12px", marginBottom: "24px", }}>
-        <div className="card shadow p-4" style={{ borderRadius: "12px", marginTop: "-24px" }}>
-          <h2 style={{ backgroundColor: "#003366", textAlign: "center", color: 'white', padding: " 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
-          <form onSubmit={handleSubmit}>
+    
+      <div className={styleRequestForm.mainContent} style={{ borderColor: "black" }}>
+        
+        <div className="container my-5" style={{ borderRadius: "12px", marginBottom: "24px", }}>
+          <div className="card shadow p-4" style={{ borderRadius: "12px", marginTop: "-24px" }}>
+            <h2 style={{ backgroundColor: "#003366", textAlign: "center", color: 'white', padding: " 20px 0", borderRadius: "5px" }} className="text-center mb-4">CYBERSECURITY AWARENESS REQUEST FORM</h2>
+            <form onSubmit={handleSubmit}>
 
-            {step === 1 && (
-              <div >
-                <h4 className="mb-3">Personal Information</h4>
-                <div className="row g-3">
-                  {/* Personal Info Fields */}
-                  <div className="col-md-4">
-                    <label className="form-label">Salutation</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <select
-                      name="salutation"
-                      value={formValues.salutation}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
-                      }
-                      className="form-select"
-                      required
-                    >
-                      <option value=""></option>
-                      <option value="Mr.">Mr.</option>
-                      <option value="Ms.">Ms.</option>
-                      <option value="Mrs.">Mrs.</option>
-                      <option value="Dr.">Dr.</option>
-                      <option value="Engr.">Engr.</option>
-                      <option value="Prof.">Prof.</option>
-                    </select>
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Last Name</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formValues.last_name}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, last_name: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }} // Apply text-transform to the input
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">First Name</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formValues.first_name}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, first_name: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Middle Name</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="middleName"
-                      value={formValues.middle_name}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, middle_name: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Extension Name</label>
-                    <select
-                      name="extension_name"
-                      value={formValues.extension_name}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
-                      }
-                      className="form-select"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    >
-                      <option value="">Select</option>
-                      <option value="Sr.">Sr.</option>
-                      <option value="Jr.">Jr.</option>
-                      <option value="II">II</option>
-                      <option value="III">III</option>
-                      <option value="">N/A</option>
-                    </select>
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Gender</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <select
-                      name="gender"
-                      value={formValues.gender}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
-                      }
-                      className="form-select"
-                      required
-                    >
-                      <option value="">Select</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Position</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="position"
-                      value={formValues.position}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, position: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Contact No.</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="tel"
-                      name="contactNo"
-                      value={formValues.contact_number}
-                      onChange={handleContactNumberChange}
-                      className="form-control"
-                      required
-                      maxLength="11" // Restricts input to 11 characters in the UI
+              {step === 1 && (
+                <div >
+                  <h4 className="mb-3">Personal Information</h4>
+                  <div className="row g-3">
+                    {/* Personal Info Fields */}
+                    <div className="col-md-4">
+                      <label className="form-label">Salutation</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <select
+                        name="salutation"
+                        value={formValues.salutation}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, salutation: sanitizeInput(e.target.value) })
+                        }
+                        className="form-select"
+                        required
+                      >
+                        <option value=""></option>
+                        <option value="Mr.">Mr.</option>
+                        <option value="Ms.">Ms.</option>
+                        <option value="Mrs.">Mrs.</option>
+                        <option value="Dr.">Dr.</option>
+                        <option value="Engr.">Engr.</option>
+                        <option value="Prof.">Prof.</option>
+                      </select>
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label">Last Name</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formValues.last_name}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, last_name: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }} // Apply text-transform to the input
+                        required
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label">First Name</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formValues.first_name}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, first_name: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label">Middle Name</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="middleName"
+                        value={formValues.middle_name}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, middle_name: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label">Extension Name</label>
+                      <select
+                        name="extension_name"
+                        value={formValues.extension_name}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, extension_name: sanitizeInput(e.target.value) })
+                        }
+                        className="form-select"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      >
+                        <option value="">Select</option>
+                        <option value="Sr.">Sr.</option>
+                        <option value="Jr.">Jr.</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="">N/A</option>
+                      </select>
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label">Gender</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <select
+                        name="gender"
+                        value={formValues.gender}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, gender: sanitizeInput(e.target.value) })
+                        }
+                        className="form-select"
+                        required
+                      >
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Position</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="position"
+                        value={formValues.position}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, position: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Contact No.</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="tel"
+                        name="contactNo"
+                        value={formValues.contact_number}
+                        onChange={handleContactNumberChange}
+                        className="form-control"
+                        required
+                        maxLength="11" // Restricts input to 11 characters in the UI
 
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Email Address</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formValues.email_address}
-                      onChange={(e) => {
-                        const sanitizedValue = sanitizeEmailInput(e.target.value);
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Email Address</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formValues.email_address}
+                        onChange={(e) => {
+                          const sanitizedValue = sanitizeEmailInput(e.target.value);
 
-                        setFormValues({ ...formValues, email_address: sanitizedValue });
-                      }}
-                      className="form-control"
-                      required
-                    />
+                          setFormValues({ ...formValues, email_address: sanitizedValue });
+                        }}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Address</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="address"
+                        value={formValues.address}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, address: sanitizeInputAddress(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Address</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formValues.address}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, address: sanitizeInputAddress(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="d-flex justify-content-between mt-4">
-                <button
-                  type="button"
-                  className={styleRequestForm.btn_cancel}
-                  onClick={() => {
-                    // Display the confirmation prompt
-                    const isConfirmed = window.confirm("Are you sure you want to cancel? data will be lost");
-                    if (isConfirmed) {
-                      // Navigate to the home page if the user confirms
-                      navigate("/home");
-                    }
-                  }}
-                >
-                    <i className="bi bi-x-circle"></i> Cancel
-                  </button>
+                  <div className="d-flex justify-content-between mt-4">
                   <button
                     type="button"
-                    className={styleRequestForm.btn_primary}
+                    className={styleRequestForm.btn_cancel}
                     onClick={() => {
-                      const sanitizedEmail = sanitizeEmailInput(formValues.email_address);
-
-                      // Validate the email format
-                      if (!validateEmail(sanitizedEmail)) {
-                        toast.warn("Please input a valid email");
-                        return; // Prevent proceeding if the email is invalid
+                      // Display the confirmation prompt
+                      const isConfirmed = window.confirm("Are you sure you want to cancel? data will be lost");
+                      if (isConfirmed) {
+                        // Navigate to the home page if the user confirms
+                        navigate("/home");
                       }
-                      // Validate the contact number input (starts with "09" and is exactly 11 digits)
-                      const sanitizedContactNumber = formValues.contact_number;
-                      if (!validatePhoneNumber(sanitizedContactNumber)) {
-                        toast.warn("Please input a valid contact number starting with '09' and exactly 11 digits");
-                        return; // Prevent proceeding if the contact number is invalid
-                      }
-
-
-                      // Proceed with the next action
-                      handleNext();
                     }}
                   >
-                    <i className="bi bi-arrow-right-circle"></i> Next
-                  </button>
+                      <i className="bi bi-x-circle"></i> Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_primary}
+                      onClick={() => {
+                        const sanitizedEmail = sanitizeEmailInput(formValues.email_address);
 
-                </div>
-              </div>
-            )}
+                        // Validate the email format
+                        if (!validateEmail(sanitizedEmail)) {
+                          toast.warn("Please input a valid email");
+                          return; // Prevent proceeding if the email is invalid
+                        }
+                        // Validate the contact number input (starts with "09" and is exactly 11 digits)
+                        const sanitizedContactNumber = formValues.contact_number;
+                        if (!validatePhoneNumber(sanitizedContactNumber)) {
+                          toast.warn("Please input a valid contact number starting with '09' and exactly 11 digits");
+                          return; // Prevent proceeding if the contact number is invalid
+                        }
 
 
-            {step === 2 && (
-              <div>
-                <h4 className="mb-3">Organization Information</h4>
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <label className="form-label">Organization Name</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="organizationName"
-                      value={formValues.organization_name}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, organization_name: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Department</label>
-                    <span style={{ color: 'red' }}>*</span>
-                    <input
-                      type="text"
-                      name="department"
-                      value={formValues.department}
-                      onChange={(e) =>
-                        setFormValues({ ...formValues, department: sanitizeInput(e.target.value) })
-                      }
-                      className="form-control"
-                      style={{ textTransform: 'capitalize' }}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6 region-dropdown-container">
-                    <label className="form-label">Region</label>
-                    <span style={{ color: "red" }}>*</span>
-                    <select
-                      name="region"
-                      value={formValues.region}
-                      onChange={(e) => setFormValues({ ...formValues, region: e.target.value })
-                      }
-                      className="form-control"
-                      required
+                        // Proceed with the next action
+                        handleNext();
+                      }}
                     >
-                      <option value="">Select a Region</option>
-                      <option value="Region I - Ilocos Region">Region I - Ilocos Region</option>
-                      <option value="Region II - Cagayan Valley">Region II - Cagayan Valley</option>
-                      <option value="Region III - Central Luzon">Region III - Central Luzon</option>
-                      <option value="Region IV-A - CALABARZON">Region IV-A - CALABARZON</option>
-                      <option value="MIMAROPA Region">MIMAROPA Region</option>
-                      <option value="Region V - Bicol Region">Region V - Bicol Region</option>
-                      <option value="Region VI - Western Visayas">Region VI - Western Visayas</option>
-                      <option value="Region VII - Central Visayas">Region VII - Central Visayas</option>
-                      <option value="Region VIII - Eastern Visayas">Region VIII - Eastern Visayas</option>
-                      <option value="Region IX - Zamboanga Peninsula">Region IX - Zamboanga Peninsula</option>
-                      <option value="Region X - Northern Mindanao">Region X - Northern Mindanao</option>
-                      <option value="Region XI - Davao Region">Region XI - Davao Region</option>
-                      <option value="Region XII - SOCCSKSARGEN">Region XII - SOCCSKSARGEN</option>
-                      <option value="Region XIII - Caraga">Region XIII - Caraga</option>
-                      <option value="NCR - National Capital Region">NCR - National Capital Region</option>
-                      <option value="CAR - Cordillera Administrative Region">CAR - Cordillera Administrative Region</option>
-                      <option value="BARMM - Bangsamoro Autonomous Region in Muslim Mindanao">BARMM - Bangsamoro Autonomous Region in Muslim Mindanao</option>
-                    </select>
+                      <i className="bi bi-arrow-right-circle"></i> Next
+                    </button>
+
                   </div>
                 </div>
-                <div className="d-flex justify-content-between mt-4">
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_secondary}
-                    onClick={handlePrevious}
-                  >
-                    <i className="bi bi-arrow-left-circle"></i> Previous
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_primary}
-                    onClick={handleNext}
-                  >
-                    <i className="bi bi-arrow-right-circle"></i> Next
-                  </button>
-                </div>
-              </div>
-            )}
+              )}
 
-            {step === 3 && (
-              <div>
-                <h4 className="mb-3">Preferred Date and Time</h4>
+
+              {step === 2 && (
                 <div>
-                  <table className="table">
-                    <thead className="table-light">
+                  <h4 className="mb-3">Organization Information</h4>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label">Organization Name</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="organizationName"
+                        value={formValues.organization_name}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, organization_name: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Department</label>
+                      <span style={{ color: 'red' }}>*</span>
+                      <input
+                        type="text"
+                        name="department"
+                        value={formValues.department}
+                        onChange={(e) =>
+                          setFormValues({ ...formValues, department: sanitizeInput(e.target.value) })
+                        }
+                        className="form-control"
+                        style={{ textTransform: 'capitalize' }}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6 region-dropdown-container">
+                      <label className="form-label">Region</label>
+                      <span style={{ color: "red" }}>*</span>
+                      <select
+                        name="region"
+                        value={formValues.region}
+                        onChange={(e) => setFormValues({ ...formValues, region: e.target.value })
+                        }
+                        className="form-control"
+                        required
+                      >
+                        <option value="">Select a Region</option>
+                        <option value="Region I - Ilocos Region">Region I - Ilocos Region</option>
+                        <option value="Region II - Cagayan Valley">Region II - Cagayan Valley</option>
+                        <option value="Region III - Central Luzon">Region III - Central Luzon</option>
+                        <option value="Region IV-A - CALABARZON">Region IV-A - CALABARZON</option>
+                        <option value="MIMAROPA Region">MIMAROPA Region</option>
+                        <option value="Region V - Bicol Region">Region V - Bicol Region</option>
+                        <option value="Region VI - Western Visayas">Region VI - Western Visayas</option>
+                        <option value="Region VII - Central Visayas">Region VII - Central Visayas</option>
+                        <option value="Region VIII - Eastern Visayas">Region VIII - Eastern Visayas</option>
+                        <option value="Region IX - Zamboanga Peninsula">Region IX - Zamboanga Peninsula</option>
+                        <option value="Region X - Northern Mindanao">Region X - Northern Mindanao</option>
+                        <option value="Region XI - Davao Region">Region XI - Davao Region</option>
+                        <option value="Region XII - SOCCSKSARGEN">Region XII - SOCCSKSARGEN</option>
+                        <option value="Region XIII - Caraga">Region XIII - Caraga</option>
+                        <option value="NCR - National Capital Region">NCR - National Capital Region</option>
+                        <option value="CAR - Cordillera Administrative Region">CAR - Cordillera Administrative Region</option>
+                        <option value="BARMM - Bangsamoro Autonomous Region in Muslim Mindanao">BARMM - Bangsamoro Autonomous Region in Muslim Mindanao</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between mt-4">
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_secondary}
+                      onClick={handlePrevious}
+                    >
+                      <i className="bi bi-arrow-left-circle"></i> Previous
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_primary}
+                      onClick={handleNext}
+                    >
+                      <i className="bi bi-arrow-right-circle"></i> Next
+                    </button>
+                  </div>
+                </div>
+              )}
 
-                      <th scope="col">Preferred Date</th>
-                      <th scope="col">Start Time</th>
-                      <th scope="col">End Time</th>
-                      <th scope="col">Total Hours</th>
+              {step === 3 && (
+                <div>
+                  <h4 className="mb-3">Preferred Date and Time</h4>
+                  <div>
+                    <table className="table">
+                      <thead className="table-light">
 
+                        <th scope="col">Preferred Date</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Total Hours</th>
+
+                      </thead>
+                      <tbody>
+                        {formValues.date_and_time.map((dateInfo, index) => (
+                          <tr key={index} style={{ borderColor: "white" }}>
+                            <td>
+                              <input
+                                type="date"
+                                name="date"
+                                value={dateInfo.date}
+                                onChange={(e) => {
+                                  const selectedDate = new Date(e.target.value);
+                                  const day = selectedDate.getDay();
+
+                                  // Restrict weekends
+                                  if (day === 0 || day === 7) {
+                                    toast.warn("Sunday is not Available.");
+                                    e.target.value = ""; // Clear invalid date
+                                    return;
+                                  }
+
+                                  // Update the date field in the array
+                                  handleChange(e, "date_and_time", index);
+                                }}
+                                className="form-control"
+                                required
+                                min={getOneWeekAfterDate()}
+
+                              />
+                            </td>
+                            <td>
+                              <select
+                                name="start_time"
+                                value={dateInfo.start_time}
+                                onChange={(e) => handleChange(e, "date_and_time", index)}
+                                className="form-control"
+                                required
+                              >
+                                <option value="" disabled>
+                                  Select Start Time
+                                </option>
+                                {generateTimeOptions("07:00", "16:00").map((time, idx) => (
+                                  <option key={idx} value={time}>
+                                    {time}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td>
+                              <select
+                                name="end_time"
+                                value={dateInfo.end_time}
+                                onChange={(e) => {
+                                  handleChange(e, "date_and_time", index);
+
+                                  // Automatically calculate total hours when end time changes
+                                  const startTime = new Date(`1970-01-01T${dateInfo.start_time}:00`);
+                                  const endTime = new Date(`1970-01-01T${e.target.value}:00`);
+
+                                  if (endTime > startTime) {
+                                    const diffInHours = (endTime - startTime) / (1000 * 60 * 60);
+                                    handleChange({
+                                      target: {
+                                        name: "total_hours",
+                                        value: diffInHours.toFixed(2),
+                                      },
+                                    }, "date_and_time", index);
+                                  }
+                                }}
+                                className="form-control"
+                                required
+                              >
+                                <option value="" disabled>
+                                  Select End Time
+                                </option>
+                                {generateTimeOptions(dateInfo.start_time, "17:00").map((time, idx) => (
+                                  <option key={idx} value={time}>
+                                    {time}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td>
+                              <input
+                                type="number"
+                                name="total_hours"
+                                value={dateInfo.total_hours || 0} // Display computed total hours
+                                className="form-control"
+                                readOnly
+                              />
+                            </td>
+                            <td className="text-center">
+                              {formValues.date_and_time.length > 1 && (
+                                <button
+                                  type="button"
+                                  className="btn btn-danger btn-sm"
+                                  onClick={() => removePreferredDate(index)}
+                                >
+                                  <i className="bi bi-trash"></i> Delete
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="d-flex justify-content-between mt-4">
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_secondary}
+                      onClick={handlePrevious}
+                    >
+                      <i className="bi bi-arrow-left-circle"></i> Previous
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_add}
+                      onClick={addPreferredDate}
+                    >
+                      <i className="bi bi-plus-circle me-2"></i> Add Preferred Date and Time
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_primary}
+                      onClick={handleNext}
+                    >
+                      <i className="bi bi-arrow-right-circle"></i> Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+
+
+              {step === 4 && (
+                <div>
+                  <h4 className="mb-3">Module Categories</h4>
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: "center" }}>Category</th>
+                        <th style={{ textAlign: "center" }}>Subcategory (Module)</th>
+                        <th style={{ textAlign: "center" }}>Description</th>
+                        <th style={{ textAlign: "center" }}>Action</th>
+                      </tr>
                     </thead>
                     <tbody>
-                      {formValues.date_and_time.map((dateInfo, index) => (
-                        <tr key={index} style={{ borderColor: "white" }}>
-                          <td>
-                            <input
-                              type="date"
-                              name="date"
-                              value={dateInfo.date}
-                              onChange={(e) => {
-                                const selectedDate = new Date(e.target.value);
-                                const day = selectedDate.getDay();
-
-                                // Restrict weekends
-                                if (day === 0 || day === 7) {
-                                  toast.warn("Sunday is not Available.");
-                                  e.target.value = ""; // Clear invalid date
-                                  return;
-                                }
-
-                                // Update the date field in the array
-                                handleChange(e, "date_and_time", index);
-                              }}
-                              className="form-control"
-                              required
-                              min={getOneWeekAfterDate()}
-
-                            />
-                          </td>
+                      {rows.map((row, index) => (
+                        <tr key={index}>
                           <td>
                             <select
-                              name="start_time"
-                              value={dateInfo.start_time}
-                              onChange={(e) => handleChange(e, "date_and_time", index)}
-                              className="form-control"
-                              required
+                              type="category"
+                              className="form-select"
+                              value={row.category}
+                              onChange={(e) => handleCategoryChange(index, e.target.value)}
                             >
-                              <option value="" disabled>
-                                Select Start Time
-                              </option>
-                              {generateTimeOptions("07:00", "16:00").map((time, idx) => (
-                                <option key={idx} value={time}>
-                                  {time}
-                                </option>
-                              ))}
+                              <option value="">Select Category</option>
+                              <option value="Beginner">Beginner</option>
+                              <option value="Intermediate">Intermediate</option>
+                              <option value="Technical">Technical</option>
                             </select>
                           </td>
                           <td>
                             <select
-                              name="end_time"
-                              value={dateInfo.end_time}
-                              onChange={(e) => {
-                                handleChange(e, "date_and_time", index);
-
-                                // Automatically calculate total hours when end time changes
-                                const startTime = new Date(`1970-01-01T${dateInfo.start_time}:00`);
-                                const endTime = new Date(`1970-01-01T${e.target.value}:00`);
-
-                                if (endTime > startTime) {
-                                  const diffInHours = (endTime - startTime) / (1000 * 60 * 60);
-                                  handleChange({
-                                    target: {
-                                      name: "total_hours",
-                                      value: diffInHours.toFixed(2),
-                                    },
-                                  }, "date_and_time", index);
-                                }
-                              }}
-                              className="form-control"
-                              required
+                              type="modules"
+                              className="form-select"
+                              value={row.subcategory.module_name}
+                              onChange={(e) => handleSubcategoryChange(index, e.target.value)}
+                              disabled={!row.category}
                             >
-                              <option value="" disabled>
-                                Select End Time
-                              </option>
-                              {generateTimeOptions(dateInfo.start_time, "17:00").map((time, idx) => (
-                                <option key={idx} value={time}>
-                                  {time}
-                                </option>
-                              ))}
+                              <option value="">Select Module</option>
+                              {modules
+                                .filter((module) => {
+                                  if (row.category === "Technical") {
+                                    return module.difficulty === "Technical";
+                                  }
+                                  if (row.category === "Intermediate") {
+                                    return module.difficulty === "Intermediate";
+                                  }
+                                  if (row.category === "Beginner") {
+                                    return module.difficulty === "Beginner";
+                                  }
+                                  return true; // Default case if no category is selected
+                                })
+                                .map((module) => (
+                                  <option key={module._id} value={module.module_name}>
+                                    {module.module_name}
+                                  </option>
+                                ))}
+
                             </select>
                           </td>
                           <td>
-                            <input
-                              type="number"
-                              name="total_hours"
-                              value={dateInfo.total_hours || 0} // Display computed total hours
-                              className="form-control"
-                              readOnly
-                            />
+                            {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
                           </td>
-                          <td className="text-center">
-                            {formValues.date_and_time.length > 1 && (
-                              <button
-                                type="button"
-                                className="btn btn-danger btn-sm"
-                                onClick={() => removePreferredDate(index)}
-                              >
-                                <i className="bi bi-trash"></i> Delete
-                              </button>
-                            )}
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm"
+                              onClick={() => removeRow(index)}
+                              style={{ display: "block", margin: "0 auto" }}
+                            >
+                              Remove
+                            </button>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                </div>
-                <div className="d-flex justify-content-between mt-4">
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_secondary}
-                    onClick={handlePrevious}
-                  >
-                    <i className="bi bi-arrow-left-circle"></i> Previous
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_add}
-                    onClick={addPreferredDate}
-                  >
-                    <i className="bi bi-plus-circle me-2"></i> Add Preferred Date and Time
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_primary}
-                    onClick={handleNext}
-                  >
-                    <i className="bi bi-arrow-right-circle"></i> Next
-                  </button>
-                </div>
-              </div>
-            )}
-
-
-
-            {step === 4 && (
-              <div>
-                <h4 className="mb-3">Module Categories</h4>
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: "center" }}>Category</th>
-                      <th style={{ textAlign: "center" }}>Subcategory (Module)</th>
-                      <th style={{ textAlign: "center" }}>Description</th>
-                      <th style={{ textAlign: "center" }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row, index) => (
-                      <tr key={index}>
-                        <td>
-                          <select
-                            type="category"
-                            className="form-select"
-                            value={row.category}
-                            onChange={(e) => handleCategoryChange(index, e.target.value)}
-                          >
-                            <option value="">Select Category</option>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Technical">Technical</option>
-                          </select>
-                        </td>
-                        <td>
-                          <select
-                            type="modules"
-                            className="form-select"
-                            value={row.subcategory.module_name}
-                            onChange={(e) => handleSubcategoryChange(index, e.target.value)}
-                            disabled={!row.category}
-                          >
-                            <option value="">Select Module</option>
-                            {modules
-                              .filter((module) => {
-                                if (row.category === "Technical") {
-                                  return module.difficulty === "Technical";
-                                }
-                                if (row.category === "Intermediate") {
-                                  return module.difficulty === "Intermediate";
-                                }
-                                if (row.category === "Beginner") {
-                                  return module.difficulty === "Beginner";
-                                }
-                                return true; // Default case if no category is selected
-                              })
-                              .map((module) => (
-                                <option key={module._id} value={module.module_name}>
-                                  {module.module_name}
-                                </option>
-                              ))}
-
-                          </select>
-                        </td>
-                        <td>
-                          {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-danger btn-sm"
-                            onClick={() => removeRow(index)}
-                            style={{ display: "block", margin: "0 auto" }}
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="d-flex justify-content-between mt-4">
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_secondary}
-                    onClick={handlePrevious}
-                  >
-                    <i className="bi bi-arrow-left-circle"></i> Previous
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_add}
-                    onClick={addRow}
-                  >
-                    <i className="bi bi-plus-circle me-2"></i> Add Another Row
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_primary}
-                    onClick={handleNext}
-                  >
-                    <i className="bi bi-arrow-right-circle"></i> Next
-                  </button>
-                </div>
-              </div>
-            )}
-
-
-            {step === 5 && (
-              <>
-                <div className="p-3" id="step-5-content" style={{ maxWidth: "100%", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
-                  {/* Personal Information Section */}
-                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                      PERSONAL INFORMATION
-                    </h5>
-                    <div style={{ padding: "8px", backgroundColor: "white" }}>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                        <div>
-                          <label><strong>Salutation<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.salutation}</p>
-                        </div>
-                        <div>
-                          <label><strong>Last Name<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.last_name}</p>
-                        </div>
-                        <div>
-                          <label><strong>First Name<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.first_name}</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                        <div>
-                          <label><strong>Middle Name<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.middle_name}</p>
-                        </div>
-                        <div>
-                          <label><strong>Extension Name:<span style={{ color: "red" }}></span></strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.extension_name || "N/A"}</p>
-                        </div>
-                        <div>
-                          <label><strong>Gender<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.gender}</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                        <div>
-                          <label><strong>Position<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.position}</p>
-                        </div>
-                        <div>
-                          <label><strong>Contact No.<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.contact_number}</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                        <div>
-                          <label><strong>Email Address<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.email_address}</p>
-                        </div>
-                        <div>
-                          <label><strong>Address<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.address}</p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="d-flex justify-content-between mt-4">
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_secondary}
+                      onClick={handlePrevious}
+                    >
+                      <i className="bi bi-arrow-left-circle"></i> Previous
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_add}
+                      onClick={addRow}
+                    >
+                      <i className="bi bi-plus-circle me-2"></i> Add Another Row
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_primary}
+                      onClick={handleNext}
+                    >
+                      <i className="bi bi-arrow-right-circle"></i> Next
+                    </button>
                   </div>
+                </div>
+              )}
 
-                  {/* Organization Information Section */}
-                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "8px", margin: 0, textAlign: "center" }}>
-                      ORGANIZATION INFORMATION
-                    </h5>
-                    <div style={{ padding: "8px", backgroundColor: "white" }}>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                        <div>
-                          <label><strong>Organization Name<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.organization_name}</p>
-                        </div>
-                        <div>
-                          <label><strong>Department<span style={{ color: "red" }}></span>:</strong></label>
-                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.department}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <label><strong>Region<span style={{ color: "red" }}></span>:</strong></label>
-                        <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", width: "calc(50% - 7.5px)", }}>{formValues.region}</p>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Preferred Dates Section */}
-                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
-                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                      PREFERRED DATE AND TIME OF THE EVENT
-                    </h5>
-                    <div style={{ padding: "8px", backgroundColor: "white" }}>
-                      {formValues.date_and_time.length > 0 ? (
-                        formValues.date_and_time.map((date, index) => (
-                          <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                            <div>
-                              <label><strong>Date:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.date || "Not Set"}</p>
-                            </div>
-                            <div>
-                              <label><strong>Start Time:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.start_time || "Not Set"}</p>
-                            </div>
-                            <div>
-                              <label><strong>End Time:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.end_time || "Not Set"}</p>
-                            </div>
-                            <div>
-                              <label><strong>Total Hours:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.total_hours || 0}</p>
-                            </div>
+              {step === 5 && (
+                <>
+                  <div className="p-3" id="step-5-content" style={{ maxWidth: "100%", margin: "0 auto", fontFamily: "Arial, sans-serif" }}>
+                    {/* Personal Information Section */}
+                    <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                      <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                        PERSONAL INFORMATION
+                      </h5>
+                      <div style={{ padding: "8px", backgroundColor: "white" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                          <div>
+                            <label><strong>Salutation<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.salutation}</p>
                           </div>
-                        ))
-                      ) : (
-                        <p style={{ textAlign: "center" }}>No dates provided.</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Modules Section */}
-                  <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial,sans-serif" }}>
-                    <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
-                      SELECTED MODULES
-                    </h5>
-                    <div style={{ padding: "8px", backgroundColor: "white" }}>
-                      {rows.length > 0 ? (
-                        rows.map((row, index) => (
-                          <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
-                            <div>
-                              <label><strong>Category:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.category || "Not Selected"}</p>
-                            </div>
-                            <div>
-                              <label><strong>Module:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_name || "Not Selected"}</p>
-                            </div>
-                            <div>
-                              <label><strong>Description:</strong></label>
-                              <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_description || "Not Selected"}</p>
-                            </div>
+                          <div>
+                            <label><strong>Last Name<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.last_name}</p>
                           </div>
-                        ))
-                      ) : (
-                        <p>No modules selected.</p>
-                      )}
+                          <div>
+                            <label><strong>First Name<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.first_name}</p>
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                          <div>
+                            <label><strong>Middle Name<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.middle_name}</p>
+                          </div>
+                          <div>
+                            <label><strong>Extension Name:<span style={{ color: "red" }}></span></strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.extension_name || "N/A"}</p>
+                          </div>
+                          <div>
+                            <label><strong>Gender<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.gender}</p>
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                          <div>
+                            <label><strong>Position<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.position}</p>
+                          </div>
+                          <div>
+                            <label><strong>Contact No.<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.contact_number}</p>
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                          <div>
+                            <label><strong>Email Address<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.email_address}</p>
+                          </div>
+                          <div>
+                            <label><strong>Address<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", textAlign: "left", verticalAlign: "top", display: "flex", alignItems: "flex-start" }}>{formValues.address}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Organization Information Section */}
+                    <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                      <h5 style={{ backgroundColor: "#003366", color: "white", padding: "8px", margin: 0, textAlign: "center" }}>
+                        ORGANIZATION INFORMATION
+                      </h5>
+                      <div style={{ padding: "8px", backgroundColor: "white" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                          <div>
+                            <label><strong>Organization Name<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.organization_name}</p>
+                          </div>
+                          <div>
+                            <label><strong>Department<span style={{ color: "red" }}></span>:</strong></label>
+                            <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{formValues.department}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <label><strong>Region<span style={{ color: "red" }}></span>:</strong></label>
+                          <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px", width: "calc(50% - 7.5px)", }}>{formValues.region}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Preferred Dates Section */}
+                    <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial, sans-serif" }}>
+                      <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                        PREFERRED DATE AND TIME OF THE EVENT
+                      </h5>
+                      <div style={{ padding: "8px", backgroundColor: "white" }}>
+                        {formValues.date_and_time.length > 0 ? (
+                          formValues.date_and_time.map((date, index) => (
+                            <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                              <div>
+                                <label><strong>Date:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.date || "Not Set"}</p>
+                              </div>
+                              <div>
+                                <label><strong>Start Time:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.start_time || "Not Set"}</p>
+                              </div>
+                              <div>
+                                <label><strong>End Time:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.end_time || "Not Set"}</p>
+                              </div>
+                              <div>
+                                <label><strong>Total Hours:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{date.total_hours || 0}</p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <p style={{ textAlign: "center" }}>No dates provided.</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Modules Section */}
+                    <div style={{ border: "2px solid white", borderColor: "lightgrey", marginBottom: "7px", borderRadius: "8px", overflow: "hidden", fontFamily: "Arial,sans-serif" }}>
+                      <h5 style={{ backgroundColor: "#003366", color: "white", padding: "10px", margin: 0, textAlign: "center" }}>
+                        SELECTED MODULES
+                      </h5>
+                      <div style={{ padding: "8px", backgroundColor: "white" }}>
+                        {rows.length > 0 ? (
+                          rows.map((row, index) => (
+                            <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
+                              <div>
+                                <label><strong>Category:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.category || "Not Selected"}</p>
+                              </div>
+                              <div>
+                                <label><strong>Module:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_name || "Not Selected"}</p>
+                              </div>
+                              <div>
+                                <label><strong>Description:</strong></label>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_description || "Not Selected"}</p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <p>No modules selected.</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Navigation Buttons */}
+
+
                   </div>
 
-                  {/* Navigation Buttons */}
+                  <div className="d-flex justify-content-between" style={{ marginTop: "8px" }}>
+                    <button
+                      type="button"
+                      style={{
+                        marginTop: "0 auto",
+                        backgroundColor: " transparent",
+                        border: "2px solid #6c757d",
+                        color: "#6c757d",
+                        borderRadius: "5px",
+                        padding: "10px 20px",
+                        fontWeight: "600",
+                        transition: "all 0.3s ease",
+                      }}
+                      onClick={() => setStep(step - 1)}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = "#6c757d";
+                        e.target.style.color = "white";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = "transparent";
+                        e.target.style.color = "#6c757d";
+                      }}
+                    >
+                      <i className="bi bi-arrow-left-circle"></i> Previous
+                    </button>
+                    <button
+                      type="button"
+                      className={styleRequestForm.btn_primary}
+                      onClick={handleDownload}
+                    >
+                      <i className="bi bi-download"></i> Download
+                    </button>
+                    <button
+                      type="submit"
+                      className={styleRequestForm.btn_submit}
+                    >
+                      <i className="bi bi-check-circle"></i> {loading ? "Submitting..." : "Submit"}
+                    </button>
+                  </div>
+                </>
+              )}
 
-
-                </div>
-
-                <div className="d-flex justify-content-between" style={{ marginTop: "8px" }}>
-                  <button
-                    type="button"
-                    style={{
-                      marginTop: "0 auto",
-                      backgroundColor: " transparent",
-                      border: "2px solid #6c757d",
-                      color: "#6c757d",
-                      borderRadius: "5px",
-                      padding: "10px 20px",
-                      fontWeight: "600",
-                      transition: "all 0.3s ease",
-                    }}
-                    onClick={() => setStep(step - 1)}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = "#6c757d";
-                      e.target.style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = "transparent";
-                      e.target.style.color = "#6c757d";
-                    }}
-                  >
-                    <i className="bi bi-arrow-left-circle"></i> Previous
-                  </button>
-                  <button
-                    type="button"
-                    className={styleRequestForm.btn_primary}
-                    onClick={handleDownload}
-                  >
-                    <i className="bi bi-download"></i> Download
-                  </button>
-                  <button
-                    type="submit"
-                    className={styleRequestForm.btn_submit}
-                  >
-                    <i className="bi bi-check-circle"></i> {loading ? "Submitting..." : "Submit"}
-                  </button>
-                </div>
-              </>
-            )}
-
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+
+      <Footer/>
+    </>
   );
 };

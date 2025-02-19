@@ -23,6 +23,8 @@ import { Ccm } from './components/CIE-Division/CCM/Ccm.jsx';
 import { Pprd } from './components/CIE-Division/PPRD/Pprd.jsx';
 import { Tec } from './components/CIE-Division/TEC/Tec.jsx';
 import { Institutional } from './components/CIE-Division/Institutional/Institutional.jsx';
+import { MonthlyReports } from './components/MonthlyReports/MonthlyReports.jsx';
+import { NewsTipsAdvisories } from './components/NewsTipsAdvisories/NewsTipsAdvisories.jsx';
 
 export default function App() {
   return (
@@ -43,7 +45,7 @@ export default function App() {
           <Route path="divisions/cie/institutional" element={ <Institutional/> }/>
           
           
-          <Route path="admin" element={<RegionUserPage />}>
+          <Route path="cpcb-admin" element={<RegionUserPage />}>
             <Route index element={<FocalDashboard />} /> {/* Default route */}
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
@@ -51,9 +53,9 @@ export default function App() {
             <Route path='modules-lists' element={<ModulesList/>} />
             <Route path='history' element={<History/>} />
             <Route path='settings' element={<Settings/>} /> 
-          </Route>
+          </Route>  
 
-          <Route path="super-admin" element={<SuperAdminPage/>}>
+          <Route path="cpcb-super-admin" element={<SuperAdminPage/>}>
             <Route index element={<FocalDashboard />} /> {/* Default route */}
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
@@ -63,6 +65,8 @@ export default function App() {
             <Route path='settings' element={<Settings/>} />
             <Route path='focal-list' element={<FocalList/>} />
             <Route path="focal-form" element={ <FocalForm/>} />
+            <Route path='monthly-reports' element={<MonthlyReports/>} />
+            <Route path='news-tips-advisories' element={<NewsTipsAdvisories/>} />
           </Route>
 
 

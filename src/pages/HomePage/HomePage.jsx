@@ -29,14 +29,14 @@ export function Homepage() {
         <Carousel
           indicators // Enables dot navigation
           controls={false} // Disables arrow navigation
-          interval={5000} // Automatically advances every 5 seconds (5000ms)
+          interval={3000} // Automatically advances every 5 seconds (5000ms)
         >
           <Carousel.Item>
             <img
               className="d-block w-100"
               src={img1}
               alt="First slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
@@ -45,7 +45,7 @@ export function Homepage() {
               className="d-block w-100"
               src={img2}
               alt="Second slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
@@ -54,7 +54,7 @@ export function Homepage() {
               className="d-block w-100"
               src={img3}
               alt="Third slide"
-              style={{ height: "400px", objectFit: "cover" }}
+              style={{ height: "480px", objectFit: "cover" }}
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
@@ -131,6 +131,7 @@ export function Homepage() {
       {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
         <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
+<<<<<<< HEAD
         <div className={styleHomePage.socialMediaSection}>
         <div className={styleHomePage.socialMediaContainer}>
           <span className={styleHomePage.socialText}>Get Our</span>
@@ -151,6 +152,8 @@ export function Homepage() {
           </a>
         </div>
       </div>
+=======
+>>>>>>> origin/master
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
@@ -164,9 +167,9 @@ export function Homepage() {
                 Stay updated with the latest news and announcements from DICT.
               </p>
             </div>
-
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
+<<<<<<< HEAD
 
             {/* Tips Section */}
             <div className={styleHomePage.topic}>
@@ -176,20 +179,36 @@ export function Homepage() {
               <h3 className={styleHomePage.topicTitle}>Tips</h3>
               <p className={styleHomePage.topicParagraph}>
                 Important Tips and notifications regarding cybersecurity and Digital services.
+=======
+            {/* Tips Section */}
+            <div className={styleHomePage.topic}>
+              <div className={styleHomePage.topicIcon}>
+                <i className="bi bi-lightbulb"></i> {/* Bootstrap Icon for Tips */}
+              </div>
+              <h3 className={styleHomePage.topicTitle}>Tips</h3>
+              <p className={styleHomePage.topicParagraph}>
+                Learn useful tips to enhance your digital safety and productivity.
+>>>>>>> origin/master
               </p>
             </div>
-
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
+<<<<<<< HEAD
 
             {/* Advisories Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
                 <i className="bi bi-megaphone-fill text-danger fs-4 me-2"></i> {/* Bootstrap Icon for Advisories */}
+=======
+            {/* Advisories Section */}
+            <div className={styleHomePage.topic}>
+              <div className={styleHomePage.topicIcon}>
+                <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Advisories */}
+>>>>>>> origin/master
               </div>
               <h3 className={styleHomePage.topicTitle}>Advisories</h3>
               <p className={styleHomePage.topicParagraph}>
-                Discover upcoming events, campaigns, and promotional activities.
+                Get important advisories on cybersecurity and digital services.
               </p>
             </div>
           </div>
@@ -232,8 +251,8 @@ export function Homepage() {
         </div>
         <p>
           Report scams to the relevant authorities by contacting the National Privacy
-          Commission (NPC), National Telecommunications Commission (NTC), or Cyber
-          Incident Coordination Center (CICC).
+          Commission (NPC), National Telecommunications Commission (NTC), or Cybercrime
+          Invistigation Coordinating Center (CICC).
         </p>
       </div>
       <Footer />
