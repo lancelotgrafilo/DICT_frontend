@@ -4,10 +4,10 @@ import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { Carousel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import img1 from "../../assets/img/img1.png";
+import img1 from "../../assets/img/cyberLarge.png";
 import img2 from "../../assets/img/img2.png";
 import img3 from "../../assets/img/img3.png";
-import img4 from "../../assets/img/cyberLarge.png";
+import img4 from "../../assets/img/img1.png";
 import missionImage from "../../assets/img/mission.png"; // Add an image for Mission and Vision
 import mandateImage from "../../assets/img/mandate.png"; // Add an image for Mandate, Powers, and Functions
 import divisionsImage from "../../assets/img/divisions.png"; // Add an image for Divisions
@@ -70,12 +70,9 @@ export function Homepage() {
           </Carousel.Item>
         </Carousel>
       </div>
-<<<<<<< HEAD
-      
-=======
-
->>>>>>> 12e01a50e000fc0f3fccdcdea2b7e865d4222e06
       {/* Mission, Vision, Divisions Cards */}
+      <h1>Who We Are</h1>
+      <p>The DICT Cybersecurity Bureau is tasked to implement the National CyberSecurity Plan</p>
       <div className={styleHomePage.cardContainer}>
         {/* Mission and Vision Card */}
         <div className={styleHomePage.flipCard}>
@@ -141,16 +138,16 @@ export function Homepage() {
         </div>
       </div>
 
-      {/* News, Alerts, and Advertisements Section */}
+      {/* News, Tips, and Advisories Section */}
       <div className={styleHomePage.newsSection}>
-        <h1 className={styleHomePage.centeredTitle}>News, Alerts, and Advertisements</h1>
+        <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
             {/* News Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-newspaper"></i> {/* Bootstrap Icon for News */}
+              <i className="bi bi-newspaper text-primary"></i> {/* Bootstrap Icon for News */}
               </div>
               <h3 className={styleHomePage.topicTitle}>News</h3>
               <p className={styleHomePage.topicParagraph}>
@@ -161,26 +158,26 @@ export function Homepage() {
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
 
-            {/* Alert Section */}
+            {/* Tips Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-exclamation-triangle"></i> {/* Bootstrap Icon for Alert */}
+              <i className="bi bi-lightbulb-fill text-warning"></i> {/* Bootstrap Icon for Tips */}
               </div>
-              <h3 className={styleHomePage.topicTitle}>Alert</h3>
+              <h3 className={styleHomePage.topicTitle}>Tips</h3>
               <p className={styleHomePage.topicParagraph}>
-                Important alerts and notifications regarding cybersecurity and digital services.
+                Important Tips and notifications regarding cybersecurity and Digital services.
               </p>
             </div>
 
             {/* Vertical Line */}
             <div className={styleHomePage.verticalLine}></div>
 
-            {/* Advertisement Section */}
+            {/* Advisories Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-                <i className="bi bi-megaphone"></i> {/* Bootstrap Icon for Advertisement */}
+                <i className="bi bi-megaphone-fill text-danger fs-4 me-2"></i> {/* Bootstrap Icon for Advisories */}
               </div>
-              <h3 className={styleHomePage.topicTitle}>Advertisement</h3>
+              <h3 className={styleHomePage.topicTitle}>Advisories</h3>
               <p className={styleHomePage.topicParagraph}>
                 Discover upcoming events, campaigns, and promotional activities.
               </p>

@@ -13,7 +13,14 @@
   margin: 0;
   position: relative; /* Required for absolute positioning of the dots container */
 }
-
+h1 {
+  font-family: 'Arial', sans-serif; /* You can replace with the desired font */
+  font-weight: 700; /* Bold text */
+  font-size: 36px; /* Adjust size as needed */
+  color: #333; /* Dark text color */
+  text-align: center;
+  position: relative;
+}
 /* Card Container */
 .cardContainer {
   display: flex;
@@ -223,4 +230,23 @@
 
 .circleButton:hover {
   background-color: #0056b3;
+}
+.facebookContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.facebookLink {
+  text-decoration: none;
+}
+
+.facebookLogo {
+  width: 50px; /* Adjust size */
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.facebookLogo:hover {
+  transform: scale(1.2);
 }
