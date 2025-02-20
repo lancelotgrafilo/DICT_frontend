@@ -4,110 +4,160 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: linear-gradient(to bottom, #f4f7f9, #d9e6f2); /* Soft blue gradient */
 }
 
+/* Main Content */
 .mainContent {
-  height: 80vh;
-  background-color: #f9f9f9;
-  padding: 20px;
+  min-height: 80vh;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 30px auto;
+  width: 95%;
+  max-width: 1300px;
 }
 
+/* Division Title */
 .division {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 80px;
+  height: 100px;
+  background: linear-gradient(to right, #007bff, #0056b3); /* DICT-style banner */
+  color: white;
+  border-radius: 10px;
 }
 
 .division h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #333333;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  padding-bottom: 10px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Card Container */
 .cardContainer {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 25px;
   margin-top: 20px;
+  max-width: 1200px;
 }
 
 /* Card Link */
 .cardLink {
   text-decoration: none;
   color: inherit;
-  width: 100%; /* Full width on small screens */
-  max-width: 350px; /* Limit width on larger screens */
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Card Design */
 .card {
   width: 100%;
-  height: 400px;
+  height: 420px;
   background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0; /* Remove padding from the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: 2px solid #ddd;
 }
 
 .card:hover {
-  transform: translateY(-10px); /* Slight upward movement on hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: #007bff;
 }
 
+/* Image Styling */
 .card .image {
-  width: 100%; /* Image spans the full width of the card */
-  height: 200px; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
-  border-top-left-radius: 16px; /* Match card border radius */
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  transition: transform 0.3s ease;
 }
 
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+/* Card Content */
 .card .title {
-  font-size: 1rem; /* Smaller font size */
-  font-weight: 600;
-  color: #333333;
-  margin: 10px 15px 5px; /* Add some spacing */
+  font-size: 1rem;
+  font-weight: 700;
+  color: #222;
+  margin: 15px 20px 5px;
   line-height: 1.4;
+  text-transform: uppercase;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit title to 2 lines */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
 .card .abbreviation {
-  font-size: 0.9rem; /* Smaller font size */
-  color: #6c757d;
-  margin: 0 15px 10px; /* Add some spacing */
+  font-size: 0.9rem;
+  color: #007bff;
+  margin: 0 15px 10px;
   font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .card .description {
-  font-size: 0.8rem; /* Smaller font size */
-  color: #555555;
-  margin: 0 15px 15px; /* Add some spacing */
-  line-height: 1.6;
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0 20px 20px;
+  line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Limit description to 3 lines */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
+/* Footer */
+.footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 0.9rem;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .cardContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .cardLink {
+    max-width: 300px;
+  }
+}
+
 @media (max-width: 768px) {
   .cardContainer {
     flex-direction: column;
@@ -115,6 +165,22 @@ body {
   }
 
   .cardLink {
-    max-width: 100%;
+    max-width: 90%;
+  }
+
+  .division h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    height: auto;
+    padding-bottom: 20px;
+  }
+
+  .division h1 {
+    font-size: 1.5rem;
+    text-align: center;
   }
 }

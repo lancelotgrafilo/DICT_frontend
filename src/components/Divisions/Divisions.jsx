@@ -52,7 +52,7 @@ export function Divisions() {
             <div className={styleDivisions.card}>
               <img
                 src="https://via.placeholder.com/350x200" // Replace with actual image URL
-                alt="NCERTD Image"
+                alt="NCERT Image"
                 className={styleDivisions.image}
               />
               <h2 className={styleDivisions.title}>
