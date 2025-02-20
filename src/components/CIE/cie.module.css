@@ -1,87 +1,131 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f8f9fa;
+  color: #333;
+}
+
 /* Main container */
 .mainContent {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 30px auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: "Poppins", sans-serif; /* Modern font */
+  font-family: "Poppins", sans-serif;
+  max-width: 1200px;
 }
 
 /* Title */
 .mainContent > div:first-child {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  color: #333;
-  text-transform: uppercase; /* Uppercase for emphasis */
-  letter-spacing: 1px; /* Spacing between letters */
+  color: #003366; /* DICT blue */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 4px solid #ffc107; /* Yellow underline effect */
+  padding-bottom: 5px;
 }
 
 /* Subtitle */
 .mainContent > div:nth-child(2) {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   margin-bottom: 40px;
   color: #555;
+  text-align: center;
+  max-width: 800px;
 }
 
 /* Card container */
 .cardContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  gap: 20px; /* Space between cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive */
+  gap: 20px;
   width: 100%;
-  max-width: 800px; /* Limit the width for better responsiveness */
+  max-width: 1000px;
 }
 
 /* Individual card */
 .card {
-  width: 100%; /* Full width of the grid cell */
-  height: 250px; /* Fixed height for portrait orientation */
-  background-color: #ffffff;
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06); /* Soft shadow */
+  width: 100%;
+  height: 260px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 5px solid #003366; /* DICT Blue accent */
+  padding: 20px;
 }
 
-/* Hover effect for cards */
+/* Hover effect */
 .card:hover {
-  transform: translateY(-5px); /* Slight upward movement */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #ffc107; /* Yellow accent on hover */
 }
 
 /* Card icon */
 .cardIcon {
   font-size: 48px;
   margin-bottom: 10px;
-  color: #007bff; /* Blue color for icons */
+  color: #007bff; /* Blue theme */
 }
 
 /* Card title */
 .cardTitle {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: #003366; /* DICT blue */
 }
 
 /* Card description */
 .cardDescription {
   font-size: 14px;
   color: #666;
-  padding: 0 20px; /* Add padding for better readability */
+  padding: 0 20px;
+  max-width: 90%;
+  line-height: 1.5;
 }
 
 /* Institutional container */
 .institutionalContainer {
-  margin-top: 20px;
-  width: 800px;
+  margin-top: 40px;
+  width: 90%;
+  max-width: 1000px;
+  text-align: center;
+}
+
+/* Footer */
+.footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cardContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .mainContent > div:first-child {
+    font-size: 28px;
+  }
 }
