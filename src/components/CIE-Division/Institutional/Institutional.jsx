@@ -1,80 +1,69 @@
 import styleInstitutional from './institutional.module.css';
 import { Header } from '../../Header/Header';
 import { Footer } from '../../Footer/Footer';
-import ProcurementImg from "/src/assets/img/Procurement.png";
+import { useState } from 'react';
+// Import icons from React Icons
+import { FaDollarSign, FaFileAlt, FaShoppingCart, FaBuilding } from 'react-icons/fa';
 
 export function Institutional() {
+  // State to track the selected item and its details
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // Define the details and icons for each item
+  const itemDetails = {
+    'Budget Execution Documents System (BEDS)': {
+      icon: <FaDollarSign />, // Dollar sign icon for BEDS
+      description: 'Streamlined financial planning and budget execution system.'
+    },
+    'Resource Investment Planning (RI Plan)': {
+      icon: <FaFileAlt />, // File icon for RI Plan
+      description: 'Strategic growth and allocation through resource investment planning.'
+    },
+    'Procurement': {
+      icon: <FaShoppingCart />, // Shopping cart icon for Procurement
+      description: 'Ensuring transparent and efficient procurement processes.'
+    },
+    'Modern Public Access System (MPAX)': {
+      icon: <FaBuilding />, // Building icon for MPAX
+      description: 'Digital governance initiatives through modern public access systems.'
+    }
+  };
+
   return (
     <>
       <Header />
       <div className={styleInstitutional.mainContent}>
-        <div className={styleInstitutional.institutionalHeader}>
-          Institutional Services
+        {/* Left Sidebar (No Background) */}
+        <div className={styleInstitutional.sidebar}>
+          {/* Title in the Sidebar */}
+          <div className={styleInstitutional.sidebarTitle}>Institutional Services</div>
+          <p className={styleInstitutional.description}>
+            Providing transparent and efficient governance solutions
+          </p>
+          {/* List of Items */}
+          <div className={styleInstitutional.itemList}>
+            {Object.keys(itemDetails).map((item, index) => (
+              <div
+                key={index}
+                onClick={() => setSelectedItem(item)}
+                className={selectedItem === item ? styleInstitutional.selected : ''}
+              >
+                {itemDetails[item].icon} {/* Display the icon */}
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className={styleInstitutional.institutionalSubHeader}>
-          Providing transparent and efficient governance solutions
-        </div>
-
-        <div className={styleInstitutional.institutionalContainer}>
-          {/* First Column */}
-            <div className={styleInstitutional.cardContainer}>
-              <div className={styleInstitutional.card}>
-              <i
-                  className="bi bi-currency-dollar" 
-                  style={{
-                    fontSize: '3rem',           // Increase icon size
-                    color: '#007bff',           // Set color
-                    padding: '10px',            // Add padding around the icon
-                    backgroundColor: '#f1f1f1', // Set background color
-                    borderRadius: '50%',        // Make icon circular
-                    transition: 'all 0.3s ease', // Smooth transition for effects
-                  }}
-                />
-
-                <h3>BEDS</h3>
-                <p>Budget Execution Documents System for streamlined financial planning.</p>
-              </div>
-              <div className={styleInstitutional.card}>
-              <i
-                className="bi bi-file-earmark-text" 
-                style={{
-                  fontSize: '3rem',           // Increase icon size
-                  color: '#28a745',           // Set color (green for "document" feel)
-                  padding: '12px',            // Add padding around the icon
-                  backgroundColor: '#f8f9fa', // Light background for contrast
-                  borderRadius: '8px',        // Rounded corners for a soft look
-                  transition: 'all 0.3s ease', // Smooth transition for effects
-                }}
-              />
-                <h3>RI Plan</h3>
-                <p>Resource Investment Planning for strategic growth and allocation.</p>
-              </div>
-            </div>
-
-          {/* Second Column */}
-            <div className={styleInstitutional.cardContainer}>
-              <div className={styleInstitutional.card}>
-              <img src={ProcurementImg} alt="Procurement" className={styleInstitutional.cardImage} />
-                <h3>Procurement</h3>
-                <p>Ensuring transparent and efficient procurement processes.</p>
-              </div>
-              <div className={styleInstitutional.card}>
-              <i
-                className="bi bi-building"
-                style={{
-                  fontSize: '3rem',
-                  color: '#6c757d',
-                  padding: '12px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '8px',
-                  transition: 'all 0.3s ease',
-                }}
-              />
-
-                <h3>MPAX</h3>
-                <p>Modern Public Access System for digital governance initiatives.</p>
-              </div>
-            </div>
+        {/* Right Content Area with Card Background */}
+        <div className={styleInstitutional.contentCard}>
+          {selectedItem ? (
+            <>
+              <h2>{selectedItem}</h2>
+              <p>{itemDetails[selectedItem].description}</p>
+            </>
+          ) : (
+            <p>Select an item from the left sidebar to view details.</p>
+          )}
         </div>
       </div>
       <Footer />

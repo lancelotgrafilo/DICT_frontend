@@ -1,116 +1,89 @@
-/* General Styles - Inspired by DICT.gov.ph */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background: #f8f9fa;
-  color: #333;
-}
-
-/* Main Content */
+/* General Styles */
 .mainContent {
-  margin: 30px auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 1200px;
+  display: flex; /* Use flexbox to create a two-column layout */
+  height: 80vh;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Title */
-.institutionalHeader {
-  font-size: 36px;
+/* Left Sidebar (No Background) */
+.sidebar {
+  width: 30%; /* Take up 30% of the screen width */
+  padding: 20px;
+}
+
+/* Title in the Sidebar */
+.sidebarTitle {
+  font-size: 20px; /* Smaller font size */
   font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #003366; /* DICT blue */
+  color: #333333;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 4px solid #ffc107; /* Yellow underline effect */
-  padding-bottom: 5px;
+  margin-bottom: 20px; /* Space between title and items */
+  text-align: left; /* Align title to the left */
 }
 
-/* Institutional Container */
-.institutionalContainer {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
-  width: 90%;
-  max-width: 1000px;
-  text-align: center;
+.description {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
-.firstColumnInstitutional,
-.secondColumnInstitutional {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 300px;
-  border-left: 5px solid #003366; /* DICT Blue accent */
-}
-
-/* Card Container */
-.cardContainer {
+.itemList {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px; /* Reduced gap between items */
 }
 
-/* Card Design */
-.card {
-  background-color: white;
-  padding: 15px;
+.itemList div {
+  display: flex;
+  align-items: center; /* Align icon and text vertically */
+  gap: 10px; /* Space between icon and text */
+  background-color: #ffffff;
   border-radius: 8px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 10px 15px; /* Reduced padding */
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 5px solid #003366; /* DICT Blue accent */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  border: 2px solid transparent; /* Transparent border by default */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
-/* Card Hover Effect */
-.card:hover {
-  background-color: rgba(0, 51, 102, 0.7); /* Adjust to match the card image */
-  color: white;
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  border-left: 5px solid #ffc107; /* Yellow accent on hover */
+.itemList div:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+  border: 2px solid #bbdefb; /* Blue border on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
 }
 
-/* Footer */
-.footer {
-  background: #003366;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 0.9rem;
-  width: 100%;
-  position: relative;
-  bottom: 0;
+.itemList .selected {
+  background-color: #e3f2fd; /* Light blue background for selected item */
+  border: 2px solid #1976d2; /* Bold blue border for selected item */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow for selected item */
+  font-weight: bold; /* Bold text for selected item */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .institutionalContainer {
-    flex-direction: column;
-    align-items: center;
-  }
-  .cardContainer {
-    grid-template-columns: 1fr;
-  }
-  .institutionalHeader {
-    font-size: 28px;
-  }
+/* Right Content Area with Card Background */
+.contentCard {
+  width: 70%; /* Take up 70% of the screen width */
+  padding: 20px;
+  background-color: #ffffff; /* White background for card */
+  border-radius: 12px; /* Rounded corners for card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for card */
+  margin: 20px; /* Space around the card */
+  overflow-y: auto; /* Enable scrolling if content overflows */
 }
-.cardImage {
-  width: 100%;       /* Ensures the image takes up the full width of the card */
-  height: auto;      /* Maintains the aspect ratio */
-  max-height: 150px; /* Adjust this value to fit the card's height */
-  object-fit: cover; /* Ensures the image fills the space without stretching */
-  border-radius: 8px; /* Optional: Makes corners slightly rounded for better aesthetics */
+
+.contentCard h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.contentCard p {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.6;
 }
