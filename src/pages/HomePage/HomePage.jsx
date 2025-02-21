@@ -125,9 +125,26 @@ export function Homepage() {
                 out its mandate.
               </p>
             </div>
-            <div className={styleHomePage.flipCardBack}>
-              <h2>View</h2>
+           <div className={styleHomePage.flipCardBack}>
+              <h2
+                style={{
+                  color: "white",
+                  transition: "color 0.3s ease-in-out, textShadow 0.3s ease-in-out",
+                  cursor: "pointer"
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.color = "#ffcc00"; // DICT Yellow Accent
+                  e.target.style.textShadow = "2px 2px 10px rgba(255, 204, 0, 0.8)"; // Glow Effect
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = "white"; // Back to original color
+                  e.target.style.textShadow = "none";
+                }}
+              >
+                View Details
+              </h2>
             </div>
+
           </div>
         </div>
       </div>
