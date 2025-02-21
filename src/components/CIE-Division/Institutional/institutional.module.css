@@ -1,53 +1,116 @@
-/* General Styles */
+/* General Styles - Inspired by DICT.gov.ph */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f8f9fa;
+  color: #333;
+}
+
+/* Main Content */
 .mainContent {
-  padding: 20px;
-  height: 80vh;
+  margin: 30px auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
 }
 
+/* Title */
 .institutionalHeader {
-  text-align: center; /* Center-align the text */
-  font-size: 28px; /* Larger font size for emphasis */
-  font-weight: bold; /* Bold text */
-  color: #333333; /* Dark gray color for contrast */
-  margin-bottom: 20px; /* Space between header and content */
-  text-transform: uppercase; /* Uppercase text for a formal look */
-  letter-spacing: 2px; /* Add spacing between letters */
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #003366; /* DICT blue */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 4px solid #ffc107; /* Yellow underline effect */
+  padding-bottom: 5px;
 }
 
+/* Institutional Container */
 .institutionalContainer {
   display: flex;
-  gap: 20px; /* Space between columns */
-  justify-content: center; /* Center columns horizontally */
+  gap: 20px;
+  justify-content: center;
   margin-top: 20px;
+  width: 90%;
+  max-width: 1000px;
+  text-align: center;
 }
 
 .firstColumnInstitutional,
 .secondColumnInstitutional {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 300px; /* Fixed width for each column */
+  width: 300px;
+  border-left: 5px solid #003366; /* DICT Blue accent */
 }
 
+/* Card Container */
 .cardContainer {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between cards */
+  gap: 15px;
 }
 
+/* Card Design */
 .card {
-  background-color: #f0f0f0;
+  background-color: white;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 8px;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 5px solid #003366; /* DICT Blue accent */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Card Hover Effect */
 .card:hover {
-  background-color: #d9d9d9; /* Lighter background on hover */
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  background-color: rgba(0, 51, 102, 0.7); /* Adjust to match the card image */
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #ffc107; /* Yellow accent on hover */
+}
+
+/* Footer */
+.footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .institutionalContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cardContainer {
+    grid-template-columns: 1fr;
+  }
+  .institutionalHeader {
+    font-size: 28px;
+  }
+}
+.cardImage {
+  width: 100%;       /* Ensures the image takes up the full width of the card */
+  height: auto;      /* Maintains the aspect ratio */
+  max-height: 150px; /* Adjust this value to fit the card's height */
+  object-fit: cover; /* Ensures the image fills the space without stretching */
+  border-radius: 8px; /* Optional: Makes corners slightly rounded for better aesthetics */
 }

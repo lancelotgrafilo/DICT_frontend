@@ -2,6 +2,9 @@
 .mainContent {
   padding: 20px;
   height: 80vh;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa; /* Light gray background */
+  color: #333;
 }
 
 .headerContainer {
@@ -12,9 +15,21 @@
 .headerContainer div {
   font-size: 28px; /* Larger font size for emphasis */
   font-weight: bold; /* Bold text */
-  color: #333333; /* Dark gray color for contrast */
+  color: #003366; /* DICT blue */
   text-transform: uppercase; /* Uppercase text for a formal look */
   letter-spacing: 2px; /* Add spacing between letters */
+  padding-bottom: 5px;
+  position: relative;
+  display: inline-block; /* Ensures the underline width is controlled */
+}
+
+.headerContainer div::after {
+  content: "";
+  display: block;
+  width: 2in; /* 2-inch-long underline */
+  height: 4px; /* Thickness of the underline */
+  background-color: #ffc107; /* Yellow color */
+  margin: 5px auto 0; /* Centers the underline */
 }
 
 .cpcbContainer {
@@ -24,10 +39,17 @@
 
 .firstColumnCpcb {
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px; /* Slightly larger radius for a modern feel */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
   padding: 20px;
   width: 350px; /* Fixed width for the column */
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for first column */
+.firstColumnCpcb:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 .cardContainer {
@@ -39,17 +61,20 @@
 .card {
   background-color: #f0f0f0;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 12px; /* Larger border radius for a modern look */
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 5px solid #003366; /* DICT blue accent */
 }
 
 .card:hover {
   background-color: #d9d9d9; /* Lighter background on hover */
   transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  border-left: 5px solid #ffc107; /* Yellow accent on hover */
 }
 
 /* Modal Styles */
@@ -69,7 +94,7 @@
 .modalContent {
   background-color: #ffffff;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 12px; /* Slightly larger radius for a modern feel */
   width: 350px;
   max-height: 80vh;
   overflow-y: auto;
@@ -95,4 +120,70 @@
 
 .modalCard:hover {
   background-color: #d9d9d9; /* Lighter background on hover */
+}
+/* Modal Content */
+.modalContent {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px; /* Larger radius for a more modern feel */
+  width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalContent h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003366; /* DICT blue */
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #ffc107; /* Yellow underline effect */
+  padding-bottom: 5px;
+}
+
+.modalCardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between modal cards */
+}
+
+.modalCard {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 12px; /* Larger radius for consistency */
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-left: 5px solid #003366; /* DICT blue accent */
+}
+
+.modalCard:hover {
+  background-color: #d9d9d9; /* Lighter background on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  border-left: 5px solid #ffc107; /* Yellow accent on hover */
+}
+
+button {
+  background-color: #003366; /* DICT blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  text-align: center; /* Center the text */
+}
+
+button:hover {
+  background-color: #ffc107; /* Yellow accent on hover */
 }
