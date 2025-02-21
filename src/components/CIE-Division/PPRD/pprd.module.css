@@ -1,48 +1,94 @@
 /* General Styles */
 .mainContent {
-  padding: 20px;
+  display: flex; /* Use flexbox to create a two-column layout */
   height: 80vh;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.headerContainer {
-  text-align: center; /* Center-align the header text */
-  margin-bottom: 20px; /* Space between header and content */
+/* Left Sidebar (No Background) */
+.sidebar {
+  width: 30%; /* Take up 30% of the screen width */
+  padding: 20px;
 }
 
-.headerContainer div {
-  font-size: 28px; /* Larger font size for emphasis */
-  font-weight: bold; /* Bold text */
-  color: #333333; /* Dark gray color for contrast */
-  text-transform: uppercase; /* Uppercase text for a formal look */
-  letter-spacing: 2px; /* Add spacing between letters */
+/* Title in the Sidebar */
+.sidebarTitle {
+  font-size: 20px; /* Smaller font size */
+  font-weight: bold;
+  color: #333333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px; /* Space between title and items */
+  text-align: left; /* Align title to the left */
 }
 
-.firstRow,
-.secondRow {
+.pprdContainer {
   display: flex;
-  justify-content: center; /* Center the card containers horizontally */
-  margin-bottom: 20px; /* Space between rows */
+  flex-direction: column;
+  gap: 10px; /* Reduced gap between items */
 }
 
-.cardContainer {
+.pprdContainer div {
   display: flex;
-  gap: 15px; /* Space between cards */
-}
-
-.card {
+  align-items: center; /* Align icon and text vertically */
+  gap: 10px; /* Space between icon and text */
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  padding: 15px;
-  width: 150px; /* Fixed width for each card */
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 10px 15px; /* Reduced padding */
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  border: 2px solid transparent; /* Transparent border by default */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
-.card:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+.pprdContainer div:hover {
+  background-color: #f0f8ff; /* Light blue background on hover */
+  border: 2px solid #bbdefb; /* Blue border on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+
+.pprdContainer .selected {
+  background-color: #e3f2fd; /* Light blue background for selected item */
+  border: 2px solid #1976d2; /* Bold blue border for selected item */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow for selected item */
+  font-weight: bold; /* Bold text for selected item */
+}
+
+/* Right Content Area with Card Background */
+.contentCard {
+  width: 70%; /* Take up 70% of the screen width */
+  padding: 20px;
+  background-color: #ffffff; /* White background for card */
+  border-radius: 12px; /* Rounded corners for card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for card */
+  margin: 20px; /* Space around the card */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+.contentCard h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.contentCard p {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.contentCard a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contentCard a:hover {
+  text-decoration: underline;
 }
