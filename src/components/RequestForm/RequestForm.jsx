@@ -31,7 +31,7 @@ export function RequestForm() {
       { date: '', start_time: '', end_time: '', total_hours: 0 },
     ],
     modules_selected: [
-      { module_name: '', module_description: '', difficulty: '' },
+      { module_name: '', module_description: '', level: '' },
     ],
     pdfFile: '',
   });
@@ -66,8 +66,33 @@ export function RequestForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Step 1: Generate the PDF as a Blob
+  
+    console.log('Initial formValues:', formValues);
+  
+    // Step 1: Validate modules_selected
+    const isValidModules = formValues.modules_selected.every(
+      (module) => module.module_name && module.module_description
+    );
+  
+    if (!isValidModules) {
+      toast.error("Please ensure all modules have a name and description.");
+      return;
+    }
+  
+    // Step 2: Filter out incomplete modules and remove the 'level' field
+    const filteredModulesSelected = formValues.modules_selected
+      .filter((module) => module.module_name && module.module_description)
+      .map(({ level, ...rest }) => rest); // Remove the 'level' field
+  
+    // Update formValues with filtered modules
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      modules_selected: filteredModulesSelected,
+    }));
+  
+    console.log('Filtered formValues:', { ...formValues, modules_selected: filteredModulesSelected });
+  
+    // Step 3: Generate the PDF as a Blob
     const element = document.getElementById('step-5-content'); // The content to convert
     const pdfOptions = {
       margin: 5,
@@ -76,7 +101,7 @@ export function RequestForm() {
       html2canvas: { scale: 3, scrollY: 0, windowWidth: 800 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
     };
-
+  
     try {
       // Generate the PDF and get it as a Blob
       const pdfBlob = await new Promise((resolve, reject) => {
@@ -87,14 +112,14 @@ export function RequestForm() {
           .then(resolve)
           .catch(reject);
       });
-
+  
       if (!pdfBlob) {
         throw new Error("Failed to generate PDF");
       }
-
-      // Step 2: Create FormData and include all formValues
+  
+      // Step 4: Create FormData and include all formValues
       const formData = new FormData();
-      Object.entries(formValues).forEach(([key, value]) => {
+      Object.entries({ ...formValues, modules_selected: filteredModulesSelected }).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           // Convert arrays (e.g., date_and_time, modules_selected) to JSON strings
           formData.append(key, JSON.stringify(value));
@@ -106,17 +131,17 @@ export function RequestForm() {
           formData.append(key, value);
         }
       });
-
-      // Step 3: Append the generated PDF file to FormData
+  
+      // Step 5: Append the generated PDF file to FormData
       formData.append('pdfFile', pdfBlob, pdfOptions.filename);
-
+  
       // Log FormData contents for debugging
       console.log('FormData Contents:');
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
       }
-
-      // Step 4: Send the FormData to the backend
+  
+      // Step 6: Send the FormData to the backend
       const response = await addRequest(formData); // Assuming addRequest accepts FormData
       console.log('Request submitted successfully:', response);
       toast.success('Request submitted successfully!');
@@ -127,46 +152,63 @@ export function RequestForm() {
     }
   };
 
+
   const [step, setStep] = useState(1);
 
   const { modules, loadingModules, errorModule } = useModules();
 
-  const [rows, setRows] = useState([{ category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
-
   const handleCategoryChange = (index, value) => {
     const updatedRows = [...rows];
     updatedRows[index].category = value;
-    updatedRows[index].subcategory = { module_name: "", module_description: "", difficulty: "" }; // Reset subcategory when category changes
+  
+    // If in custom module mode, update customModuleLevel
+    if (updatedRows[index].isCustomModule) {
+      updatedRows[index].customModuleLevel = value;
+    }
+  
+    // Reset subcategory when category changes
+    updatedRows[index].subcategory = { module_name: "", module_description: "" }; // Remove 'level'
     setRows(updatedRows);
-
-    // Update modules_selected to reflect the changes
+  
+    // Update formValues.modules_selected
     const updatedModulesSelected = [...formValues.modules_selected];
-    updatedModulesSelected[index] = { module_name: "", module_description: "", difficulty: "" };
+    updatedModulesSelected[index] = {
+      module_name: "", // Reset module name
+      module_description: "", // Reset module description
+    };
     setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
   };
 
   const handleSubcategoryChange = (index, moduleName) => {
-    const selectedModule = modules.find((module) => module.module_name === moduleName); // Find the selected module
-
+    const selectedModule = modules.find((module) => module.module_name === moduleName);
+  
     if (selectedModule) {
-      const updatedRows = [...rows];
-      updatedRows[index].subcategory = {
-        module_name: selectedModule.module_name,
-        module_description: selectedModule.module_description,
-        difficulty: selectedModule.difficulty
-      };
-      setRows(updatedRows);
-
-      // Update modules_selected to reflect the changes
-      const updatedModulesSelected = [...formValues.modules_selected];
-      updatedModulesSelected[index] = {
-        module_name: selectedModule.module_name,
-        module_description: selectedModule.module_description,
-        difficulty: selectedModule.difficulty
-      };
-      setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
+      setRows((prevRows) =>
+        prevRows.map((row, i) =>
+          i === index
+            ? {
+                ...row,
+                subcategory: {
+                  module_name: selectedModule.module_name,
+                  module_description: selectedModule.module_description,
+                  level: selectedModule.level,
+                },
+              }
+            : row
+        )
+      );
+  
+      // Update formValues.modules_selected
+      setFormValues((prevFormValues) => {
+        const updatedModulesSelected = [...prevFormValues.modules_selected];
+        updatedModulesSelected[index] = {
+          module_name: selectedModule.module_name,
+          module_description: selectedModule.module_description,
+          level: selectedModule.level,
+        };
+        return { ...prevFormValues, modules_selected: updatedModulesSelected };
+      });
     } else {
-      // Handle case where module is not found (optional)
       console.error("Selected module not found");
     }
   };
@@ -174,11 +216,57 @@ export function RequestForm() {
 
 
   const addRow = () => {
-    setRows([...rows, { category: "", subcategory: { module_name: "", module_description: "", difficulty: "" } }]);
+    // If there are no rows, allow adding a new row without validation
+    if (rows.length === 0) {
+      console.log("No rows exist. Adding the first row...");
+      setRows((prevRows) => [
+        {
+          category: "",
+          subcategory: { module_name: "", module_description: "", level: "" },
+          isCustomModule: false,
+          customModuleName: "",
+          customModuleDescription: "",
+          customModuleLevel: "",
+        },
+      ]);
+      return;
+    }
+  
+    const lastRow = rows[rows.length - 1];
+  
+    // Log the last row for debugging
+    console.log("Last Row Before Adding New Row:", lastRow);
+  
+    // Ensure the last row has a category or custom module filled
+    if (!lastRow?.category && !lastRow?.isCustomModule) {
+      console.log("Validation Failed: Last row is incomplete.");
+      toast.warn("Please complete the current row before adding a new one.");
+      return;
+    }
+  
+    console.log("Adding a new row...");
+  
+    setRows((prevRows) => [
+      ...prevRows,
+      {
+        category: "",
+        subcategory: { module_name: "", module_description: "", level: "" },
+        isCustomModule: false,
+        customModuleName: "",
+        customModuleDescription: "",
+        customModuleLevel: "",
+      },
+    ]);
   };
-
+  
   const removeRow = (index) => {
     setRows(rows.filter((_, i) => i !== index));
+  
+    // Remove the corresponding module from formValues.modules_selected
+    setFormValues((prevFormValues) => {
+      const updatedModulesSelected = prevFormValues.modules_selected.filter((_, i) => i !== index);
+      return { ...prevFormValues, modules_selected: updatedModulesSelected };
+    });
   };
 
   const handleChange = (e, section, index = null) => {
@@ -237,12 +325,73 @@ export function RequestForm() {
     return formatTime(start);
   };
 
+  const getMissingFields = (step) => {
+    const missingFields = [];
+  
+    switch (step) {
+      case 1:
+        if (!formValues.salutation) missingFields.push("Salutation");
+        if (!formValues.last_name) missingFields.push("Last Name");
+        if (!formValues.first_name) missingFields.push("First Name");
+        if (!formValues.middle_name) missingFields.push("Middle Name");
+        if (!formValues.gender) missingFields.push("Gender");
+        if (!formValues.position) missingFields.push("Position");
+        if (!formValues.contact_number) missingFields.push("Contact Number");
+        if (!formValues.email_address) missingFields.push("Email Address");
+        if (!formValues.address) missingFields.push("Address");
+        break;
+  
+      case 2:
+        if (!formValues.organization_name) missingFields.push("Organization Name");
+        if (!formValues.department) missingFields.push("Department");
+        if (!formValues.region) missingFields.push("Region");
+        break;
+  
+      case 3:
+        formValues.date_and_time.forEach((dateInfo, index) => {
+          if (!dateInfo.date) missingFields.push(`Date ${index + 1}`);
+          if (!dateInfo.start_time) missingFields.push(`Start Time ${index + 1}`);
+          if (!dateInfo.end_time) missingFields.push(`End Time ${index + 1}`);
+        });
+        break;
+  
+      case 4:
+        rows.forEach((row, index) => {
+          if (!row.category) missingFields.push(`Category ${index + 1}`);
+          if (row.isCustomModule) {
+            if (!row.customModuleName) missingFields.push(`Custom Module Name ${index + 1}`);
+            if (!row.customModuleDescription) missingFields.push(`Custom Module Description ${index + 1}`);
+          } else {
+            if (!row.subcategory?.module_name) missingFields.push(`Module Name ${index + 1}`);
+            if (!row.subcategory?.module_description) missingFields.push(`Module Description ${index + 1}`);
+          }
+        });
+        break;
+  
+      default:
+        break;
+    }
+  
+    return missingFields;
+  };
+
   const handleNext = () => {
     const isValid = validateStep(step);
+  
     if (isValid) {
       setStep(step + 1);
     } else {
-      toast.info("Please fill in all required fields.");
+      // Collect all missing or empty fields
+      const missingFields = getMissingFields(step);
+  
+      if (missingFields.length > 0) {
+        // Create a user-friendly message for the toast
+        const errorMessage = `Please fill in the following fields:\n${missingFields.join(", ")}`;
+        toast.error(errorMessage, { autoClose: 5000 }); // Display the error message for 5 seconds
+      } else {
+        toast.info("Please fill in all required fields.");
+      }
+  
       // Scroll to the first invalid field
       const firstInvalidField = document.querySelector(".form-control:invalid");
       if (firstInvalidField) {
@@ -253,17 +402,71 @@ export function RequestForm() {
   };
 
   const validateStep = (step) => {
+    const missingFields = [];
+  
     switch (step) {
       case 1:
-        return formValues.salutation && formValues.first_name && formValues.last_name && formValues.middle_name && formValues.gender && formValues.position && formValues.contact_number && formValues.email_address && formValues.address;
+        if (!formValues.salutation) missingFields.push("Salutation");
+        if (!formValues.first_name) missingFields.push("First Name");
+        if (!formValues.last_name) missingFields.push("Last Name");
+        if (!formValues.middle_name) missingFields.push("Middle Name");
+        if (!formValues.gender) missingFields.push("Gender");
+        if (!formValues.position) missingFields.push("Position");
+        if (!formValues.contact_number) missingFields.push("Contact Number");
+        if (!formValues.email_address) missingFields.push("Email Address");
+        if (!formValues.address) missingFields.push("Address");
+  
+        if (missingFields.length > 0) {
+          toast.error(`Please fill in the following fields: ${missingFields.join(", ")}`);
+          return false;
+        }
+        return true;
+  
       case 2:
-        return formValues.organization_name && formValues.department && formValues.region;
+        if (!formValues.organization_name) missingFields.push("Organization Name");
+        if (!formValues.department) missingFields.push("Department");
+        if (!formValues.region) missingFields.push("Region");
+  
+        if (missingFields.length > 0) {
+          toast.error(`Please fill in the following fields: ${missingFields.join(", ")}`);
+          return false;
+        }
+        return true;
+  
       case 3:
-        return formValues.date_and_time.every((dateInfo) => dateInfo.date && dateInfo.start_time && dateInfo.end_time);
+        formValues.date_and_time.forEach((dateInfo, index) => {
+          if (!dateInfo.date) missingFields.push(`Date ${index + 1}`);
+          if (!dateInfo.start_time) missingFields.push(`Start Time ${index + 1}`);
+          if (!dateInfo.end_time) missingFields.push(`End Time ${index + 1}`);
+        });
+  
+        if (missingFields.length > 0) {
+          toast.error(`Please fill in the following fields: ${missingFields.join(", ")}`);
+          return false;
+        }
+        return true;
+  
       case 4:
-        return rows.every((row) => row.category && row.subcategory.module_name && row.subcategory.module_description && row.subcategory.difficulty);
+        rows.forEach((row, index) => {
+          if (!row.category) missingFields.push(`Category ${index + 1}`);
+          if (row.isCustomModule) {
+            if (!row.customModuleName) missingFields.push(`Custom Module Name ${index + 1}`);
+            if (!row.customModuleDescription) missingFields.push(`Custom Module Description ${index + 1}`);
+          } else {
+            if (!row.subcategory?.module_name) missingFields.push(`Module Name ${index + 1}`);
+            if (!row.subcategory?.module_description) missingFields.push(`Module Description ${index + 1}`);
+          }
+        });
+      
+        if (missingFields.length > 0) {
+          toast.error(`Please fill in the following fields: ${missingFields.join(", ")}`);
+          return false;
+        }
+        return true;
+  
       case 5:
         return true;
+  
       default:
         return true;
     }
@@ -374,16 +577,63 @@ export function RequestForm() {
   };
   
   // Function to validate phone number format (must start with "09" and be exactly 11 digits)
-const validatePhoneNumber = (phoneNumber) => {
-  const phonePattern = /^09\d{9}$/; // Ensures the phone number starts with "09" and has exactly 11 digits
-  return phonePattern.test(phoneNumber);
-};
+  const validatePhoneNumber = (phoneNumber) => {
+    const phonePattern = /^09\d{9}$/; // Ensures the phone number starts with "09" and has exactly 11 digits
+    return phonePattern.test(phoneNumber);
+  };
 
 
   const validateEmail = (email) => {
     // Simple regex for basic email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
+  };
+
+  const [rows, setRows] = useState([]);
+
+  // Function to toggle custom module mode
+  const toggleCustomModule = (index) => {
+    setRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index
+          ? {
+              ...row,
+              isCustomModule: !row.isCustomModule,
+              customModuleName: row.isCustomModule ? "" : " ", // Reset custom module name
+              customModuleDescription: row.isCustomModule ? "" : "", // Reset custom module description
+            }
+          : row
+      )
+    );
+  
+    // Update formValues.modules_selected
+    setFormValues((prevFormValues) => {
+      const updatedModulesSelected = [...prevFormValues.modules_selected];
+      updatedModulesSelected[index] = {
+        module_name: rows.isCustomModule ? "" : " ", // Reset for custom module
+        module_description: rows.isCustomModule ? "" : "",
+      };
+      return { ...prevFormValues, modules_selected: updatedModulesSelected };
+    });
+  };
+
+  const handleCustomModuleChange = (index, field, value) => {
+    setRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index ? { ...row, [field]: value } : row
+      )
+    );
+  
+    // Update formValues.modules_selected
+    setFormValues((prevFormValues) => {
+      const updatedModulesSelected = [...prevFormValues.modules_selected];
+      if (field === "customModuleName") {
+        updatedModulesSelected[index].module_name = value;
+      } else if (field === "customModuleDescription") {
+        updatedModulesSelected[index].module_description = value;
+      }
+      return { ...prevFormValues, modules_selected: updatedModulesSelected };
+    });
   };
 
   return (
@@ -842,7 +1092,6 @@ const validatePhoneNumber = (phoneNumber) => {
               )}
 
 
-
               {step === 4 && (
                 <div>
                   <h4 className="mb-3">Module Categories</h4>
@@ -866,43 +1115,77 @@ const validatePhoneNumber = (phoneNumber) => {
                               onChange={(e) => handleCategoryChange(index, e.target.value)}
                             >
                               <option value="">Select Category</option>
-                              <option value="Beginner">Beginner</option>
+                              <option value="Basic">Basic</option>
                               <option value="Intermediate">Intermediate</option>
                               <option value="Technical">Technical</option>
                             </select>
                           </td>
                           <td>
-                            <select
-                              type="modules"
-                              className="form-select"
-                              value={row.subcategory.module_name}
-                              onChange={(e) => handleSubcategoryChange(index, e.target.value)}
-                              disabled={!row.category}
+                            {row.isCustomModule ? (
+                              // Input field for custom module name
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter Custom Module Name"
+                                value={row.customModuleName}
+                                onChange={(e) =>
+                                  handleCustomModuleChange(index, "customModuleName", e.target.value)
+                                }
+                              />
+                            ) : (
+                              // Dropdown for predefined modules
+                              <select
+                                type="modules"
+                                className="form-select"
+                                value={row.subcategory?.module_name}
+                                onChange={(e) => handleSubcategoryChange(index, e.target.value)}
+                                disabled={!row.category}
+                              >
+                                <option value="">Select Module</option>
+                                {modules
+                                  .filter((module) => {
+                                    if (row.category === "Technical") {
+                                      return module.level === "Technical";
+                                    }
+                                    if (row.category === "Intermediate") {
+                                      return module.level === "Intermediate";
+                                    }
+                                    if (row.category === "Basic") {
+                                      return module.level === "Basic";
+                                    }
+                                    return true; // Default case if no category is selected
+                                  })
+                                  .map((module) => (
+                                    <option key={module._id} value={module.module_name}>
+                                      {module.module_name}
+                                    </option>
+                                  ))}
+                              </select>
+                            )}
+                            {/* Button to toggle between custom module and predefined module */}
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-outline-secondary mt-2"
+                              onClick={() => toggleCustomModule(index)}
                             >
-                              <option value="">Select Module</option>
-                              {modules
-                                .filter((module) => {
-                                  if (row.category === "Technical") {
-                                    return module.difficulty === "Technical";
-                                  }
-                                  if (row.category === "Intermediate") {
-                                    return module.difficulty === "Intermediate";
-                                  }
-                                  if (row.category === "Beginner") {
-                                    return module.difficulty === "Beginner";
-                                  }
-                                  return true; // Default case if no category is selected
-                                })
-                                .map((module) => (
-                                  <option key={module._id} value={module.module_name}>
-                                    {module.module_name}
-                                  </option>
-                                ))}
-
-                            </select>
+                              {row.isCustomModule ? "Use Predefined Module" : "Add Custom Module"}
+                            </button>
                           </td>
                           <td>
-                            {row.subcategory.module_description || "Select a module to see the description"} {/* Display description here */}
+                            {row.isCustomModule ? (
+                              // Textarea for custom module description
+                              <textarea
+                                className="form-control"
+                                placeholder="Enter Custom Module Description"
+                                value={row.customModuleDescription}
+                                onChange={(e) =>
+                                  handleCustomModuleChange(index, "customModuleDescription", e.target.value)
+                                }
+                              />
+                            ) : (
+                              // Display predefined module description
+                              row.subcategory?.module_description || "Select a module to see the description"
+                            )}
                           </td>
                           <td>
                             <button
@@ -943,7 +1226,6 @@ const validatePhoneNumber = (phoneNumber) => {
                   </div>
                 </div>
               )}
-
 
               {step === 5 && (
                 <>
@@ -1072,15 +1354,21 @@ const validatePhoneNumber = (phoneNumber) => {
                             <div key={index} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "8px" }}>
                               <div>
                                 <label><strong>Category:</strong></label>
-                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.category || "Not Selected"}</p>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>
+                                  {row.category || "Not Selected"}
+                                </p>
                               </div>
                               <div>
                                 <label><strong>Module:</strong></label>
-                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_name || "Not Selected"}</p>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>
+                                  {row.isCustomModule ? row.customModuleName || "Not Selected" : row.subcategory?.module_name || "Not Selected"}
+                                </p>
                               </div>
                               <div>
                                 <label><strong>Description:</strong></label>
-                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>{row.subcategory?.module_description || "Not Selected"}</p>
+                                <p style={{ margin: "3px 0", padding: "4px", backgroundColor: "#eaf4ff", border: "1px solid black", borderRadius: "5px" }}>
+                                  {row.isCustomModule ? row.customModuleDescription || "Not Selected" : row.subcategory?.module_description || "Not Selected"}
+                                </p>
                               </div>
                             </div>
                           ))

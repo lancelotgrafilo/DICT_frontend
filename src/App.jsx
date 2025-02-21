@@ -59,7 +59,7 @@ export default function App() {
             <Route index element={<FocalDashboard />} /> {/* Default route */}
             <Route path="dashboard" element={<FocalDashboard />} />
             <Route path="request" element={<Request />} />
-            <Route path="activities" element={<Activities />} />
+            <Route path="activities" element={<Activities />} />  
             <Route path='modules-lists' element={<ModulesList/>} />
             <Route path='history' element={<History/>} />
             <Route path='settings' element={<Settings/>} />
