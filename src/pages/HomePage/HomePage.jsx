@@ -24,6 +24,10 @@ export function Homepage() {
   const handleDivisionClick = () => {
     navigate("/divisions"); // Redirect to the division page
   };
+  const handleOutcomeClick = () => {
+    const outcomes = ["Enhanced Cybersecurity", "Increased Awareness", "Better Data Protection"];
+    navigate("/outcomes", { state: { outcomes } });
+  };
 
   return (
     <div className={styleHomePage.mainContent}>
@@ -53,14 +57,13 @@ export function Homepage() {
             />
             <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
-          <Carousel.Item>
+          <Carousel.Item onClick={handleOutcomeClick} style={{ cursor: "pointer" }}>
             <img
               className="d-block w-100"
               src={img3}
               alt="Third slide"
               style={{ height: "480px", objectFit: "cover" }}
             />
-            <Carousel.Caption></Carousel.Caption>
           </Carousel.Item>
         </Carousel>
       </div>

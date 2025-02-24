@@ -25,6 +25,8 @@ import { Tec } from './components/CIE-Division/TEC/Tec.jsx';
 import { Institutional } from './components/CIE-Division/Institutional/Institutional.jsx';
 import { MonthlyReports } from './components/MonthlyReports/MonthlyReports.jsx';
 import { NewsTipsAdvisories } from './components/NewsTipsAdvisories/NewsTipsAdvisories.jsx';
+import { Outcomes } from './pages/outcomepage/outcomes.jsx';
+
 
 export default function App() {
   return (
@@ -35,7 +37,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="home" element={ <Homepage/> }></Route>
           <Route path="request-form" element={ <RequestForm/> }> </Route>
-          <Route path="divisions" element={ <Divisions/> } /> 
+          <Route path="divisions" element={ <Divisions/> } />
+          <Route path="outcomes" element={<Outcomes />} />
           
           <Route path="divisions/cie" element={ <Cie/> }/>
           <Route path="divisions/cie/cpcb" element={ <Cpcb/> }/>
