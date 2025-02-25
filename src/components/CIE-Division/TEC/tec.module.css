@@ -80,3 +80,14 @@
   color: #555555;
   line-height: 1.6;
 }
+
+.link {
+  text-decoration: none; /* Remove default underline */
+  color: #007bff; /* Adjust link color */
+  font-weight: bold;
+  transition: text-decoration 0.2s ease-in-out;
+}
+
+.link:hover {
+  text-decoration: underline; /* Underline on hover */
+}

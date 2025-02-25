@@ -2,6 +2,8 @@ import styleTec from './tec.module.css';
 import { Header } from '../../Header/Header';
 import { Footer } from '../../Footer/Footer';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 // Import icons from React Icons
 import { FaShieldAlt, FaFileUpload, FaFilePdf, FaUsersCog, FaBook } from 'react-icons/fa';
 
@@ -74,6 +76,13 @@ export function Tec() {
             <>
               <h2>{selectedItem}</h2>
               <p>{itemDetails[selectedItem].description}</p>
+              {selectedItem === 'Capacity Building' && (
+                <Link to="/divisions/cie/cpcb" className={styleTec.link}>
+                  Go to Cybersecurity Programs and Capacity Building (CPCB)
+                </Link>
+              )}
+
+
             </>
           ) : (
             <p>Select an item from the left sidebar to view details.</p>
