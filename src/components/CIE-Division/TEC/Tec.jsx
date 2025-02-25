@@ -42,6 +42,15 @@ export function Tec() {
           {/* Smaller Title in the Sidebar */}
           <div className={styleTec.sidebarTitle}>
             Technical Evaluation and Cybersecurity (TECS)
+            <div className="divider">
+        <div className="blue-section"></div>
+        <div className="red-section"></div>
+      </div>
+      <div className="stars">
+        <span>⭐</span>
+        <span>⭐</span>
+        <span>⭐</span>
+      </div>
           </div>
 
           {/* List of Items */}

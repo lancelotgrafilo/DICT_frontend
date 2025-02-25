@@ -43,7 +43,15 @@ export function Cpcb() {
         {/* Left Sidebar (No Background) */}
         <div className={styleCpcb.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={styleCpcb.sidebarTitle}>Cybersecurity Programs and Capacity Building (CPCB)</div>
+          <div className={styleCpcb.sidebarTitle}>Cybersecurity Programs and Capacity Building (CPCB)<div className="divider">
+            <div className="blue-section"></div>
+            <div className="red-section"></div>
+          </div>
+          <div className="stars">
+            <span>⭐</span>
+            <span>⭐</span>
+            <span>⭐</span>
+          </div></div>
           <p className={styleCpcb.description}>
             The Cybersecurity Programs and Capacity Building (CPCB) initiative aims to enhance cybersecurity awareness,
             provide technical training, and strengthen cyber resilience across different regions.

@@ -275,7 +275,6 @@ h1 {
   --icon-size: 40px;
   --icon-font-size: 1.5rem;
 }
-
 .socialIcon {
   color: white;
   font-size: var(--icon-font-size);
@@ -288,25 +287,13 @@ h1 {
   text-decoration: none;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
-
 .socialIcon:hover {
   transform: scale(1.15);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
   background-color: rgba(255, 255, 255, 0.2);
 }
-
-
-/* Background Colors for Each Social Icon */
-.socialIcon.x { background-color: black; }
-.socialIcon.facebook { background-color: #1877f2; }
-.socialIcon.youtube { background-color: #ff0000; }
-.socialIcon.instagram {
-  background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
-}
-
 /* Icon Styling */
 .socialIcon i {
   color: white;
   font-size: 18px;
 }
-

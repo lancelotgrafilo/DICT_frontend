@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styleHomePage from "./homePage.module.css";
 import { Header } from "../../components/Header/Header";
@@ -28,6 +29,7 @@ export function Homepage() {
     const outcomes = ["Enhanced Cybersecurity", "Increased Awareness", "Better Data Protection"];
     navigate("/outcomes", { state: { outcomes } });
   };
+  
 
   return (
     <div className={styleHomePage.mainContent}>

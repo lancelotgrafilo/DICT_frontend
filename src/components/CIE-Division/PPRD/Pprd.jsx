@@ -45,7 +45,15 @@ export function Pprd() {
         {/* Left Sidebar (No Background) */}
         <div className={stylePprd.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={stylePprd.sidebarTitle}>Public Policy and Regulatory Documents (PPRD)</div>
+          <div className={stylePprd.sidebarTitle}>Public Policy and Regulatory Documents (PPRD)<div className="divider">
+        <div className="blue-section"></div>
+        <div className="red-section"></div>
+      </div>
+      <div className="stars">
+        <span>⭐</span>
+        <span>⭐</span>
+        <span>⭐</span>
+      </div></div>
           {/* List of Items */}
           <div className={stylePprd.pprdContainer}>
             {Object.keys(itemDetails).map((item, index) => (

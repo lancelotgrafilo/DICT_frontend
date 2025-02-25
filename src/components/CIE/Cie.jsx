@@ -65,7 +65,7 @@ export function Cie() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer/>
     </>
   );
 }

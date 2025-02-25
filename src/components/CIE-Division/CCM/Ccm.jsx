@@ -39,7 +39,16 @@ export function Ccm() {
         {/* Left Sidebar (No Background) */}
         <div className={styleCcm.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={styleCcm.sidebarTitle}>Cybersecurity Compliance and Monitoring (CCM)</div>
+          <div className={styleCcm.sidebarTitle}>Cybersecurity Compliance and Monitoring (CCM)
+      <div className="divider">
+        <div className="blue-section"></div>
+        <div className="red-section"></div>
+      </div>
+      <div className="stars">
+        <span>⭐</span>
+        <span>⭐</span>
+        <span>⭐</span>
+      </div></div>
           {/* List of Items */}
           <div className={styleCcm.ccmContainer}>
             {Object.keys(itemDetails).map((item, index) => (
