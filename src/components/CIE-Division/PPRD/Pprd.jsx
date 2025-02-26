@@ -6,9 +6,6 @@ import { useState } from 'react';
 import { FaFileAlt, FaClipboardList, FaGavel, FaDraftingCompass, FaChartLine, FaEllipsisH } from 'react-icons/fa';
 
 export function Pprd() {
-  // State to track the selected item and its details
-  const [selectedItem, setSelectedItem] = useState(null);
-
   // Define the details and icons for each item
   const itemDetails = {
     'Department Circulars': {
@@ -37,6 +34,12 @@ export function Pprd() {
       description: 'Other documents and resources that do not fall under specific categories.'
     }
   };
+
+  // Extract the keys of the itemDetails object
+  const itemKeys = Object.keys(itemDetails);
+
+  // Initialize selectedItem with the first key (automatically selects the first menu item)
+  const [selectedItem, setSelectedItem] = useState(itemKeys[0]);
 
   return (
     <>

@@ -11,7 +11,7 @@ body {
 .mainContent {
   min-height: 80vh;
   background: rgba(255, 255, 255, 0.95);
-  padding: 40px 20px;
+  padding: 40px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,13 +31,14 @@ body {
   height: 100px;
   background: linear-gradient(to right, #007bff, #0056b3); /* DICT-style banner */
   color: white;
-  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .division h1 {
   font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
+  color: #ffffff;
   letter-spacing: 1.5px;
   padding-bottom: 10px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);

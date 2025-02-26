@@ -13,6 +13,7 @@
   margin: 0;
   position: relative; /* Required for absolute positioning of the dots container */
 }
+
 h1 {
   font-family: 'Arial', sans-serif; /* You can replace with the desired font */
   font-weight: 700; /* Bold text */
@@ -20,6 +21,7 @@ h1 {
   color: #333; /* Dark text color */
   text-align: center;
   position: relative;
+  margin-top: 20px;
 }
 
 .banner img {
