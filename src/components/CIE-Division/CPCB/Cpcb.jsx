@@ -7,9 +7,6 @@ import { Link } from 'react-router-dom';
 import { FaGraduationCap, FaFileAlt, FaMicrophone, FaMapMarkedAlt } from 'react-icons/fa';
 
 export function Cpcb() {
-  // State to track the selected item and its details
-  const [selectedItem, setSelectedItem] = useState(null);
-
   // Define the regions for NCAP
   const regions = [
     "CAR - Cordillera Administrative Region",
@@ -36,6 +33,12 @@ export function Cpcb() {
     }
   };
 
+  // Extract the keys of the itemDetails object
+  const itemKeys = Object.keys(itemDetails);
+
+  // Initialize selectedItem with the first key (automatically selects the first menu item)
+  const [selectedItem, setSelectedItem] = useState(itemKeys[0]);
+
   return (
     <>
       <Header />
@@ -43,15 +46,17 @@ export function Cpcb() {
         {/* Left Sidebar (No Background) */}
         <div className={styleCpcb.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={styleCpcb.sidebarTitle}>Cybersecurity Programs and Capacity Building (CPCB)<div className="divider">
-            <div className="blue-section"></div>
-            <div className="red-section"></div>
+          <div className={styleCpcb.sidebarTitle}>Cybersecurity Programs and Capacity Building (CPCB)
+            <div className="divider">
+              <div className="blue-section"></div>
+              <div className="red-section"></div>
+            </div>
+            <div className="stars">
+              <span>⭐</span>
+              <span>⭐</span>
+              <span>⭐</span>
+            </div>
           </div>
-          <div className="stars">
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-          </div></div>
           <p className={styleCpcb.description}>
             The Cybersecurity Programs and Capacity Building (CPCB) initiative aims to enhance cybersecurity awareness,
             provide technical training, and strengthen cyber resilience across different regions.

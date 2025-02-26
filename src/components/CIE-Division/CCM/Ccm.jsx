@@ -6,21 +6,15 @@ import { useState } from 'react';
 import { FaShieldAlt, FaFileUpload, FaListAlt, FaBuilding } from 'react-icons/fa';
 
 export function Ccm() {
-  // State to track the selected item and its details
-  const [selectedItem, setSelectedItem] = useState(null);
-
-  // Define the sectors for display
-  const sectors = [
-    "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5",
-    "Sector 6", "Sector 7", "Sector 8", "Sector 9", "Sector 10"
-  ];
-
   // Define the details and icons for each item
   const itemDetails = {
     'Critical Information Infrastructure (CII)': {
       icon: <FaShieldAlt />, // Shield icon for CII
       description: 'CII refers to systems and assets that are essential for national security, economic stability, and public safety.',
-      sectors: sectors // Include sectors as part of the item details
+      sectors: [
+        "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5",
+        "Sector 6", "Sector 7", "Sector 8", "Sector 9", "Sector 10"
+      ]
     },
     'Request for CB': {
       icon: <FaBuilding />, // Building icon for CB
@@ -32,6 +26,12 @@ export function Ccm() {
     }
   };
 
+  // Extract the keys of the itemDetails object
+  const itemKeys = Object.keys(itemDetails);
+
+  // Initialize selectedItem with the first key (automatically selects the first menu item)
+  const [selectedItem, setSelectedItem] = useState(itemKeys[0]);
+
   return (
     <>
       <Header />
@@ -39,16 +39,7 @@ export function Ccm() {
         {/* Left Sidebar (No Background) */}
         <div className={styleCcm.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={styleCcm.sidebarTitle}>Cybersecurity Compliance and Monitoring (CCM)
-      <div className="divider">
-        <div className="blue-section"></div>
-        <div className="red-section"></div>
-      </div>
-      <div className="stars">
-        <span>⭐</span>
-        <span>⭐</span>
-        <span>⭐</span>
-      </div></div>
+          <div className={styleCcm.sidebarTitle}>Cybersecurity Compliance and Monitoring (CCM)</div>
           {/* List of Items */}
           <div className={styleCcm.ccmContainer}>
             {Object.keys(itemDetails).map((item, index) => (

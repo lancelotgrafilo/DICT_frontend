@@ -18,6 +18,7 @@ import divisionsImage from "../../assets/img/divisions.png"; // Add an image for
 import ciccLogo from "../../assets/logo/cicc.png";
 import npcLogo from "../../assets/logo/npc.png";
 import ntcLogo from "../../assets/logo/ntc.png";
+import { FaFileAlt, FaClipboardList, FaGavel, FaDraftingCompass, FaChartLine, FaEllipsisH } from 'react-icons/fa';
 
 export function Homepage() {
   const navigate = useNavigate(); // Initialize the navigate function
@@ -29,7 +30,7 @@ export function Homepage() {
     const outcomes = ["Enhanced Cybersecurity", "Increased Awareness", "Better Data Protection"];
     navigate("/outcomes", { state: { outcomes } });
   };
-  
+
 
   return (
     <div className={styleHomePage.mainContent}>
@@ -71,6 +72,10 @@ export function Homepage() {
       </div>
       {/* Mission, Vision, Divisions Cards */}
       <h1>Who We Are</h1>
+      <div className="divider">
+        <div className="blue-section"></div>
+        <div className="red-section"></div>
+      </div>
       <p>The DICT Cybersecurity Bureau is tasked to implement the National CyberSecurity Plan</p>
       <div className={styleHomePage.cardContainer}>
         {/* Mission and Vision Card */}
@@ -130,7 +135,7 @@ export function Homepage() {
                 out its mandate.
               </p>
             </div>
-           <div className={styleHomePage.flipCardBack}>
+            <div className={styleHomePage.flipCardBack}>
               <h2
                 style={{
                   color: "white",
@@ -158,32 +163,32 @@ export function Homepage() {
       <div className={styleHomePage.newsSection}>
         <h1 className={styleHomePage.centeredTitle}>News, Tips, and Advisories</h1>
         <div className={styleHomePage.socialMediaSection}>
-      <div className={styleHomePage.socialMediaContainer}>
-        <span className={styleHomePage.socialText}>Get Our</span>
-        <strong className={styleHomePage.socialHighlight}>Latest Updates</strong>
-      </div>
-      <div className={styleHomePage.socialIcons}>
-        <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={styleHomePage.socialIcon}>
-          <img src={twitterIcon} alt="Twitter" />
-        </a>
-        <a href="https://www.facebook.com/CYBERSECgovph" className={styleHomePage.socialIcon}>
-          <img src={facebookIcon} alt="Facebook" />
-        </a>
-        <a href="https://www.youtube.com/DICTCybersecurity" className={styleHomePage.socialIcon}>
-          <img src={youtubeIcon} alt="YouTube" />
-        </a>
-        <a href="https://www.instagram.com/dictcsb/" className={styleHomePage.socialIcon}>
-          <img src={instagramIcon} alt="Instagram" />
-        </a>
-      </div>
-    </div>
+          <div className={styleHomePage.socialMediaContainer}>
+            <span className={styleHomePage.socialText}>Get Our</span>
+            <strong className={styleHomePage.socialHighlight}>Latest Updates</strong>
+          </div>
+          <div className={styleHomePage.socialIcons}>
+            <a href="https://x.com/CYBERSECgovph/status/1447752966451040258" className={styleHomePage.socialIcon}>
+              <img src={twitterIcon} alt="Twitter" />
+            </a>
+            <a href="https://www.facebook.com/CYBERSECgovph" className={styleHomePage.socialIcon}>
+              <img src={facebookIcon} alt="Facebook" />
+            </a>
+            <a href="https://www.youtube.com/DICTCybersecurity" className={styleHomePage.socialIcon}>
+              <img src={youtubeIcon} alt="YouTube" />
+            </a>
+            <a href="https://www.instagram.com/dictcsb/" className={styleHomePage.socialIcon}>
+              <img src={instagramIcon} alt="Instagram" />
+            </a>
+          </div>
+        </div>
         <div className={styleHomePage.cardViewContainer}>
           {/* Single Card View with Vertical Lines */}
           <div className={styleHomePage.singleCard}>
             {/* News Section */}
             <div className={styleHomePage.topic}>
               <div className={styleHomePage.topicIcon}>
-              <i className="bi bi-newspaper text-primary"></i> {/* Bootstrap Icon for News */}
+                <i className="bi bi-newspaper"></i> {/* Bootstrap Icon for News */}
               </div>
               <h3 className={styleHomePage.topicTitle}>News</h3>
               <p className={styleHomePage.topicParagraph}>

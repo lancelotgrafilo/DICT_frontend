@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import { FaShieldAlt, FaFileUpload, FaFilePdf, FaUsersCog, FaBook } from 'react-icons/fa';
 
 export function Tec() {
-  // State to track the selected item and its details
-  const [selectedItem, setSelectedItem] = useState(null);
 
   // Define the details and icons for each item
   const itemDetails = {
@@ -35,6 +33,12 @@ export function Tec() {
     }
   };
 
+  // Extract the keys of the itemDetails object
+  const itemKeys = Object.keys(itemDetails);
+
+  // Initialize selectedItem with the first key (automatically selects the first menu item)
+  const [selectedItem, setSelectedItem] = useState(itemKeys[0]);
+
   return (
     <>
       <Header />
@@ -45,14 +49,14 @@ export function Tec() {
           <div className={styleTec.sidebarTitle}>
             Technical Evaluation and Cybersecurity (TECS)
             <div className="divider">
-        <div className="blue-section"></div>
-        <div className="red-section"></div>
-      </div>
-      <div className="stars">
-        <span>⭐</span>
-        <span>⭐</span>
-        <span>⭐</span>
-      </div>
+              <div className="blue-section"></div>
+              <div className="red-section"></div>
+            </div>
+            <div className="stars">
+              <span>⭐</span>
+              <span>⭐</span>
+              <span>⭐</span>
+            </div>
           </div>
 
           {/* List of Items */}

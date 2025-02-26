@@ -6,8 +6,6 @@ import { useState } from 'react';
 import { FaDollarSign, FaFileAlt, FaShoppingCart, FaBuilding } from 'react-icons/fa';
 
 export function Institutional() {
-  // State to track the selected item and its details
-  const [selectedItem, setSelectedItem] = useState(null);
 
   // Define the details and icons for each item
   const itemDetails = {
@@ -28,6 +26,12 @@ export function Institutional() {
       description: 'Digital governance initiatives through modern public access systems.'
     }
   };
+
+  // Extract the keys of the itemDetails object
+  const itemKeys = Object.keys(itemDetails);
+
+  // Initialize selectedItem with the first key (automatically selects the first menu item)
+  const [selectedItem, setSelectedItem] = useState(itemKeys[0]);
 
   return (
     <>
