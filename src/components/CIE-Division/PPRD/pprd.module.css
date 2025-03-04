@@ -92,3 +92,35 @@
 .contentCard a:hover {
   text-decoration: underline;
 }
+
+/* Card Container */
+.cardContainer {
+  display: flex;
+  flex-direction: column; /* Stack cards vertically */
+  gap: 1rem; /* Space between cards */
+}
+
+/* Individual Card */
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 100%; /* Full width for single-column layout */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.card a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
