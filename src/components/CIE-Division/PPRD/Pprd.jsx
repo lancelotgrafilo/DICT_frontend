@@ -11,15 +11,33 @@ export function Pprd() {
     'Department Circulars': {
       icon: <FaFileAlt />, // File icon for Department Circulars
       description: 'Department Circulars provide official directives and guidelines issued by the department.',
-      link: 'https://dict.gov.ph/department-circulars'
+      documents: [
+        { id: 1, title: 'DICT DC 003 S.2020', link: '#' },
+        { id: 2, title: 'DICT DC 003 S.2024', link: '#' },
+        { id: 3, title: 'DICT DC 004 S.2024', link: '#' },
+        { id: 4, title: 'DICT DC 005 S.2024', link: '#' },
+        { id: 5, title: 'DICT DC 006 S.2024', link: '#' }
+      ]
     },
     'Memorandum Circulars': {
       icon: <FaClipboardList />, // Clipboard icon for Memorandum Circulars
-      description: 'Memorandum Circulars are official communications disseminating information or instructions.'
+      description: 'Memorandum Circulars are official communications disseminating information or instructions.',
+      documents: [
+        { id: 1, title: 'DICT MC 005 S.2017', link: '#' },
+        { id: 2, title: 'DICT MC 006 S.2017', link: '#' },
+        { id: 3, title: 'DICT MS 007 S.2017', link: '#' }
+      ]
     },
     'Legislation': {
       icon: <FaGavel />, // Gavel icon for Legislation
-      description: 'Legislation refers to laws and regulations relevant to the department and its operations.'
+      description: 'Legislation refers to laws and regulations relevant to the department and its operations.',
+      documents: [
+        { id: 1, title: 'EO 58', link: '#' },
+        { id: 2, title: 'RA 10175', link: '#' },
+        { id: 3, title: 'RA 10173', link: '#' },
+        { id: 4, title: 'RA 10844', link: '#' },
+        { id: 5, title: 'NCSP 2028', link: '#' }
+      ]
     },
     'Draft Policies': {
       icon: <FaDraftingCompass />, // Drafting Compass icon for Draft Policies
@@ -77,10 +95,17 @@ export function Pprd() {
             <>
               <h2>{selectedItem}</h2>
               <p>{itemDetails[selectedItem].description}</p>
-              {itemDetails[selectedItem].link && (
-                <a href={itemDetails[selectedItem].link} target="_blank" rel="noopener noreferrer">
-                  View Details
-                </a>
+              {itemDetails[selectedItem].documents && (
+                <div className={stylePprd.cardContainer}>
+                  {itemDetails[selectedItem].documents.map((doc) => (
+                    <div key={doc.id} className={stylePprd.card}>
+                      <h3>{doc.title}</h3>
+                      <a href={doc.link} target="_blank" rel="noopener noreferrer">
+                        View Document
+                      </a>
+                    </div>
+                  ))}
+                </div>
               )}
             </>
           ) : (
