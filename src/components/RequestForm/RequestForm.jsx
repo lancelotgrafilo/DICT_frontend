@@ -82,7 +82,7 @@ export function RequestForm() {
     // Step 2: Filter out incomplete modules and remove the 'level' field
     const filteredModulesSelected = formValues.modules_selected
       .filter((module) => module.module_name && module.module_description)
-      .map(({ level, ...rest }) => rest); // Remove the 'level' field
+      .map(({ level, ...rest }) => rest); 
   
     // Update formValues with filtered modules
     setFormValues((prevFormValues) => ({
@@ -167,16 +167,20 @@ export function RequestForm() {
     }
   
     // Reset subcategory when category changes
-    updatedRows[index].subcategory = { module_name: "", module_description: "" }; // Remove 'level'
+    updatedRows[index].subcategory = { module_name: "", module_description: "" };
     setRows(updatedRows);
   
-    // Update formValues.modules_selected
-    const updatedModulesSelected = [...formValues.modules_selected];
-    updatedModulesSelected[index] = {
-      module_name: "", // Reset module name
-      module_description: "", // Reset module description
-    };
-    setFormValues({ ...formValues, modules_selected: updatedModulesSelected });
+    // Update formValues.modules_selected with the new category as level
+    setFormValues((prevFormValues) => {
+      const updatedModulesSelected = [...prevFormValues.modules_selected];
+      updatedModulesSelected[index] = {
+        ...updatedModulesSelected[index],
+        level: value, // Set the category as the level
+        module_name: "", // Reset module name
+        module_description: "", // Reset module description
+      };
+      return { ...prevFormValues, modules_selected: updatedModulesSelected };
+    });
   };
 
   const handleSubcategoryChange = (index, moduleName) => {
@@ -204,7 +208,7 @@ export function RequestForm() {
         updatedModulesSelected[index] = {
           module_name: selectedModule.module_name,
           module_description: selectedModule.module_description,
-          level: selectedModule.level,
+          level: rows[index].category, // Ensure the level matches the current category
         };
         return { ...prevFormValues, modules_selected: updatedModulesSelected };
       });
@@ -219,14 +223,13 @@ export function RequestForm() {
     // If there are no rows, allow adding a new row without validation
     if (rows.length === 0) {
       console.log("No rows exist. Adding the first row...");
-      setRows((prevRows) => [
+      setRows([
         {
           category: "",
-          subcategory: { module_name: "", module_description: "", level: "" },
+          subcategory: { module_name: "", module_description: "" }, // Removed 'level' as it's unused
           isCustomModule: false,
           customModuleName: "",
           customModuleDescription: "",
-          customModuleLevel: "",
         },
       ]);
       return;
@@ -250,11 +253,10 @@ export function RequestForm() {
       ...prevRows,
       {
         category: "",
-        subcategory: { module_name: "", module_description: "", level: "" },
+        subcategory: { module_name: "", module_description: "" }, // Removed 'level' as it's unused
         isCustomModule: false,
         customModuleName: "",
         customModuleDescription: "",
-        customModuleLevel: "",
       },
     ]);
   };
@@ -379,6 +381,14 @@ export function RequestForm() {
     const isValid = validateStep(step);
   
     if (isValid) {
+      // Log inputs for Step 4
+      if (step === 4) {
+        console.group("Step 4 Inputs:");
+        console.log("Rows Data:", rows);
+        console.log("Modules Selected in FormValues:", formValues.modules_selected);
+        console.groupEnd();
+      }
+  
       setStep(step + 1);
     } else {
       // Collect all missing or empty fields
@@ -610,8 +620,10 @@ export function RequestForm() {
     setFormValues((prevFormValues) => {
       const updatedModulesSelected = [...prevFormValues.modules_selected];
       updatedModulesSelected[index] = {
-        module_name: rows.isCustomModule ? "" : " ", // Reset for custom module
-        module_description: rows.isCustomModule ? "" : "",
+        ...updatedModulesSelected[index],
+        level: rows[index].category, // Ensure the level matches the current category
+        module_name: rows[index].isCustomModule ? "" : " ", // Reset for custom module
+        module_description: rows[index].isCustomModule ? "" : "",
       };
       return { ...prevFormValues, modules_selected: updatedModulesSelected };
     });
@@ -632,6 +644,10 @@ export function RequestForm() {
       } else if (field === "customModuleDescription") {
         updatedModulesSelected[index].module_description = value;
       }
+  
+      // Ensure the level matches the current category
+      updatedModulesSelected[index].level = rows[index].category;
+  
       return { ...prevFormValues, modules_selected: updatedModulesSelected };
     });
   };
