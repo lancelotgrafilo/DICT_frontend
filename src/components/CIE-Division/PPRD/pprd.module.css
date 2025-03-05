@@ -25,6 +25,23 @@
   text-align: left; /* Align title to the left */
 }
 
+.divider {
+  display: flex
+;
+  height: 5px;
+  margin: 5px 0;
+}
+
+.blue-section {
+  flex: 7;
+  background-color: #002b5c;
+}
+
+.red-section {
+  flex: 3;
+  background-color: #a02c2c;
+}
+
 .pprdContainer {
   display: flex;
   flex-direction: column;

@@ -299,3 +299,19 @@ h1 {
   color: white;
   font-size: 18px;
 }
+
+.divider {
+  display: flex;
+  height: 5px;
+  margin: 5px 0;
+}
+
+.blue_section {
+  flex: 7;
+  background-color: #002b5c;
+}
+
+.red_section {
+  flex: 3;
+  background-color: #a02c2c;
+}
