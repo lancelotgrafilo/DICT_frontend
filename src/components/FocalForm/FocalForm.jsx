@@ -3,9 +3,11 @@ import styleFocalForm from './focalForm.module.css';
 import { toast } from 'react-toastify';
 import usePostFocal from '../../utils/Hooks/FocalHooks/usePostFocal';
 import html2pdf from 'html2pdf.js';
+import { useNavigate } from 'react-router-dom';
 
 export function FocalForm() {
 
+  const navigate = useNavigate();
   const { loading, addFocal } = usePostFocal();
   const [step, setStep] = useState(1);
   const [formValues, setFormValues] = useState({
@@ -64,7 +66,8 @@ export function FocalForm() {
           province: '',
           focal_status: '',
         });
-        setStep(1);
+        setStep(1); // Reset to Step 1
+        navigate("/cpcb-super-admin/focal-list"); // Navigate to the specified path
       }
     } else {
       // Reset form values and step without confirmation
@@ -83,7 +86,8 @@ export function FocalForm() {
         province: '',
         focal_status: '',
       });
-      setStep(1);
+      setStep(1); // Reset to Step 1
+      navigate("/cpcb-super-admin/focal-list"); // Navigate to the specified path
     }
   };
     
