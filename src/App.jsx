@@ -67,7 +67,7 @@ export default function App() {
             <Route path='history' element={<History/>} />
             <Route path='settings' element={<Settings/>} />
             <Route path='focal-list' element={<FocalList/>} />
-            <Route path="focal-form" element={ <FocalForm/>} />
+            <Route path="focal-form" element={<FocalForm/>} />
             <Route path='monthly-reports' element={<MonthlyReports/>} />
             <Route path='news-tips-advisories' element={<NewsTipsAdvisories/>} />
           </Route>
@@ -76,6 +76,7 @@ export default function App() {
           <Route path="training" element={ <TrainingPage /> } />
           <Route path="login" element={<LoginPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
+          
 
           
         </Routes>

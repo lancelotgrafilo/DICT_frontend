@@ -18,7 +18,7 @@ import divisionsImage from "../../assets/img/divisions.png"; // Add an image for
 import ciccLogo from "../../assets/logo/cicc.png";
 import npcLogo from "../../assets/logo/npc.png";
 import ntcLogo from "../../assets/logo/ntc.png";
-import { FaFileAlt, FaClipboardList, FaGavel, FaDraftingCompass, FaChartLine, FaEllipsisH } from 'react-icons/fa';
+
 
 export function Homepage() {
   const navigate = useNavigate(); // Initialize the navigate function
@@ -40,7 +40,7 @@ export function Homepage() {
         <Carousel
           indicators // Enables dot navigation
           controls={false} // Disables arrow navigation
-          interval={3000} // Automatically advances every 5 seconds (5000ms)
+          interval={3000} // Automatically advances every 3 seconds (3000ms)
         >
           <Carousel.Item>
             <img
@@ -72,9 +72,9 @@ export function Homepage() {
       </div>
       {/* Mission, Vision, Divisions Cards */}
       <h1>Who We Are</h1>
-      <div className="divider">
-        <div className="blue-section"></div>
-        <div className="red-section"></div>
+      <div className={styleHomePage.divider}>
+        <div className={styleHomePage.blue_section}></div>
+        <div className={styleHomePage.red_section}></div>
       </div>
       <p>The DICT Cybersecurity Bureau is tasked to implement the National CyberSecurity Plan</p>
       <div className={styleHomePage.cardContainer}>
