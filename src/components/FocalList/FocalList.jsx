@@ -96,7 +96,7 @@ export function FocalList() {
 
       {/* Button to Redirect to Focal Form */}
       <div className={styleFocalList.addButtonContainer}>
-        <Link to="/focal-form" className="btn btn-primary btn-lg px-4">
+        <Link to="/cpcb-super-admin/focal-form" className="btn btn-primary btn-lg px-4">
           Add New Focal User
         </Link>
       </div>
