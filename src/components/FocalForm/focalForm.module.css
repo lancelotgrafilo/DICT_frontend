@@ -4,11 +4,25 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
+  line-height: 1.5; /* Improve readability */
+}
+
+.mainContent {
+  display: grid;
+  justify-content: center;
+  align-items: start;
+  min-height: 80vh;
+  background-color: var(--body-color);
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--shadow-color);
+  padding: 20px; /* Add padding for spacing */
 }
 
 .container {
   width: 100%;
-  max-width: 76%;
+  max-width: 1200px; /* Limit max width for larger screens */
   margin: auto;
   padding: 20px;
   background-color: white;
@@ -19,12 +33,11 @@ body {
 
 .header {
   border-radius: 3px;
-  font-size: x-large;
+  font-size: 1.5rem; /* Use relative font size */
   text-align: center;
   background-color: #003366;
   color: white;
   padding: 20px;
-  margin-bottom: 20px;
 }
 
 .sectionHeader {
@@ -34,18 +47,22 @@ body {
   color: white;
   padding: 5px 10px;
   margin-top: 20px;
+  font-size: 1.2rem; /* Use relative font size */
 }
 
 .formGroup {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .formGroup label {
   color: black;
-  width: 115px;
+  width: 100%; /* Full width on small screens */
   margin-right: 5px;
+  margin-bottom: 5px; /* Add spacing below labels */
+  font-size: 1rem; /* Use relative font size */
 }
 
 .formGroup input,
@@ -56,6 +73,8 @@ body {
   background-color: #cbf0f7;
   border: 1px solid black;
   margin-top: 6px;
+  width: 100%; /* Full width on small screens */
+  font-size: 1rem; /* Use relative font size */
 }
 
 .formGroupContainer {
@@ -70,7 +89,13 @@ body {
 }
 
 .formGroupContainer .formGroup {
-  width: 48%;
+  width: 48%; /* Two columns on larger screens */
+}
+
+@media (max-width: 768px) {
+  .formGroupContainer .formGroup {
+    width: 100%; /* Single column on smaller screens */
+  }
 }
 
 .formContainer {
@@ -87,7 +112,7 @@ body {
 @media (min-width: 768px) {
   .formLeft,
   .formRight {
-    width: 48%;
+    width: 48%; /* Two columns on larger screens */
   }
 }
 
@@ -108,6 +133,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   margin: 5px;
+  font-size: 1rem; /* Use relative font size */
 }
 
 .buttons button:hover {
@@ -123,7 +149,7 @@ body {
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem; /* Use relative font size */
 }
 
 .submitBtn:hover {
@@ -144,6 +170,7 @@ body {
   color: black;
   display: block;
   margin-bottom: 5px;
+  font-size: 1rem; /* Use relative font size */
 }
 
 .formGroupContact input {
@@ -152,9 +179,11 @@ body {
   box-sizing: border-box;
   background-color: #cbf0f7;
   border: 1px solid black;
+  font-size: 1rem; /* Use relative font size */
 }
 
-.btn_primary {
+.btn_primary,
+.btn_secondary {
   background-color: #007bff;
   color: white;
   border: none;
@@ -162,6 +191,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 1rem; /* Use relative font size */
 }
 
 .btn_primary:hover {
@@ -170,12 +200,6 @@ body {
 
 .btn_secondary {
   background-color: #6c757d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .btn_secondary:hover {
@@ -185,13 +209,16 @@ body {
 .errorPopup {
   display: none;
   position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   background: red;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
   font-weight: bold;
   z-index: 1000;
-  transform: translateX(-50%);
+  font-size: 1rem; /* Use relative font size */
 }
 
 .invalid {
@@ -215,6 +242,7 @@ body {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
+  font-size: 1rem; /* Use relative font size */
 }
 
 .focalTable th {
@@ -240,7 +268,7 @@ body {
   padding: 10px 20px;
   background-color: #28a745;
   color: white;
-  font-size: 16px;
+  font-size: 1rem; /* Use relative font size */
   font-weight: bold;
   text-align: center;
   text-decoration: none;

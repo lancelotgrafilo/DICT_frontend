@@ -76,7 +76,7 @@
 
 /* Right Content Area with Card Background */
 .contentCard {
-  width: 70%; /* Take up 70% of the screen width */
+  width: 100%; /* Take up 70% of the screen width */
   padding: 20px;
   background-color: #ffffff; /* White background for card */
   border-radius: 12px; /* Rounded corners for card */

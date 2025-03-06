@@ -228,7 +228,7 @@ export function FocalForm() {
   };
 
   return (
-    <div className={styleFocalForm.container}>
+    <div className={styleFocalForm.mainContent}>
       <div className={styleFocalForm.header}>CYBERSECURITY FOCAL FORM</div>
       <form onSubmit={handleSubmit}>
         {step === 1 && (

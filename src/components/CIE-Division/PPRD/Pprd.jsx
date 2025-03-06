@@ -5,6 +5,7 @@ import { useState } from 'react';
 // Import icons from React Icons
 import { FaFileAlt, FaClipboardList, FaGavel, FaDraftingCompass, FaChartLine, FaEllipsisH } from 'react-icons/fa';
 
+
 export function Pprd() {
   // Define the details and icons for each item
   const itemDetails = {
@@ -12,20 +13,20 @@ export function Pprd() {
       icon: <FaFileAlt />, // File icon for Department Circulars
       description: 'Department Circulars provide official directives and guidelines issued by the department.',
       documents: [
-        { id: 1, title: 'DICT DC 003 S.2020', link: '#' },
-        { id: 2, title: 'DICT DC 003 S.2024', link: '#' },
-        { id: 3, title: 'DICT DC 004 S.2024', link: '#' },
-        { id: 4, title: 'DICT DC 005 S.2024', link: '#' },
-        { id: 5, title: 'DICT DC 006 S.2024', link: '#' }
+        { id: 1, title: 'DICT DC 003 S.2020', link: '/src/assets/pdfs/DepartmentCircular/Dept_Circular_No_003_3062020.pdf' },
+        { id: 2, title: 'DICT DC 003 S.2024', link: '/src/assets/pdfs/DepartmentCircular/Department-Circular-No.-003-s.-2024.pdf' },
+        { id: 3, title: 'DICT DC 004 S.2024', link: '/src/assets/pdfs/DepartmentCircular/Department-Circular-No.-004-s.-2024.pdf' },
+        { id: 4, title: 'DICT DC 005 S.2024', link: '/src/assets/pdfs/DepartmentCircular/Department-Circular-No.-005-s.-2024.pdf' },
+        { id: 5, title: 'DICT DC 006 S.2024', link: '/src/assets/pdfs/DepartmentCircular/Department-Circular-No.-006-s.-2024.pdf' }
       ]
     },
     'Memorandum Circulars': {
       icon: <FaClipboardList />, // Clipboard icon for Memorandum Circulars
       description: 'Memorandum Circulars are official communications disseminating information or instructions.',
       documents: [
-        { id: 1, title: 'DICT MC 005 S.2017', link: '#' },
-        { id: 2, title: 'DICT MC 006 S.2017', link: '#' },
-        { id: 3, title: 'DICT MS 007 S.2017', link: '#' }
+        { id: 1, title: 'DICT MC 005 S.2017', link: '/src/assets/pdfs/MemorandumCircular/Memorandum-Circular-005.pdf' },
+        { id: 2, title: 'DICT MC 006 S.2017', link: '/src/assets/pdfs/MemorandumCircular/Memorandum-Circular-006.pdf' },
+        { id: 3, title: 'DICT MS 007 S.2017', link: '/src/assets/pdfs/MemorandumCircular/Memorandum-Circular-007.pdf' }
       ]
     },
     'Legislation': {
