@@ -2,10 +2,6 @@ import styleDivisions from "./divisions.module.css";
 import { Header } from "../Header/Header";
 import { Link } from "react-router-dom";
 import { Footer } from "../Footer/Footer";
-import dcdImg from "../../assets/img/dcd.png";
-import certPHLogo from "../../assets/img/CERT-PH.png";
-import PnpkiLogo from "../../assets/img/pnpki.jpg";
-import CyberImg from "../../assets/img/Cyber.png";
 export function Divisions() {
   return (
     <>
@@ -18,11 +14,6 @@ export function Divisions() {
           {/* Card 1 */}
           <Link to="/divisions/cie" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
-              <img
-                src={CyberImg}
-                alt="CIECSD Image"
-                className={styleDivisions.image}
-              />
               <h2 className={styleDivisions.title}>
                 Critical Infostructure Evaluation and Cybersecurity Standards Division
               </h2>
@@ -36,11 +27,6 @@ export function Divisions() {
           {/* Card 2 */}
           <a href="https://sites.google.com/dict.gov.ph/pnpki/ors" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
-              <img
-                src={PnpkiLogo}
-                alt="DCD Image"
-                className={styleDivisions.image}
-              />
               <h2 className={styleDivisions.title}>Digital Certificate Division</h2>
               <p className={styleDivisions.abbreviation}>(DCD)</p>
               <p className={styleDivisions.description}>
@@ -52,11 +38,6 @@ export function Divisions() {
           {/* Card 3 */}
           <a href="https://www.ncert.gov.ph/" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
-              <img
-                src={certPHLogo} 
-                alt="CERT-PH Logo"
-                className={styleDivisions.image}
-              />
               <h2 className={styleDivisions.title}>
                 National Computer Emergency Response Team Division
               </h2>
