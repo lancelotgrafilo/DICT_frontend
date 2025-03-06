@@ -4,32 +4,32 @@ import { Footer } from '../../Footer/Footer';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // Import icons from React Icons
-import { FaGraduationCap, FaFileAlt, FaMicrophone, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaGraduationCap, FaFileAlt, FaMicrophone } from 'react-icons/fa';
 
 export function Cpcb() {
-  // Define the regions for NCAP
+  // Define the regions for NCAP with links
   const regions = [
-    "CAR - Cordillera Administrative Region",
-    "R1 - Region 1 (Ilocos Region)",
-    "R2 - Region 2 (Cagayan Valley)",
-    "RBC - Regional Business Center"
+    { name: "CAR - Cordillera Administrative Region", link: "https://www.facebook.com/dict.car" },
+    { name: "R1 - Region 1 (Ilocos Region)", link: "https://www.facebook.com/ILCDBRO1" },
+    { name: "R2 - Region 2 (Cagayan Valley)", link: "https://www.facebook.com/DICTCagayanValley" },
+    { name: "RBC - Regional Business Center", link: "#" } // No link provided
   ];
 
   // Define the details and icons for each item
   const itemDetails = {
-    'National Cyber Awareness Program (NCAP)': {
+    "National Cyber Awareness Program (NCAP)": {
       icon: <FaGraduationCap />, // Graduation cap icon for NCAP
-      description: 'The NCAP is designed to spread cybersecurity knowledge, enhance digital safety, and provide regional training initiatives.',
-      regions: regions // Include regions as part of the item details
+      description: "The NCAP is designed to spread cybersecurity knowledge, enhance digital safety, and provide regional training initiatives.",
+      regions: regions // Include regions with links
     },
-    'Request for Awareness': {
+    "Request for Awareness": {
       icon: <FaFileAlt />, // File icon for Request for Awareness
-      description: 'Submit a request for cybersecurity awareness programs or materials.',
-      link: '/request-form' // Link to the request form
+      description: "Submit a request for cybersecurity awareness programs or materials.",
+      link: "/request-form" // Link to the request form
     },
-    'Request for Speaker': {
+    "Request for Speaker": {
       icon: <FaMicrophone />, // Microphone icon for Request for Speaker
-      description: 'Request a speaker for cybersecurity-related events or workshops.'
+      description: "Request a speaker for cybersecurity-related events or workshops."
     }
   };
 
@@ -43,10 +43,11 @@ export function Cpcb() {
     <>
       <Header />
       <div className={styleCpcb.mainContent}>
-        {/* Left Sidebar (No Background) */}
+        {/* Left Sidebar */}
         <div className={styleCpcb.sidebar}>
           {/* Title in the Sidebar */}
-          <div className={styleCpcb.sidebarTitle}>Cybersecurity Programs and Capacity Building (CPCB)
+          <div className={styleCpcb.sidebarTitle}>
+            Cybersecurity Programs and Capacity Building (CPCB)
             <div className="divider">
               <div className="blue-section"></div>
               <div className="red-section"></div>
@@ -75,20 +76,22 @@ export function Cpcb() {
             ))}
           </div>
         </div>
-        {/* Right Content Area with Card Background */}
+        {/* Right Content Area */}
         <div className={styleCpcb.contentCard}>
           {selectedItem ? (
             <>
               <h2>{selectedItem}</h2>
               <p>{itemDetails[selectedItem].description}</p>
-              {/* Conditionally display regions if the selected item is NCAP */}
-              {selectedItem === 'National Cyber Awareness Program (NCAP)' && (
+              {/* Conditionally display regions with links if the selected item is NCAP */}
+              {selectedItem === "National Cyber Awareness Program (NCAP)" && (
                 <>
                   <h3>Regions</h3>
                   <div className={styleCpcb.regionList}>
                     {itemDetails[selectedItem].regions.map((region, index) => (
                       <div key={index} className={styleCpcb.regionItem}>
-                        {region}
+                        <a href={region.link} target="_blank" rel="noopener noreferrer">
+                          {region.name}
+                        </a>
                       </div>
                     ))}
                   </div>
