@@ -2,6 +2,8 @@ import styleDivisions from "./divisions.module.css";
 import { Header } from "../Header/Header";
 import { Link } from "react-router-dom";
 import { Footer } from "../Footer/Footer";
+import { FaShieldAlt, FaCertificate, FaLaptopCode } from "react-icons/fa"; // Import icons
+
 export function Divisions() {
   return (
     <>
@@ -14,6 +16,7 @@ export function Divisions() {
           {/* Card 1 */}
           <Link to="/divisions/cie" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
+              <FaShieldAlt className={styleDivisions.cardIcon} /> {/* Icon for security */}
               <h2 className={styleDivisions.title}>
                 Critical Infostructure Evaluation and Cybersecurity Standards Division
               </h2>
@@ -27,6 +30,7 @@ export function Divisions() {
           {/* Card 2 */}
           <a href="https://sites.google.com/dict.gov.ph/pnpki/ors" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
+              <FaCertificate className={styleDivisions.cardIcon} /> {/* Icon for certificate */}
               <h2 className={styleDivisions.title}>Digital Certificate Division</h2>
               <p className={styleDivisions.abbreviation}>(DCD)</p>
               <p className={styleDivisions.description}>
@@ -38,6 +42,7 @@ export function Divisions() {
           {/* Card 3 */}
           <a href="https://www.ncert.gov.ph/" className={styleDivisions.cardLink}>
             <div className={styleDivisions.card}>
+              <FaLaptopCode className={styleDivisions.cardIcon} /> {/* Icon for cybersecurity */}
               <h2 className={styleDivisions.title}>
                 National Computer Emergency Response Team Division
               </h2>
