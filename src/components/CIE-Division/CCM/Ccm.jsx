@@ -3,10 +3,11 @@ import styleCcm from './ccm.module.css';
 import { Header } from "../../Header/Header";
 import { Footer } from '../../Footer/Footer';
 import { useState } from 'react';
-import { 
-  FaShieldAlt, 
-  FaFileUpload, 
-  FaListAlt, 
+import { Link } from 'react-router-dom';
+import {
+  FaShieldAlt,
+  FaFileUpload,
+  FaListAlt,
   FaBuilding,
   FaTint,          // Water
   FaBolt,          // Energy
@@ -14,7 +15,7 @@ import {
   FaMoneyBillAlt,  // Finance
   FaTv,            // Media
   FaTruck,         // Transportation
-  FaUniversity,    // Banking
+  FaUniversity,    // Banking 
   FaHeadset,       // BPO
   FaSatelliteDish, // Telecom
   FaLandmark       // Government
@@ -45,9 +46,8 @@ export function Ccm() {
     'Submit CERT': {
       icon: <FaFileUpload />,
       description: 'Submit a CERT form along with the required attachments for review and processing.'
-      //  Form Modal and Attach File
     }
-  };
+  };  
 
   const [selectedItem, setSelectedItem] = useState(Object.keys(itemDetails)[0]);
 
@@ -87,6 +87,11 @@ export function Ccm() {
                     ))}
                   </div>
                 </>
+              )}
+              {selectedItem === 'Request for CB' && (
+                <Link to="/divisions/cie/cpcb" className={styleCcm.link}>
+                  Go to Cybersecurity Programs and Capacity Building (CPCB)
+                </Link>
               )}
             </>
           )}
