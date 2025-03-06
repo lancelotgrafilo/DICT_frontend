@@ -6,7 +6,6 @@ import { RegionUserPage } from './pages/RegionUserPage/RegionUserPage.jsx';
 import { AppProviders } from './utils/context/AppProviders.jsx';
 import { Request } from "./components/Request/Request.jsx";
 import { Activities } from './components/Activities/Activities.jsx';
-import { TrainingPage } from './pages/TrainingPage/TrainingPage.jsx';
 import { FocalDashboard } from './components/Users/Focal/Dashboard/FocalDashboard.jsx';
 import { ModulesList } from './components/ModulesList/ModulesList.jsx';
 import { Settings } from './components/Settings/Settings.jsx';
@@ -72,8 +71,6 @@ export default function App() {
             <Route path='news-tips-advisories' element={<NewsTipsAdvisories/>} />
           </Route>
 
-
-          <Route path="training" element={ <TrainingPage /> } />
           <Route path="login" element={<LoginPage/>} />
           <Route path="sign-up" element={<SignUpPage/>} />
 

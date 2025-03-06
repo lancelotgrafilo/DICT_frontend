@@ -1,10 +1,9 @@
-import React from 'react';
 import styleLogin from './loginPage.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 
-import dict_logo from '../../assets/logo/logo.png';
+import dict_logo from '../../assets/logo/dict-cyber.png';
 
 export function LoginPage() {
   const navigate = useNavigate();
