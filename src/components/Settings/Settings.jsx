@@ -48,20 +48,6 @@ export function Settings() {
             </div>
           </div>
 
-          <div className={styleSettings.inputGroup}>
-            <label htmlFor="region">Region</label>
-            <select id="region" name="region">
-              <option value="" disabled selected>
-                Select your region
-              </option>
-              {regions.map((region, index) => (
-                <option key={index} value={region}>
-                  {region}
-                </option>
-              ))}
-            </select>
-          </div>
-
           <div className={styleSettings.buttonGroup}>
             <button type="submit" className={styleSettings.btnPrimary}>
               Save Personal Information
