@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:5000', // Adjust the backend URL
+      '/api': 'https://sample-dict-frontend.onrender.com', // Adjust the backend URL
     },
   },
 })
