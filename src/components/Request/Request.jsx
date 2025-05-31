@@ -3,7 +3,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import useGetRequest from "../../utils/Hooks/RequestHooks/useGetRequest";
 import useUpdateRequestStatus from "../../utils/Hooks/RequestHooks/useUpdateRequestStatus";
 import { useState } from "react";
-import { useGetFiles } from "../../utils/Hooks/FileHooks/useGetFiles";
 
 export function Request() {
   // Fetch requests using the custom hook
@@ -11,7 +10,6 @@ export function Request() {
   // Custom hook for updating request status
   const { updateLoading, updateError, response, updateRequestStatus } = useUpdateRequestStatus();
   // Custom hook for fetching files
-  const { files, loading: fileLoading, errorFile } = useGetFiles();
 
   // State to track processing state for accept/reject buttons
   const [processing, setProcessing] = useState({});
