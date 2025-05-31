@@ -11,7 +11,7 @@ export function useGetFiles() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get('/api/files');
+        const response = await axios.get('https://sample-dict-backend.onrender.com/api/files');
         setFiles(response.data); // Store the entire response data
       } catch (error) {
         // Handle different types of errors

@@ -25,7 +25,7 @@ const useUpdateRequestStatus = () => {
 
     try {
       console.log("Sending PATCH request...");
-      const res = await axios.patch(`/api/${status}-request/${requestId}`, {}, {
+      const res = await axios.patch(`https://sample-dict-backend.onrender.com/api/${status}-request/${requestId}`, {}, {
         headers: {
           "Content-Type": "application/json",
         },

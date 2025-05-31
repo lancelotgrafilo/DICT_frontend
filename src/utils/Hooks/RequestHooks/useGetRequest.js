@@ -9,7 +9,7 @@ const useGetRequest = () => {
   const fetchRequests = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/get-requests');
+      const response = await axios.get('https://sample-dict-backend.onrender.com/api/get-requests');
       setRequests(response.data);
     } catch (err) {
       setError(err.message || 'Failed to fetch requests');

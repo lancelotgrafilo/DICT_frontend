@@ -37,7 +37,7 @@ export function Pprd() {
         { id: 2, title: 'RA 10175', link: '#' },
         { id: 3, title: 'RA 10173', link: '#' },
         { id: 4, title: 'RA 10844', link: '#' },
-        { id: 5, title: 'NCSP 2028', link: '#' }
+        { id: 5, title: 'NCSP 2028', link: '/src/assets/pdfs/NCSP_2028/NCSP_2028_v3.pdf' }
       ]
     },
     'Draft Policies': {

@@ -9,7 +9,7 @@ const useModules = () => {
   const fetchModules = useCallback(async () => {
     try {
       setLoading(true); // Set loading to true before fetching
-      const response = await axios.get('/api/get-module');
+      const response = await axios.get('https://sample-dict-backend.onrender.com/api/get-module');
       
       // Check if the response is valid JSON (array)
       if (Array.isArray(response.data)) {

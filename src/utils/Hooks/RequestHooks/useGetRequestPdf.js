@@ -13,7 +13,7 @@ const useGetRequestPdf = () => {
 
     try {
       // Fetch the PDF file from the backend using Axios
-      const response = await axios.get(`/get-pdf/${requestId}`, {
+      const response = await axios.get(`https://sample-dict-backend.onrender.com/get-pdf/${requestId}`, {
         responseType: 'blob', // Important: Set the response type to 'blob' for binary data
       });
 

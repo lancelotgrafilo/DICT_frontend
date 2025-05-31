@@ -17,7 +17,7 @@ const useDeleteModule = () => {
       // Simulate a delay (e.g., 2 seconds)
       await delay(2000);
 
-      const response = await axios.delete(`/api/delete-module/${id}`);
+      const response = await axios.delete(`https://sample-dict-backend.onrender.com/api/delete-module/${id}`);
       setSuccess(response.data.message);
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Something went wrong');

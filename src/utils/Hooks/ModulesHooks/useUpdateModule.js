@@ -17,7 +17,7 @@ const useUpdateModule = () => {
       // Simulate a delay (e.g., 2 seconds)
       await delay(2000);
 
-      const response = await axios.put(`/api/update-module/${id}`, moduleData);
+      const response = await axios.put(`https://sample-dict-backend.onrender.com/api/update-module/${id}`, moduleData);
       setSuccess(response.data.message);
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Something went wrong');

@@ -9,7 +9,7 @@ const useGetHistory = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await axios.get('/api/get-history');
+        const response = await axios.get('https://sample-dict-backend.onrender.com/api/get-history');
         setHistory(response.data.data);
         setLoading(false);
       } catch (err) {
