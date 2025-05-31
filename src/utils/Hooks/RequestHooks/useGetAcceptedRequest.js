@@ -9,7 +9,7 @@ const useGetAcceptedRequest = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get('/api/get-requests');
+        const response = await axios.get('https://sample-dict-backend.onrender.com/api/get-requests');
         // Filter only accepted requests
         const acceptedRequests = response.data.filter(request => request.status === "accepted");
         setRequests(acceptedRequests);

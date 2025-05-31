@@ -53,9 +53,6 @@ export function LoginPage() {
             <div className="input-group mb-3">
               <button className="btn btn-lg btn-primary w-100 fs-6">Login</button>
             </div>
-            <div className="row">
-              <small>Don&apos;t have an account? <button onClick={() => navigate("/sign-up")}>Sign Up</button></small>
-            </div>
           </div>
         </div>
 

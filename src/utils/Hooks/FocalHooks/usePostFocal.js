@@ -19,7 +19,7 @@ const usePostFocal = () => {
       // Adding a 2-second delay before making the request
       await delay(2000);
 
-      const response = await axios.post('/api/post-focal', focalPayload);
+      const response = await axios.post('https://sample-dict-backend.onrender.com/api/post-focal', focalPayload);
       setData(response.data);
       return response.data;
     } catch (err) {

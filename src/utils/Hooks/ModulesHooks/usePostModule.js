@@ -17,7 +17,7 @@ const usePostModule = () => {
       // Simulate a delay (e.g., 2 seconds)
       await delay(2000);
 
-      const response = await axios.post('/api/post-module', moduleData);
+      const response = await axios.post('https://sample-dict-backend.onrender.com/api/post-module', moduleData);
       setSuccess(response.data.message);
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Something went wrong');
